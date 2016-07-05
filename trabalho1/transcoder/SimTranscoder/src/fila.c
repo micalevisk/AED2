@@ -37,11 +37,7 @@ typedef struct{
 	TStatsFila stats;
 } TDadoFila;
 
-short comparar(void* a, void* b){
-	TComparavel* A = a;
-	TComparavel* B = b;
-	return A->compara(A, B);
-}
+
 
 static void ajustarFila(TFila *f, unsigned novoTamanho){
 	TDadoFila *d = f->dado;
