@@ -8,6 +8,7 @@
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
+#include "comparavel.h"
 #include "heap.h"
 #include <math.h>
 #include <stdlib.h>

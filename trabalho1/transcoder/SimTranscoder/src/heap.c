@@ -8,6 +8,7 @@
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
+#include "comparavel.h"
 #include "heap.h"
 #include <math.h>
 #include <stdlib.h>
@@ -15,7 +16,7 @@
 #include <string.h>
 
 #define NaN NULL
-#define TAM 10
+#define TAM 2
 
 #define ESQ(i) (2*(i)+1)
 #define DIR(i) (2*(i)+2)

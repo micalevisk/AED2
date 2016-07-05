@@ -1,5 +1,5 @@
 /*
- * filaD.c
+ * fila.c
  *
  *  Created on: 30/05/2016
  *      Author: cesar
@@ -11,11 +11,11 @@
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
+#include "comparavel.h"
 #include "fila.h"
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 
 #define NaN NULL
 #define TAM 10
@@ -31,8 +31,7 @@ typedef struct{
 } TStatsFila;
 
 typedef struct{
-	void** fila;
-	unsigned tamanho;
+	void* fila[TAM];
 
 	int primeiro;
 	int ultimo;
@@ -43,20 +42,6 @@ short comparar(void* a, void* b){
 	TComparavel* A = a;
 	TComparavel* B = b;
 	return A->compara(A, B);
-}
-
-static void ajustarFila(TFila *f, unsigned novoTamanho){
-	TDadoFila *d = f->dado;
-	size_t bytes = sizeof(void*) * novoTamanho;
-	void **novoVetor = malloc(bytes);
-	memcpy(novoVetor, d->fila, bytes);
-
-	free(d->fila);
-	d->tamanho = novoTamanho;
-	d->fila   = novoVetor;
-
-	// Atualiza estatística
-	d->stats.sobrecarregou++;
 }
 
 
@@ -101,17 +86,16 @@ static void* Desenfileirar(TFila *f){
  * Pós-Cond: elemento inserido na fila, se houver espaço.
  */
 static short Enfileirar(TFila *f, void *elemento){
+	short status = 1; // verdade (vai dar tudo certo)
 	TDadoFila *d = f->dado;
 
 	int posInsercao = d->ultimo+1, i;
 	void* aux; // auxilia na troca de endereços.
 
 	if(d->primeiro == -1){
-		d->primeiro = d->ultimo = 0;
+		d->primeiro=d->ultimo=0;
 		d->fila[d->primeiro] = elemento;
-	}else{
-		// se o vetor estiver cheio, então cria outro com o dobro do tamanho inicial.
-		if(posInsercao >= d->tamanho) ajustarFila(f, pow(2.0, floor(log2(posInsercao))+1));
+	}else if(posInsercao < TAM){
 
 		d->ultimo = posInsercao;
 		d->fila[posInsercao] = elemento;
@@ -124,12 +108,14 @@ static short Enfileirar(TFila *f, void *elemento){
 			d->fila[i-1]= aux;
 			d->stats.movimentou++;
 		}
-	}
+
+	}else		status = 0; //falso (deu errado)
 
 	// Atualiza estatística
-	d->stats.inseriu++;
+	d->stats.inseriu += status;
+	d->stats.sobrecarregou += !status;
 
-	return 1;
+	return status;
 }
 
 /**Verifica a ocupação da fila. Para uma fila criada, verifica se ela tem UM elemento, pelo menos. Caso haja elementos o status retornado é de que a fila NÃO está vazia, caso contrário tem-se a indicação de fila vazia.
@@ -163,28 +149,24 @@ TFila* criarFila(){
 	TFila *f = malloc(sizeof(TFila));
 
 	TDadoFila *d = malloc(sizeof(TDadoFila));
-	d->fila = malloc(sizeof(void*)*TAM);
-	d->tamanho = TAM;
-	d->primeiro = d->ultimo = -1;
+	d->primeiro=-1;
+	d->ultimo=-1;
 	// d->fila = calloc(TAM,sizeof(void*));
 
 
-	f->dado = d;
 	f->desenfileirar = Desenfileirar;
 	f->enfileirar = Enfileirar;
 	f->vazia = Vazia;
 	f->analytics = Analytics;
+	f->dado = d;
 
 	return f;
 }
 
 void destruirFila(TFila *f){
-	free(((TDadoFila*)f->dado)->fila);
 	free(f->dado);
 	free(f);
 }
-
-
 
 void percorrer(TFila* f, void (*acao)(void*)){
 	if(!Vazia(f)){
@@ -197,7 +179,7 @@ void percorrer(TFila* f, void (*acao)(void*)){
 
 
 /////////////////////// [ AFIM DE TESTES ] ////////////////////////////////////
-
+/*
 typedef struct tint INTEIRO;
 struct tint{
 	int *dado;
@@ -217,11 +199,11 @@ void imprimir(void* e){
 
 int main(){
 	TFila* minhaFila = criarFila();
-	int i, nLinhas;
 
-	scanf("%d",&nLinhas); // primeira linha
+	int i, argc;
+	scanf("%d",&argc); // primeira linha
 
-	for(i=0; i < nLinhas; i++){
+	for(i=0; i < argc; i++){
 		INTEIRO* aux = malloc(sizeof(INTEIRO));
 		aux->compara = comparaINTEIROS;
 
@@ -235,3 +217,4 @@ int main(){
 	Analytics(minhaFila);
 	percorrer(minhaFila, imprimir);
 }
+*/
