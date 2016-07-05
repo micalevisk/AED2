@@ -23,6 +23,7 @@ $ for i in ${TESTES[@]}; do gprof -b transcoder < ../Dado/instancia.${i}  > ../o
 
 ///////////////////////////////// [ MOSTRA A SAÍDA PADRÃO DO PROGRAMA E SALVA O TEMPO DE EXECUÇÃO ] ///////////////////////////////////////
 $ for i in ${TESTES[@]}; do { time ./transcoder < ../Dado/instancia.${i} ; } 2> ../executionTimes/executionTime_${TAD}_instancia.${i}; done
+$ for i in ${TESTES[@]}; do ( time ./transcoder < ../Dado/instancia.${i} ) 2> ../executionTimes/executionTime_${TAD}_instancia.${i}; done
 */
 
 #include <stdio.h>
