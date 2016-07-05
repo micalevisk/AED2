@@ -19,6 +19,10 @@ ITERACOES="x"         ##  'x' define o número de iterações para cada teste (p
 ( time [cmd] >&2 ) 2> instancia_[x].log
 ## >&2  Conecta a STDOUT (1) de [cmd] na STDERR (2)
 ## 2>   Redireciona a STDERR
+###################################################
+( (time [cmd]) 2>&1 ) > instancia_[x].log
+## 2>&1 Conecta a STDERR na STDOUT
+## >    Redireciona a STDOUT
 ```
 _loop que realiza todo o processo:__
 ```bash
