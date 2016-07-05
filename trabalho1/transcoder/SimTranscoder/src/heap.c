@@ -8,12 +8,9 @@
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
-<<<<<<< HEAD:trabalho1/transcoder/SimTranscoder/src/heap.c
 #include "comparavel.h"
 #include "heap.h"
-=======
 #include "fila.h"
->>>>>>> dfe9368dacbf8ab79caf2c3c6341ecf006d02eaa:trabalho1/transcoder/SimTranscoder/src/implementacao_tads/heapD.c
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -45,11 +42,7 @@ typedef struct{
 	TStatsFila stats;
 } TDadoFila;
 
-short comparar(void* a, void* b){
-	TComparavel* A = a;
-	TComparavel* B = b;
-	return A->compara(A, B);
-}
+
 
 // Heapify:
 // Garante a manutenção da propriedade ordem do Heap; complexidade O(log n)
