@@ -23,7 +23,7 @@ CASOS=$( for((i=10; i < 10000000; i *= 10)); do echo -n "$i "; done )
 TORDENACAO="PARCIAL"  
 
 ##  'x' define o número de iterações para cada teste (para calcular a média)
-ITERACOES="x"         
+ITERACOES="15"         
 
 ## diretório que contém as pastas de resultados
 DIR="../resultados/ordenacao_$TORDENACAO/"
@@ -136,4 +136,20 @@ done
 
 <span style="color:#005270"> 3. Tudo em um só loop (gera log -> edita pra analiticos/saidas?/tempos): </span>
 
-> Após definir o ***número de teste*** que as instâncias realizarão, ***o tipo de ordenação***, o ***vetor de casos testes*** , o ***tipo de estrutura*** 
+> Após definir o ***número de testes*** que as instâncias realizarão, ***o tipo de ordenação***, o ***vetor de casos testes*** , e o ***tipo de estrutura*** ;
+> O script a seguir irá realizar o seguinte:
+
+1. Equanto tiver instância a ser testada
++ Gerar arquivo de teste salvando como _.log_ (chamar programa) 
++ Filtrar arquivo teste dividindo em _.stats_, _.output_, _.time_ 
++ [Próxima instância]
+
+
+```bash
+# CURR DIR = ../src/
+for i in ${CASOS[@]}; do
+  for((x=1; x <= $ITERACOES; ++x)); do
+    
+  done
+done
+```
