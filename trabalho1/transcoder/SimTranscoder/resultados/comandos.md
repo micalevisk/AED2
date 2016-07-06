@@ -68,9 +68,8 @@ done
 ```bash
 # Executar para cada instancia i, x vezes:
 #-------------------------------------------------------------------#
-tail -8 ${DIR}/tudo/instancia_${i}/${x}.log |
-head -4 > ${DIR}/analiticos/instancia_${i}/${x}.stats
-sed -i -r 's/\[..?m//g' ${DIR}/analiticos/instancia_${i}/${x}.stats
+grep -Po '(?<=\[..m ).+(?=\[0m)' ${DIR}/tudo/instancia_${i}/${x}.log 
+> ${DIR}/analiticos/instancia_${i}/${x}.stats
 ```
 
 _loop que realiza os comandos acima:_
@@ -81,8 +80,7 @@ for i in ${CASOS[@]}; do
     VEZ=instancia_${i}
     ARQ=${DIR}/analiticos/$VEZ/${x}.stats
     
-    tail -8 ${DIR}/tudo/$VEZ/${x}.log | head -4 > $ARQ
-    sed -i -r 's/\[..?m//g' $ARQ
+    grep -Po '(?<=\[..m ).+(?=\[0m)' ${DIR}/tudo/instancia_${i}/${x}.log > $ARQ
   done
 done
 ```
