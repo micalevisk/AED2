@@ -1,0 +1,39 @@
+Tempo:66.714079 Tipo:1
+	 INSERE: 0
+Tempo:67.826700 Tipo:1
+	 INSERE: 0
+Tempo:69.311557 Tipo:1
+	 INSERE: 0
+Tempo:78.579522 Tipo:1
+	 INSERE: 0
+Tempo:82.853274 Tipo:1
+	 INSERE: 0
+Tempo:85.311557 Tipo:2
+Tempo:85.826700 Tipo:2
+Tempo:94.078520 Tipo:1
+	 INSERE: 0
+Tempo:107.606302 Tipo:1
+	 INSERE: 0
+Tempo:111.853274 Tipo:2
+Tempo:114.285083 Tipo:1
+	 INSERE: 0
+Tempo:119.579522 Tipo:2
+Tempo:120.205535 Tipo:1
+	 INSERE: 0
+Tempo:136.831093 Tipo:1
+	 INSERE: 0
+Tempo:166.714079 Tipo:2
+Tempo:178.078520 Tipo:2
+Tempo:182.285083 Tipo:2
+Tempo:197.606302 Tipo:2
+Tempo:205.714079 Tipo:2
+Tempo:289.205535 Tipo:2
+
+[32m inserções : 10[0m
+[31m removeu   : 10[0m
+[33m movimentou: 0[0m
+[36m sobrecarga: 0[0m
+
+real	0m0.040s
+user	0m0.000s
+sys	0m0.015s
