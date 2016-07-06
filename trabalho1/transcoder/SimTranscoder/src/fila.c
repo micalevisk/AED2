@@ -37,15 +37,8 @@ typedef struct{
 	TStatsFila stats;
 } TDadoFila;
 
-<<<<<<< HEAD
 
-=======
-short comparar(void* a, void* b){
-	TComparavel* A = a;
-	TComparavel* B = b;
-	return A->compara(A, B);
-}
->>>>>>> 21e873bc897949a54ba604bb8bf0acbe15d0d61e
+
 
 static void ajustarFila(TFila *f, unsigned novoTamanho){
 	TDadoFila *d = f->dado;
@@ -168,11 +161,6 @@ TFila* criarFila(){
 	d->fila = malloc(sizeof(void*)*TAM);
 	d->tamanho = TAM;
 	d->primeiro = d->ultimo = -1;
-<<<<<<< HEAD
-=======
-	// d->fila = calloc(TAM,sizeof(void*));
-
->>>>>>> 21e873bc897949a54ba604bb8bf0acbe15d0d61e
 
 	f->dado = d;
 	f->desenfileirar = Desenfileirar;

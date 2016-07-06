@@ -8,11 +8,6 @@
 #ifndef FILA_H_
 #define FILA_H_
 
-<<<<<<< HEAD
-=======
-#include "comparavel.h"
-
->>>>>>> 21e873bc897949a54ba604bb8bf0acbe15d0d61e
 typedef struct fila TFila;
 
 // declaração dos tipos Função/Método
