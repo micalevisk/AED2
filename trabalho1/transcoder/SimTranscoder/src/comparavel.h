@@ -10,5 +10,8 @@ typedef struct {
 	void *dado;
 	TCompara compara;
 }TComparavel;
+<<<<<<< HEAD
 
 short comparar(void*, void*); // compara as prioridades.
+=======
+>>>>>>> 21e873bc897949a54ba604bb8bf0acbe15d0d61e
