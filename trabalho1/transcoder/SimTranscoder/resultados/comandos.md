@@ -42,7 +42,9 @@ _loop que realiza todo o processo descrito acima:_
 for i in ${CASOS[@]}; do
   for((x=1; x <= $ITERACOES; ++x)); do
     local VEZ=instancia_${i}
-    ( time ./transcoder < ../Dado/$VEZ >&2 ) 2> ${DIR}/tudo/$VEZ/${x}.log
+    local ARQ=${DIR}/tudo/$VEZ/${x}.log
+
+    ( time ./transcoder < ../Dado/$VEZ >&2 ) 2> $ARQ
   done
 done
 ```
@@ -51,7 +53,7 @@ done
 - **../ordenacao_(PARCIAL|COMPLETA)/analiticos/instancia_${i}/${x}.stats**
 ```bash
 # Executar para cada instancia i, x vezes:
-#-------------------------------------------------------------------------------------------------#
+#-------------------------------------------------------------------#
 tail -8 ${DIR}/tudo/instancia_${i}/${x}.log |
 head -4 > ${DIR}/analiticos/instancia_${i}/${x}.stats
 sed -i -r 's/\[..?m//g' ${DIR}/analiticos/instancia_${i}/${x}.stats
@@ -64,6 +66,7 @@ for i in ${CASOS[@]}; do
   for((x=1; x <= $ITERACOES; ++x)); do
     local VEZ=instancia_${i}
     local ARQ=${DIR}/analiticos/$VEZ/${x}.stats
+    
     tail -8 ${DIR}/tudo/$VEZ/${x}.log | head -4 > $ARQ
     sed -i -r 's/\[..?m//g' $ARQ
   done
@@ -72,12 +75,54 @@ done
 
 
 - **../ordenacao_(PARCIAL|COMPLETA)/saidas/instancia_${i}/${x}.output**
-
-
-- **../ordenacao_(PARCIAL|COMPLETA)/tempos/instancia_${i}/${x}.time**
 ```bash
 # Executar para cada instancia i, x vezes:
-#---------------------------------------------------------------------------------------------------#
-tail -4 ${DIR}/tudo/instancia_${i}/${x}.log |
-grep 'real' > ${DIR}/analiticos/instancia_${i}/${x}.time
+#-------------------------------------------------------------------------------------------------#
+sed -n '1,/^$/ p' ${DIR}/tudo/instancia_${i}/${x}.log > ${DIR}/saidas/instancia_${i}/${x}.output
 ```
+
+_loop que realiza o comando acima:_
+```bash
+# CURR DIR = ../src/
+for i in ${CASOS[@]}; do
+  for((x=1; x <= $ITERACOES; ++x)); do
+    local VEZ=instancia_${i}
+    local ARQ=${DIR}/saidas/$VEZ/${x}.output
+    
+    sed -n '1,/^$/ p' ${DIR}/tudo/instancia_${i}/${x}.log > $ARQ
+  done
+done
+```
+
+
+- **../ordenacao_(PARCIAL|COMPLETA)/tempos/instancia_${i}/${x}.time** <br>
+[TIME SKILL](http://www.thegeekstuff.com/2013/10/time-command-format/)
+[TIME MANUAL](http://ss64.com/bash/time.html)
+
+```bash
+# Executar para cada instancia i, x vezes:
+#----------------------------------------------------------------------------------------------#
+grep -F 'real' ${DIR}/tudo/instancia_${i}/${x}.log > ${DIR}/tempos/instancia_${i}/${x}.time
+```
+
+_loop que realiza o comando acima:_
+```bash
+# CURR DIR = ../src/
+for i in ${CASOS[@]}; do
+  for((x=1; x <= $ITERACOES; ++x)); do
+    local VEZ=instancia_${i}
+    local ARQ=${DIR}/tempos/$VEZ/${x}.time
+    
+    grep -F 'real' ${DIR}/tudo/instancia_${i}/${x}.log > $ARQ
+  done
+done
+```
+
+
+
+<span style="color:#005270"> 3. Tudo em um só loop (gera log -> edita pra analiticos/saidas/tempos): </span>
+
+
+
+
+
