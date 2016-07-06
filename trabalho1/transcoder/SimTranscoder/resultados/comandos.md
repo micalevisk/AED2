@@ -41,8 +41,8 @@ _loop que realiza todo o processo descrito acima:_
 # CURR DIR = ../src/
 for i in ${CASOS[@]}; do
   for((x=1; x <= $ITERACOES; ++x)); do
-    local VEZ=instancia_${i}
-    local ARQ=${DIR}/tudo/$VEZ/${x}.log
+    VEZ=instancia_${i}
+    ARQ=${DIR}/tudo/$VEZ/${x}.log
 
     ( time ./transcoder < ../Dado/$VEZ >&2 ) 2> $ARQ
   done
@@ -64,8 +64,8 @@ _loop que realiza os comandos acima:_
 # CURR DIR = ../src/
 for i in ${CASOS[@]}; do
   for((x=1; x <= $ITERACOES; ++x)); do
-    local VEZ=instancia_${i}
-    local ARQ=${DIR}/analiticos/$VEZ/${x}.stats
+    VEZ=instancia_${i}
+    ARQ=${DIR}/analiticos/$VEZ/${x}.stats
     
     tail -8 ${DIR}/tudo/$VEZ/${x}.log | head -4 > $ARQ
     sed -i -r 's/\[..?m//g' $ARQ
@@ -86,8 +86,8 @@ _loop que realiza o comando acima:_
 # CURR DIR = ../src/
 for i in ${CASOS[@]}; do
   for((x=1; x <= $ITERACOES; ++x)); do
-    local VEZ=instancia_${i}
-    local ARQ=${DIR}/saidas/$VEZ/${x}.output
+    VEZ=instancia_${i}
+    ARQ=${DIR}/saidas/$VEZ/${x}.output
     
     sed -n '1,/^$/ p' ${DIR}/tudo/instancia_${i}/${x}.log > $ARQ
   done
@@ -110,8 +110,8 @@ _loop que realiza o comando acima:_
 # CURR DIR = ../src/
 for i in ${CASOS[@]}; do
   for((x=1; x <= $ITERACOES; ++x)); do
-    local VEZ=instancia_${i}
-    local ARQ=${DIR}/tempos/$VEZ/${x}.time
+    VEZ=instancia_${i}
+    ARQ=${DIR}/tempos/$VEZ/${x}.time
     
     grep -F 'real' ${DIR}/tudo/instancia_${i}/${x}.log > $ARQ
   done
