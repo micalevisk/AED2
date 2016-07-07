@@ -18,6 +18,9 @@
 #define NaN NULL
 #define TAM 2
 
+#define TIPOSTATS unsigned long long
+#define DIRETIVASTATS "%llu\n"
+
 #define ESQ(i) (2*(i)+1)
 #define DIR(i) (2*(i)+2)
 #define PAI(i) (((i)-1)/2)
@@ -150,10 +153,10 @@ static short Vazia(TFila *f){
 static void Analytics(TFila *f){
 	TDadoFila *d = f->dado;
 	printf("\n");
-	printf(ANSI_COLOR_GREEN " inserções : %u" ANSI_COLOR_RESET, d->stats.inseriu); printf("\n");
-	printf(ANSI_COLOR_RED " removeu   : %u" ANSI_COLOR_RESET, d->stats.removeu); printf("\n");
-	printf(ANSI_COLOR_YELLOW " movimentou: %u" ANSI_COLOR_RESET, d->stats.movimentou); printf("\n");
-	printf(ANSI_COLOR_CYAN " sobrecarga: %u" ANSI_COLOR_RESET, d->stats.sobrecarregou); printf("\n");
+	printf(ANSI_COLOR_GREEN " inserções : " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.inseriu); printf("\n");
+	printf(ANSI_COLOR_RED " removeu   : " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.removeu); printf("\n");
+	printf(ANSI_COLOR_YELLOW " movimentou: " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.movimentou); printf("\n");
+	printf(ANSI_COLOR_CYAN " sobrecarga: " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.sobrecarregou); printf("\n");
 }
 
 

@@ -1,39 +1,40 @@
-<!-- Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved. stackedit.io -->
+<!-- Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved. -->
+<!-- https://stackedit.io/editor -->
 
-# Comandos Para a Criação dos Arquivos de Resultados
+# <i class="icon-cog"></i> Comandos Para a Criação dos Arquivos de Resultados
 > admitindo que o diretório corrente é o 'src'
-> Após compilar o programa chamando de **transcoder_PARCIAL** e **transcoder_TOTAL**. 
+> Após compilar o programa chamando de **transcoder_PARCIAL** e **transcoder_TOTAL**.
 
 Definição das Variáveis (glob):
------------------------------------------
+------------------------------------------
 
-_caso inicial:_
 ```bash
-##  (Estrutura de Dados) FILA ou HEAP
-TAD="FILA"            
-
-## nome do programa que será chamado
-PROG="transcoder_$TAD"
-
-## vetor de casos testes (instâncias)
-## 10 100 1000 10000 100000 1000000
-CASOS=$( for((i=10; i < 10000000; i *= 10)); do echo -n "$i "; done )
+## nome do programa que será executado
+declare -r PROG="$1"
 
 ##  PARCIAL ou COMPLETA; define o diretório ordenacao_$TORDENACAO/...
-TORDENACAO="PARCIAL"  
+declare -r TORDENACAO="$2"  
 
-##  'x' define o número de iterações para cada teste (para calcular a média)
-ITERACOES="15"         
+##  (Estrutura de Dados) FILA ou HEAP; deve estar em maiúsculo
+declare -r TAD=$(tr -dc '[A-Z]' <<< $PROG)            
+
+## vetor de casos testes (instâncias i)
+## for((i=10; i <= 10000000; i *= 10)); do echo -n "$i "; done
+CASOS=(10 100 1000 10000 100000 1000000 10000000)
+
+##  (x) define o número de iterações para cada teste (para calcular a média)
+declare -i ITERACOES=15
 
 ## diretório que contém as pastas de resultados
-DIR="../resultados/ordenacao_$TORDENACAO/"
+declare -r DIR="../resultados/ordenacao_$TORDENACAO/"
 ```
 
 ----------
 
-### Gerar todos os dados & filtrar resultados ("log"):
-<span style="color:#00a761"> 1. Gera as x saídas (seguido do tempo de execução) do programa, salvando arquivos independentes:</span>
-**../ordenacao_(PARCIAL|COMPLETA)/tudo/instancia_i/x.log** <br>
+## Gerar todos os dados & filtrar resultados ("log"):
+
+### <i class="icon-file"></i> 1. Gera as 'x' saídas (seguido do tempo de execução) do programa, salvando arquivos independentes:
+**../ordenacao_(parcial|completa)/tudo/instancia_i/x.log** <br>
 
 - Onde **TORDENACAO** define se a ordenacao é "PARCIAL" ou "TOTAL"   
 - Onde **i** é o número da instância (de acordo com o número de elementos)
@@ -63,12 +64,12 @@ for i in ${CASOS[@]}; do
   done
 done
 ```
-<span style="color:#005270"> 2. Filtrar dados obtidos, salvando em seus respectivos diretórios: </span>
+### <i class="icon-upload"></i> 2. Filtrar dados obtidos, salvando em seus respectivos diretórios:
 **../ordenacao_TORDENACAO/analiticos/instancia_i/x.stats**
 ```bash
 # Executar para cada instancia i, x vezes:
 #-------------------------------------------------------------------#
-grep -Po '(?<=\[..m ).+(?=\[0m)' ${DIR}/tudo/instancia_${i}/${x}.log 
+grep -Po '(?<=\[..m ).+(?=\[0m)' ${DIR}/tudo/instancia_${i}/${x}.log
 > ${DIR}/analiticos/instancia_${i}/${x}.stats
 ```
 
@@ -79,7 +80,7 @@ for i in ${CASOS[@]}; do
   for((x=1; x <= $ITERACOES; ++x)); do
     VEZ=instancia_${i}
     ARQ=${DIR}/analiticos/$VEZ/${x}.stats
-    
+
     grep -Po '(?<=\[..m ).+(?=\[0m)' ${DIR}/tudo/instancia_${i}/${x}.log > $ARQ
   done
 done
@@ -90,7 +91,7 @@ done
 ```bash
 # Executar para cada instancia i, x vezes:
 #----------------------------------------------------#
-sed -n '1,/^$/ p' ${DIR}/tudo/instancia_${i}/${x}.log 
+sed -n '1,/^$/ p' ${DIR}/tudo/instancia_${i}/${x}.log
 > ${DIR}/saidas/instancia_${i}/${x}.output
 ```
 
@@ -101,7 +102,7 @@ for i in ${CASOS[@]}; do
   for((x=1; x <= $ITERACOES; ++x)); do
     VEZ=instancia_${i}
     ARQ=${DIR}/saidas/$VEZ/${x}.output
-    
+
     sed -n '1,/^$/ p' ${DIR}/tudo/instancia_${i}/${x}.log > $ARQ
   done
 done
@@ -109,13 +110,13 @@ done
 
 
 **../ordenacao_TORDENACAO/tempos/instancia_i/x.time** <br>
-[TIME SKILL](http://www.thegeekstuff.com/2013/10/time-command-format/) <br>
-[TIME MANUAL](http://ss64.com/bash/time.html)
+http://www.thegeekstuff.com/2013/10/time-command-format/ _(exemplos do time com opções)_
+http://ss64.com/bash/time.html _(manual do comando time)_
 
 ```bash
 # Executar para cada instancia i, x vezes:
 #-------------------------------------------------#
-grep -F 'real' ${DIR}/tudo/instancia_${i}/${x}.log 
+grep -F 'real' ${DIR}/tudo/instancia_${i}/${x}.log
 > ${DIR}/tempos/instancia_${i}/${x}.time
 ```
 
@@ -126,7 +127,7 @@ for i in ${CASOS[@]}; do
   for((x=1; x <= $ITERACOES; ++x)); do
     VEZ=instancia_${i}
     ARQ=${DIR}/tempos/$VEZ/${x}.time
-    
+
     grep -F 'real' ${DIR}/tudo/instancia_${i}/${x}.log > $ARQ
   done
 done
@@ -134,22 +135,104 @@ done
 
 
 
-<span style="color:#005270"> 3. Tudo em um só loop (gera log -> edita pra analiticos/saidas?/tempos): </span>
+### <i class="icon-refresh"></i> 3. Tudo em um só loop:
 
 > Após definir o ***número de testes*** que as instâncias realizarão, ***o tipo de ordenação***, o ***vetor de casos testes*** , e o ***tipo de estrutura*** ;
-> O script a seguir irá realizar o seguinte:
-
-1. Equanto tiver instância a ser testada
-+ Gerar arquivo de teste salvando como _.log_ (chamar programa) 
-+ Filtrar arquivo teste dividindo em _.stats_, _.output_, _.time_ 
-+ [Próxima instância]
+>
+> #### O script a seguir irá realizar o seguinte algoritmo:
+> - Equanto não for a última instância (i), fazer:
+>  * Enquanto não for a última iteração (x), fazer: 		
+>        * executar com 'time' e salvar na pasta da instância e com nome _x.log_ 		
+>        * ler o _x.log_ e capturar analítico salvando na pasta da instância e com nome _x.stats_ 		
+>        * ler _x.log_ e capturar 'time' (sem cor) salvando na pasta da instância e com nome _x.time_
 
 
 ```bash
-# CURR DIR = ../src/
+#!/bin/bash
+#
+#									transcoder_FILA|HEAP	parcial|completa
+# uso verbose : ./gerarResultado.sh <nomePrograma_TAD> <tipoDeOrdenacao>
+# uso execucao: ./gerarResultado.sh -e <nomePrograma_TAD> <tipoDeOrdenacao>
+#
+# Created by Micael Levi on 07/06/2016
+# Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
+#
+
+[ "$1" -a "$2" ] || exit 1
+
+_RESET="\033[0m"
+_GREEN="\033[40;32m"
+_YELLO="\033[40;33m"
+_PURPL="\033[40;35m"
+_BLUE="\033[40;36m"
+
+
+declare -i SO_TESTA=1
+[ "$1" == "-e" ] && { SO_TESTA=0; shift; }
+
+
+#-----------------[ ]-----------------------#
+
+## nome do programa que será executado; o arquivo deve exisitir e ser executável
+declare -r PROG="$1"
+[ -x $PROG ] || { echo 'ERRO AO ABRIR: $PROG'; exit 1; }
+
+## 'parcial' ou 'completa'; define o diretório ordenacao_xx/...
+[ "$2" == "parcial" -o "$2" == "completa" ] || exit 1
+declare -r TORDENACAO="$2"
+
+## (Estrutura de Dados) FILA ou HEAP; deve estar em maiúsculo
+declare -r TAD=$(tr -dc '[A-Z]' <<< $PROG)
+
+## array de casos testes (instâncias i)
+## for((i=0; i <= 10000000; i*=10)); do echo -n "$i "; done
+CASOS=(10 100 1000 10000 100000 1000000 10000000)
+
+## (x) define o número de iterações para cada teste
+declare -i ITERACOES=15
+
+## diretório que contém as pastas de resultados
+declare -r DIR="../resultados/ordenacao_$TORDENACAO"
+
+
+
+#-----------------[ ]-----------------------#
+## DIRETÓRIO CORRENTE: .../src/
+
+declare -i i x
 for i in ${CASOS[@]}; do
-  for((x=1; x <= $ITERACOES; ++x)); do
-    
-  done
+	VEZ="instancia_${i}"	## nome da pasta relacionada à instância corrente
+
+	for((x=1; x <= 4; ++x)); do
+
+		## gerando o .log
+		BASE="${DIR}/tudo/$VEZ/${x}.log"
+		[ $SO_TESTA -eq 0 ] && ( time ./$PROG < ../DADO/$VEZ ) 2>&1 | install -D /dev/stdin $ARQ
+		echo -e $_GREEN "( time ./$PROG < ../DADO/$VEZ ) 2>&1 | install -D /dev/stdin $BASE" $_RESET
+
+		## gerando .stats
+		ARQ="${DIR}/analiticos/$VEZ/${x}.stats"
+		[ $SO_TESTA -eq 0 ] && grep -Po '(?<=\[..m ).+(?=\[0m)' $BASE | install -D /dev/stdin
+		echo -e $_YELLO "grep -Po '(?<=\[..m ).+(?=\[0m)' $BASE | install -D /dev/stdin" $_RESET
+
+		## gerando .output
+		ARQ="${DIR}/saidas/$VEZ/${x}.output"
+		[ $SO_TESTA -eq 0 ] && sed -n '1,/^$/p' ${BASE} | install -D /dev/stdin
+		echo -e $_PURPL "sed -n '1,/^$/p' ${BASE} | install -D /dev/stdin" $_RESET
+
+		## gerando .time
+		ARQ="${DIR}/tempos/$VEZ/${x}.time"
+		#echo -e $_BLUE "grep -F 'real' ${BASE} | install -D /dev/stdin" $_RESET
+		[ $SO_TESTA -eq 0 ] && tail -4 ${BASE} | install -D /dev/stdin
+		echo -e $_BLUE "tail -4 ${BASE} | install -D /dev/stdin" $_RESET
+
+		echo
+	done
+
 done
 ```
+
+
+
+----------
+http://github.com/micalevisk/AED2
