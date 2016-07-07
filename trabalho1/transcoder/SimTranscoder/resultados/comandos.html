@@ -255,14 +255,14 @@ resposta=$(tr <span class="hljs-operator">-d</span> -c <span class="hljs-string"
         <span class="hljs-comment">## gerando .stats</span>
         ARQ=<span class="hljs-string">"<span class="hljs-variable">${DIR}</span>/analiticos/<span class="hljs-variable">$VEZ</span>/<span class="hljs-variable">${x}</span>.stats"</span>
         [ <span class="hljs-variable">$SO_TESTA</span> <span class="hljs-operator">-eq</span> <span class="hljs-number">0</span> ] &amp;&amp; 
-            grep -Po <span class="hljs-string">'(?&lt;=\[..m ).+(?=\[0m)'</span> <span class="hljs-variable">$BASE</span> | install -D /dev/stdin
-        <span class="hljs-built_in">echo</span> <span class="hljs-operator">-e</span> <span class="hljs-variable">$_YELLO</span> <span class="hljs-string">"grep -Po '(?&lt;=\[..m ).+(?=\[0m)' <span class="hljs-variable">$BASE</span> | install -D /dev/stdin"</span> <span class="hljs-variable">$_RESET</span>
+            grep -Po <span class="hljs-string">'(?&lt;=\[..m ).+(?=\[0m)'</span> <span class="hljs-variable">$BASE</span> | install -D /dev/stdin <span class="hljs-variable">$ARQ</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-operator">-e</span> <span class="hljs-variable">$_YELLO</span> <span class="hljs-string">"grep -Po '(?&lt;=\[..m ).+(?=\[0m)' <span class="hljs-variable">$BASE</span> | install -D /dev/stdin <span class="hljs-variable">$ARQ</span>"</span> <span class="hljs-variable">$_RESET</span>
 
         <span class="hljs-comment">## gerando .time</span>
         ARQ=<span class="hljs-string">"<span class="hljs-variable">${DIR}</span>/tempos/<span class="hljs-variable">$VEZ</span>/<span class="hljs-variable">${x}</span>.time"</span>
         [ <span class="hljs-variable">$SO_TESTA</span> <span class="hljs-operator">-eq</span> <span class="hljs-number">0</span> ] &amp;&amp; 
-            tail -<span class="hljs-number">4</span> <span class="hljs-variable">${BASE}</span> | install -D /dev/stdin
-        <span class="hljs-built_in">echo</span> <span class="hljs-operator">-e</span> <span class="hljs-variable">$_BLUE</span> <span class="hljs-string">"tail -4 <span class="hljs-variable">${BASE}</span> | install -D /dev/stdin"</span> <span class="hljs-variable">$_RESET</span>
+            tail -<span class="hljs-number">4</span> <span class="hljs-variable">${BASE}</span> | install -D /dev/stdin <span class="hljs-variable">$ARQ</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-operator">-e</span> <span class="hljs-variable">$_BLUE</span> <span class="hljs-string">"tail -4 <span class="hljs-variable">${BASE}</span> | install -D /dev/stdin <span class="hljs-variable">$ARQ</span>"</span> <span class="hljs-variable">$_RESET</span>
 
         <span class="hljs-built_in">echo</span>
     <span class="hljs-keyword">done</span>
