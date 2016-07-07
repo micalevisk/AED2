@@ -1,0 +1,32 @@
+-----PARA ARRAY DINÂMICO CIRCULAR:------
+n = tamanho atual
+N = novo tamanho
+p = posição do primeiro
+u = posição do último
+v = vetor
+dado = { v, p, u, n }
+
+AUMENTA COM RAZAO n*2
+
+AO REAJUSTAR(dado):
+N <- n*2
+realoca memória com N * sizeof(void*) bytes
+se p for maior que u, então
+	novoP <- N - (n - p)
+	copia todos os elementos a partir de p até n-1 para o novo vetor
+
+
+AO ENFILEIRAR:
+se u for igual a n então reajusta vetor
+se p for -1 então p <- 0
+u <- u mod n
+v[u] <- novoElemento
+
+
+AO DESENFILEIRAR:
+prim <- p
+p <- prim mod n
+n <- n-1
+retorna v[prim]
+
+
