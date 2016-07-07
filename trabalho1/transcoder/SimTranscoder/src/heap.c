@@ -83,13 +83,13 @@ static void ajustarFila(TFila *f, unsigned novoTamanho){
 
 
 static void* Desenfileirar(TFila *f){
+	if(Vazia(f)) return NULL;
 	TDadoFila *d = f->dado;
 
-  void *raiz = NULL;
+  void *raiz = d->fila[0];
   int posUltimo = d->ocupacao - 1;
 
   if(posUltimo > 0){
-    raiz               = d->fila[0];
     d->fila[0]         = d->fila[posUltimo];
     d->fila[posUltimo] = raiz;
 
