@@ -1,0 +1,9 @@
+
+[32m inserções : 100000
+[0m[31m removeu   : 100000
+[0m[33m movimentou: 4077967848
+[0m[36m sobrecarga: 15
+[0m
+real	1m9.185s
+user	1m9.046s
+sys	0m0.000s

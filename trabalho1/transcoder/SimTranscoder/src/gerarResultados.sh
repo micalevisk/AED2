@@ -64,19 +64,19 @@ echo -e "\033c"	## limpar tela
 
 declare -i i x
 for i in ${CASOS[@]}; do
-	VEZ="instancia_${i}"	## nome da pasta relacionada à instância corrente
+	VEZ="instancia.${i}"	## nome da pasta relacionada à instância corrente
 
 	for((x=1; x <= $ITERACOES; ++x)); do
 
 		## gerando o .log
 		BASE="${DIR}/tudo/$VEZ/${x}.log"
 		[ $SO_TESTA -eq 0 ] &&
-			( time ./$PROG < ../DADO/$VEZ ) 2>&1 | install -D /dev/stdin $BASE
-		echo -e $_GREEN "( time ./$PROG < ../DADO/$VEZ ) 2>&1 | install -D /dev/stdin $BASE" $_RESET
+			( time ./$PROG < ../Dado/$VEZ ) 2>&1 | install -D /dev/stdin $BASE
+		echo -e $_GREEN "( time ./$PROG < ../Dado/$VEZ ) 2>&1 | install -D /dev/stdin $BASE" $_RESET
 
 		## gerando .stats
 		ARQ="${DIR}/analiticos/$VEZ/${x}.stats"
-		[ $SO_TESTA -eq 0 ] && 
+		[ $SO_TESTA -eq 0 ] &&
 			grep -Po '(?<=\[..m ).+(?=\[0m)' $BASE | install -D /dev/stdin $ARQ
 		echo -e $_YELLO "grep -Po '(?<=\[..m ).+(?=\[0m)' $BASE | install -D /dev/stdin $ARQ" $_RESET
 

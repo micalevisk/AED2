@@ -34,7 +34,7 @@ declare -r DIR="../resultados/ordenacao_$TORDENACAO/"
 ## Gerar todos os dados & filtrar resultados ("log"):
 
 ### <i class="icon-file"></i> 1. Gera as 'x' saídas (seguido do tempo de execução) do programa, salvando arquivos independentes:
-**../ordenacao_(parcial|completa)/tudo/instancia_i/x.log** <br>
+**../ordenacao_(parcial|completa)/tudo/instancia.i/x.log** <br>
 
 - Onde **TORDENACAO** define se a ordenacao é "PARCIAL" ou "TOTAL"   
 - Onde **i** é o número da instância (de acordo com o número de elementos)
@@ -43,11 +43,11 @@ declare -r DIR="../resultados/ordenacao_$TORDENACAO/"
 ```bash
 # Executar para cada instancia i, x vezes:
 #----------------------------------------------------------#
-( time [cmd] >&2 ) 2> ${DIR}/tudo/instancia_${i}/${x}.log
+( time [cmd] >&2 ) 2> ${DIR}/tudo/instancia.${i}/${x}.log
 ## >&2  Conecta a STDOUT de [cmd] na STDERR.
 ## 2>   Redireciona a STDERR.
 #----------------------------------------------------------#
-( (time [cmd]) 2>&1 ) > ${DIR}/tudo/instancia_${i}/${x}.log
+( (time [cmd]) 2>&1 ) > ${DIR}/tudo/instancia.${i}/${x}.log
 ## 2>&1 Conecta a STDERR na STDOUT.
 ## >    Redireciona a STDOUT.
 ```
@@ -57,7 +57,7 @@ _loop que realiza todo o processo descrito acima:_
 # CURR DIR = ../src/
 for i in ${CASOS[@]}; do
   for((x=1; x <= $ITERACOES; ++x)); do
-    VEZ=instancia_${i}
+    VEZ=instancia.${i}
     ARQ=${DIR}/tudo/$VEZ/${x}.log
 
     ( time $PROG < ../Dado/$VEZ >&2 ) 2> $ARQ
@@ -65,12 +65,12 @@ for i in ${CASOS[@]}; do
 done
 ```
 ### <i class="icon-upload"></i> 2. Filtrar dados obtidos, salvando em seus respectivos diretórios:
-**../ordenacao_TORDENACAO/analiticos/instancia_i/x.stats**
+**../ordenacao_TORDENACAO/analiticos/instancia.i/x.stats**
 ```bash
 # Executar para cada instancia i, x vezes:
 #-------------------------------------------------------------------#
-grep -Po '(?<=\[..m ).+(?=\[0m)' ${DIR}/tudo/instancia_${i}/${x}.log
-> ${DIR}/analiticos/instancia_${i}/${x}.stats
+grep -Po '(?<=\[..m ).+(?=\[0m)' ${DIR}/tudo/instancia.${i}/${x}.log
+> ${DIR}/analiticos/instancia.${i}/${x}.stats
 ```
 
 _loop que realiza os comandos acima:_
@@ -78,21 +78,21 @@ _loop que realiza os comandos acima:_
 # CURR DIR = ../src/
 for i in ${CASOS[@]}; do
   for((x=1; x <= $ITERACOES; ++x)); do
-    VEZ=instancia_${i}
+    VEZ=instancia.${i}
     ARQ=${DIR}/analiticos/$VEZ/${x}.stats
 
-    grep -Po '(?<=\[..m ).+(?=\[0m)' ${DIR}/tudo/instancia_${i}/${x}.log > $ARQ
+    grep -Po '(?<=\[..m ).+(?=\[0m)' ${DIR}/tudo/instancia.${i}/${x}.log > $ARQ
   done
 done
 ```
 
 
-**../ordenacao_TORDENACAO/saidas/instancia_i/x.output**
+**../ordenacao_TORDENACAO/saidas/instancia.i/x.output**
 ```bash
 # Executar para cada instancia i, x vezes:
 #----------------------------------------------------#
-sed -n '1,/^$/ p' ${DIR}/tudo/instancia_${i}/${x}.log
-> ${DIR}/saidas/instancia_${i}/${x}.output
+sed -n '1,/^$/ p' ${DIR}/tudo/instancia.${i}/${x}.log
+> ${DIR}/saidas/instancia.${i}/${x}.output
 ```
 
 _loop que realiza o comando acima:_
@@ -100,25 +100,25 @@ _loop que realiza o comando acima:_
 # CURR DIR = ../src/
 for i in ${CASOS[@]}; do
   for((x=1; x <= $ITERACOES; ++x)); do
-    VEZ=instancia_${i}
+    VEZ=instancia.${i}
     ARQ=${DIR}/saidas/$VEZ/${x}.output
 
-    sed -n '1,/^$/ p' ${DIR}/tudo/instancia_${i}/${x}.log > $ARQ
+    sed -n '1,/^$/ p' ${DIR}/tudo/instancia.${i}/${x}.log > $ARQ
   done
 done
 ```
 
 
-**../ordenacao_TORDENACAO/tempos/instancia_i/x.time** <br>
+**../ordenacao_TORDENACAO/tempos/instancia.i/x.time** <br>
 http://www.thegeekstuff.com/2013/10/time-command-format/ _(exemplos do time com opções)_
 http://ss64.com/bash/time.html _(manual do comando time)_
 
 ```bash
 # Executar para cada instancia i, x vezes:
 #-------------------------------------------------#
-#grep -F 'real' ${DIR}/tudo/instancia_${i}/${x}.log
-tail -n4 ${DIR}/tudo/instancia_${i}/${x}.log
-> ${DIR}/tempos/instancia_${i}/${x}.time
+#grep -F 'real' ${DIR}/tudo/instancia.${i}/${x}.log
+tail -n4 ${DIR}/tudo/instancia.${i}/${x}.log
+> ${DIR}/tempos/instancia.${i}/${x}.time
 ```
 
 _loop que realiza o comando acima:_
@@ -126,10 +126,10 @@ _loop que realiza o comando acima:_
 # CURR DIR = ../src/
 for i in ${CASOS[@]}; do
   for((x=1; x <= $ITERACOES; ++x)); do
-    VEZ=instancia_${i}
+    VEZ=instancia.${i}
     ARQ=${DIR}/tempos/$VEZ/${x}.time
 
-    tail -n4 ${DIR}/tudo/instancia_${i}/${x}.log > $ARQ
+    tail -n4 ${DIR}/tudo/instancia.${i}/${x}.log > $ARQ
   done
 done
 ```
@@ -207,15 +207,15 @@ echo -e "\033c"	## limpar tela
 
 declare -i i x
 for i in ${CASOS[@]}; do
-	VEZ="instancia_${i}"	## nome da pasta relacionada à instância corrente
+	VEZ="instancia.${i}"	## nome da pasta relacionada à instância corrente
 
 	for((x=1; x <= $ITERACOES; ++x)); do
 
 		## gerando o .log
 		BASE="${DIR}/tudo/$VEZ/${x}.log"
 		[ $SO_TESTA -eq 0 ] &&
-			( time ./$PROG < ../DADO/$VEZ ) 2>&1 | install -D /dev/stdin $BASE
-		echo -e $_GREEN "( time ./$PROG < ../DADO/$VEZ ) 2>&1 | install -D /dev/stdin $BASE" $_RESET
+			( time ./$PROG < ../Dado/$VEZ ) 2>&1 | install -D /dev/stdin $BASE
+		echo -e $_GREEN "( time ./$PROG < ../Dado/$VEZ ) 2>&1 | install -D /dev/stdin $BASE" $_RESET
 
 		## gerando .stats
 		ARQ="${DIR}/analiticos/$VEZ/${x}.stats"

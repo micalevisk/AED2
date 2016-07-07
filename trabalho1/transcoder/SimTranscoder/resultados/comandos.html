@@ -29,10 +29,10 @@
 <span class="hljs-keyword">declare</span> -r PROG=<span class="hljs-string">"<span class="hljs-variable">$1</span>"</span>
 
 <span class="hljs-comment">##  PARCIAL ou COMPLETA; define o diretório ordenacao_$TORDENACAO/...</span>
-<span class="hljs-keyword">declare</span> -r TORDENACAO=<span class="hljs-string">"<span class="hljs-variable">$2</span>"</span>  
+<span class="hljs-keyword">declare</span> -r TORDENACAO=<span class="hljs-string">"<span class="hljs-variable">$2</span>"</span>
 
 <span class="hljs-comment">##  (Estrutura de Dados) FILA ou HEAP; deve estar em maiúsculo</span>
-<span class="hljs-keyword">declare</span> -r TAD=$(tr -dc <span class="hljs-string">'[A-Z]'</span> &lt;&lt;&lt; <span class="hljs-variable">$PROG</span>)            
+<span class="hljs-keyword">declare</span> -r TAD=$(tr -dc <span class="hljs-string">'[A-Z]'</span> &lt;&lt;&lt; <span class="hljs-variable">$PROG</span>)
 
 <span class="hljs-comment">## vetor de casos testes (instâncias i)</span>
 <span class="hljs-comment">## for((i=10; i &lt;= 10000000; i *= 10)); do echo -n "$i "; done</span>
@@ -54,7 +54,7 @@ CASOS=(<span class="hljs-number">10</span> <span class="hljs-number">100</span> 
 
 <h3 id="1-gera-as-x-saídas-seguido-do-tempo-de-execução-do-programa-salvando-arquivos-independentes"><i class="icon-file"></i> 1. Gera as ‘x’ saídas (seguido do tempo de execução) do programa, salvando arquivos independentes:</h3>
 
-<p><strong>../ordenacao_(parcial|completa)/tudo/instancia_i/x.log</strong> <br></p>
+<p><strong>../ordenacao_(parcial|completa)/tudo/instancia.i/x.log</strong> <br></p>
 
 <ul>
 <li>Onde <strong>TORDENACAO</strong> define se a ordenacao é “PARCIAL” ou “TOTAL”   </li>
@@ -66,11 +66,11 @@ CASOS=(<span class="hljs-number">10</span> <span class="hljs-number">100</span> 
 
 <pre class="prettyprint"><code class="language-bash hljs "><span class="hljs-comment"># Executar para cada instancia i, x vezes:</span>
 <span class="hljs-comment">#----------------------------------------------------------#</span>
-( time [cmd] &gt;&amp;<span class="hljs-number">2</span> ) <span class="hljs-number">2</span>&gt; <span class="hljs-variable">${DIR}</span>/tudo/instancia_<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log
+( time [cmd] &gt;&amp;<span class="hljs-number">2</span> ) <span class="hljs-number">2</span>&gt; <span class="hljs-variable">${DIR}</span>/tudo/instancia.<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log
 <span class="hljs-comment">## &gt;&amp;2  Conecta a STDOUT de [cmd] na STDERR.</span>
 <span class="hljs-comment">## 2&gt;   Redireciona a STDERR.</span>
 <span class="hljs-comment">#----------------------------------------------------------#</span>
-( (time [cmd]) <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span> ) &gt; <span class="hljs-variable">${DIR}</span>/tudo/instancia_<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log
+( (time [cmd]) <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span> ) &gt; <span class="hljs-variable">${DIR}</span>/tudo/instancia.<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log
 <span class="hljs-comment">## 2&gt;&amp;1 Conecta a STDERR na STDOUT.</span>
 <span class="hljs-comment">## &gt;    Redireciona a STDOUT.</span></code></pre>
 
@@ -81,7 +81,7 @@ CASOS=(<span class="hljs-number">10</span> <span class="hljs-number">100</span> 
 <pre class="prettyprint"><code class="language-bash hljs "><span class="hljs-comment"># CURR DIR = ../src/</span>
 <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-variable">${CASOS[@]}</span>; <span class="hljs-keyword">do</span>
   <span class="hljs-keyword">for</span>((x=<span class="hljs-number">1</span>; x &lt;= <span class="hljs-variable">$ITERACOES</span>; ++x)); <span class="hljs-keyword">do</span>
-    VEZ=instancia_<span class="hljs-variable">${i}</span>
+    VEZ=instancia.<span class="hljs-variable">${i}</span>
     ARQ=<span class="hljs-variable">${DIR}</span>/tudo/<span class="hljs-variable">$VEZ</span>/<span class="hljs-variable">${x}</span>.log
 
     ( time <span class="hljs-variable">$PROG</span> &lt; ../Dado/<span class="hljs-variable">$VEZ</span> &gt;&amp;<span class="hljs-number">2</span> ) <span class="hljs-number">2</span>&gt; <span class="hljs-variable">$ARQ</span>
@@ -92,14 +92,14 @@ CASOS=(<span class="hljs-number">10</span> <span class="hljs-number">100</span> 
 
 <h3 id="2-filtrar-dados-obtidos-salvando-em-seus-respectivos-diretórios"><i class="icon-upload"></i> 2. Filtrar dados obtidos, salvando em seus respectivos diretórios:</h3>
 
-<p><strong>../ordenacao_TORDENACAO/analiticos/instancia_i/x.stats</strong></p>
+<p><strong>../ordenacao_TORDENACAO/analiticos/instancia.i/x.stats</strong></p>
 
 
 
 <pre class="prettyprint"><code class="language-bash hljs "><span class="hljs-comment"># Executar para cada instancia i, x vezes:</span>
 <span class="hljs-comment">#-------------------------------------------------------------------#</span>
-grep -Po <span class="hljs-string">'(?&lt;=\[..m ).+(?=\[0m)'</span> <span class="hljs-variable">${DIR}</span>/tudo/instancia_<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log
-&gt; <span class="hljs-variable">${DIR}</span>/analiticos/instancia_<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.stats</code></pre>
+grep -Po <span class="hljs-string">'(?&lt;=\[..m ).+(?=\[0m)'</span> <span class="hljs-variable">${DIR}</span>/tudo/instancia.<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log
+&gt; <span class="hljs-variable">${DIR}</span>/analiticos/instancia.<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.stats</code></pre>
 
 <p><em>loop que realiza os comandos acima:</em></p>
 
@@ -108,21 +108,21 @@ grep -Po <span class="hljs-string">'(?&lt;=\[..m ).+(?=\[0m)'</span> <span class
 <pre class="prettyprint"><code class="language-bash hljs "><span class="hljs-comment"># CURR DIR = ../src/</span>
 <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-variable">${CASOS[@]}</span>; <span class="hljs-keyword">do</span>
   <span class="hljs-keyword">for</span>((x=<span class="hljs-number">1</span>; x &lt;= <span class="hljs-variable">$ITERACOES</span>; ++x)); <span class="hljs-keyword">do</span>
-    VEZ=instancia_<span class="hljs-variable">${i}</span>
+    VEZ=instancia.<span class="hljs-variable">${i}</span>
     ARQ=<span class="hljs-variable">${DIR}</span>/analiticos/<span class="hljs-variable">$VEZ</span>/<span class="hljs-variable">${x}</span>.stats
 
-    grep -Po <span class="hljs-string">'(?&lt;=\[..m ).+(?=\[0m)'</span> <span class="hljs-variable">${DIR}</span>/tudo/instancia_<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log &gt; <span class="hljs-variable">$ARQ</span>
+    grep -Po <span class="hljs-string">'(?&lt;=\[..m ).+(?=\[0m)'</span> <span class="hljs-variable">${DIR}</span>/tudo/instancia.<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log &gt; <span class="hljs-variable">$ARQ</span>
   <span class="hljs-keyword">done</span>
 <span class="hljs-keyword">done</span></code></pre>
 
-<p><strong>../ordenacao_TORDENACAO/saidas/instancia_i/x.output</strong></p>
+<p><strong>../ordenacao_TORDENACAO/saidas/instancia.i/x.output</strong></p>
 
 
 
 <pre class="prettyprint"><code class="language-bash hljs "><span class="hljs-comment"># Executar para cada instancia i, x vezes:</span>
 <span class="hljs-comment">#----------------------------------------------------#</span>
-sed -n <span class="hljs-string">'1,/^$/ p'</span> <span class="hljs-variable">${DIR}</span>/tudo/instancia_<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log
-&gt; <span class="hljs-variable">${DIR}</span>/saidas/instancia_<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.output</code></pre>
+sed -n <span class="hljs-string">'1,/^$/ p'</span> <span class="hljs-variable">${DIR}</span>/tudo/instancia.<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log
+&gt; <span class="hljs-variable">${DIR}</span>/saidas/instancia.<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.output</code></pre>
 
 <p><em>loop que realiza o comando acima:</em></p>
 
@@ -131,14 +131,14 @@ sed -n <span class="hljs-string">'1,/^$/ p'</span> <span class="hljs-variable">$
 <pre class="prettyprint"><code class="language-bash hljs "><span class="hljs-comment"># CURR DIR = ../src/</span>
 <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-variable">${CASOS[@]}</span>; <span class="hljs-keyword">do</span>
   <span class="hljs-keyword">for</span>((x=<span class="hljs-number">1</span>; x &lt;= <span class="hljs-variable">$ITERACOES</span>; ++x)); <span class="hljs-keyword">do</span>
-    VEZ=instancia_<span class="hljs-variable">${i}</span>
+    VEZ=instancia.<span class="hljs-variable">${i}</span>
     ARQ=<span class="hljs-variable">${DIR}</span>/saidas/<span class="hljs-variable">$VEZ</span>/<span class="hljs-variable">${x}</span>.output
 
-    sed -n <span class="hljs-string">'1,/^$/ p'</span> <span class="hljs-variable">${DIR}</span>/tudo/instancia_<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log &gt; <span class="hljs-variable">$ARQ</span>
+    sed -n <span class="hljs-string">'1,/^$/ p'</span> <span class="hljs-variable">${DIR}</span>/tudo/instancia.<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log &gt; <span class="hljs-variable">$ARQ</span>
   <span class="hljs-keyword">done</span>
 <span class="hljs-keyword">done</span></code></pre>
 
-<p><strong>../ordenacao_TORDENACAO/tempos/instancia_i/x.time</strong> <br>
+<p><strong>../ordenacao_TORDENACAO/tempos/instancia.i/x.time</strong> <br>
 <a href="http://www.thegeekstuff.com/2013/10/time-command-format/">http://www.thegeekstuff.com/2013/10/time-command-format/</a> <em>(exemplos do time com opções)</em> <br>
 <a href="http://ss64.com/bash/time.html">http://ss64.com/bash/time.html</a> <em>(manual do comando time)</em></p>
 
@@ -146,9 +146,9 @@ sed -n <span class="hljs-string">'1,/^$/ p'</span> <span class="hljs-variable">$
 
 <pre class="prettyprint"><code class="language-bash hljs "><span class="hljs-comment"># Executar para cada instancia i, x vezes:</span>
 <span class="hljs-comment">#-------------------------------------------------#</span>
-<span class="hljs-comment">#grep -F 'real' ${DIR}/tudo/instancia_${i}/${x}.log</span>
-tail -n4 <span class="hljs-variable">${DIR}</span>/tudo/instancia_<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log
-&gt; <span class="hljs-variable">${DIR}</span>/tempos/instancia_<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.time</code></pre>
+<span class="hljs-comment">#grep -F 'real' ${DIR}/tudo/instancia.${i}/${x}.log</span>
+tail -n4 <span class="hljs-variable">${DIR}</span>/tudo/instancia.<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log
+&gt; <span class="hljs-variable">${DIR}</span>/tempos/instancia.<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.time</code></pre>
 
 <p><em>loop que realiza o comando acima:</em></p>
 
@@ -157,10 +157,10 @@ tail -n4 <span class="hljs-variable">${DIR}</span>/tudo/instancia_<span class="h
 <pre class="prettyprint"><code class="language-bash hljs "><span class="hljs-comment"># CURR DIR = ../src/</span>
 <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-variable">${CASOS[@]}</span>; <span class="hljs-keyword">do</span>
   <span class="hljs-keyword">for</span>((x=<span class="hljs-number">1</span>; x &lt;= <span class="hljs-variable">$ITERACOES</span>; ++x)); <span class="hljs-keyword">do</span>
-    VEZ=instancia_<span class="hljs-variable">${i}</span>
+    VEZ=instancia.<span class="hljs-variable">${i}</span>
     ARQ=<span class="hljs-variable">${DIR}</span>/tempos/<span class="hljs-variable">$VEZ</span>/<span class="hljs-variable">${x}</span>.time
 
-    tail -n4 <span class="hljs-variable">${DIR}</span>/tudo/instancia_<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log &gt; <span class="hljs-variable">$ARQ</span>
+    tail -n4 <span class="hljs-variable">${DIR}</span>/tudo/instancia.<span class="hljs-variable">${i}</span>/<span class="hljs-variable">${x}</span>.log &gt; <span class="hljs-variable">$ARQ</span>
   <span class="hljs-keyword">done</span>
 <span class="hljs-keyword">done</span></code></pre>
 
@@ -170,9 +170,9 @@ tail -n4 <span class="hljs-variable">${DIR}</span>/tudo/instancia_<span class="h
 
 <blockquote>
   <p>Após definir o <strong><em>número de testes</em></strong> que as instâncias realizarão, <strong><em>o tipo de ordenação</em></strong>, o <strong><em>vetor de casos testes</em></strong> , e o <strong><em>tipo de estrutura</em></strong> ;</p>
-  
+
   <h4 id="o-script-a-seguir-irá-realizar-o-seguinte-algoritmo">O script a seguir irá realizar o seguinte algoritmo:</h4>
-  
+
   <ul>
   <li>Equanto não for a última instância (i), fazer: <br>
   <ul><li>Enquanto não for a última iteração (x), fazer: <br>
@@ -242,25 +242,25 @@ resposta=$(tr <span class="hljs-operator">-d</span> -c <span class="hljs-string"
 
 <span class="hljs-keyword">declare</span> -i i x
 <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-variable">${CASOS[@]}</span>; <span class="hljs-keyword">do</span>
-    VEZ=<span class="hljs-string">"instancia_<span class="hljs-variable">${i}</span>"</span>   <span class="hljs-comment">## nome da pasta relacionada à instância corrente</span>
+    VEZ=<span class="hljs-string">"instancia.<span class="hljs-variable">${i}</span>"</span>   <span class="hljs-comment">## nome da pasta relacionada à instância corrente</span>
 
     <span class="hljs-keyword">for</span>((x=<span class="hljs-number">1</span>; x &lt;= <span class="hljs-variable">$ITERACOES</span>; ++x)); <span class="hljs-keyword">do</span>
 
         <span class="hljs-comment">## gerando o .log</span>
         BASE=<span class="hljs-string">"<span class="hljs-variable">${DIR}</span>/tudo/<span class="hljs-variable">$VEZ</span>/<span class="hljs-variable">${x}</span>.log"</span>
-        [ <span class="hljs-variable">$SO_TESTA</span> <span class="hljs-operator">-eq</span> <span class="hljs-number">0</span> ] &amp;&amp; 
-            ( time ./<span class="hljs-variable">$PROG</span> &lt; ../DADO/<span class="hljs-variable">$VEZ</span> ) <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span> | install -D /dev/stdin <span class="hljs-variable">$BASE</span>
-        <span class="hljs-built_in">echo</span> <span class="hljs-operator">-e</span> <span class="hljs-variable">$_GREEN</span> <span class="hljs-string">"( time ./<span class="hljs-variable">$PROG</span> &lt; ../DADO/<span class="hljs-variable">$VEZ</span> ) 2&gt;&amp;1 | install -D /dev/stdin <span class="hljs-variable">$BASE</span>"</span> <span class="hljs-variable">$_RESET</span>
+        [ <span class="hljs-variable">$SO_TESTA</span> <span class="hljs-operator">-eq</span> <span class="hljs-number">0</span> ] &amp;&amp;
+            ( time ./<span class="hljs-variable">$PROG</span> &lt; ../Dado/<span class="hljs-variable">$VEZ</span> ) <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span> | install -D /dev/stdin <span class="hljs-variable">$BASE</span>
+        <span class="hljs-built_in">echo</span> <span class="hljs-operator">-e</span> <span class="hljs-variable">$_GREEN</span> <span class="hljs-string">"( time ./<span class="hljs-variable">$PROG</span> &lt; ../Dado/<span class="hljs-variable">$VEZ</span> ) 2&gt;&amp;1 | install -D /dev/stdin <span class="hljs-variable">$BASE</span>"</span> <span class="hljs-variable">$_RESET</span>
 
         <span class="hljs-comment">## gerando .stats</span>
         ARQ=<span class="hljs-string">"<span class="hljs-variable">${DIR}</span>/analiticos/<span class="hljs-variable">$VEZ</span>/<span class="hljs-variable">${x}</span>.stats"</span>
-        [ <span class="hljs-variable">$SO_TESTA</span> <span class="hljs-operator">-eq</span> <span class="hljs-number">0</span> ] &amp;&amp; 
+        [ <span class="hljs-variable">$SO_TESTA</span> <span class="hljs-operator">-eq</span> <span class="hljs-number">0</span> ] &amp;&amp;
             grep -Po <span class="hljs-string">'(?&lt;=\[..m ).+(?=\[0m)'</span> <span class="hljs-variable">$BASE</span> | install -D /dev/stdin <span class="hljs-variable">$ARQ</span>
         <span class="hljs-built_in">echo</span> <span class="hljs-operator">-e</span> <span class="hljs-variable">$_YELLO</span> <span class="hljs-string">"grep -Po '(?&lt;=\[..m ).+(?=\[0m)' <span class="hljs-variable">$BASE</span> | install -D /dev/stdin <span class="hljs-variable">$ARQ</span>"</span> <span class="hljs-variable">$_RESET</span>
 
         <span class="hljs-comment">## gerando .time</span>
         ARQ=<span class="hljs-string">"<span class="hljs-variable">${DIR}</span>/tempos/<span class="hljs-variable">$VEZ</span>/<span class="hljs-variable">${x}</span>.time"</span>
-        [ <span class="hljs-variable">$SO_TESTA</span> <span class="hljs-operator">-eq</span> <span class="hljs-number">0</span> ] &amp;&amp; 
+        [ <span class="hljs-variable">$SO_TESTA</span> <span class="hljs-operator">-eq</span> <span class="hljs-number">0</span> ] &amp;&amp;
             tail -<span class="hljs-number">4</span> <span class="hljs-variable">${BASE}</span> | install -D /dev/stdin <span class="hljs-variable">$ARQ</span>
         <span class="hljs-built_in">echo</span> <span class="hljs-operator">-e</span> <span class="hljs-variable">$_BLUE</span> <span class="hljs-string">"tail -4 <span class="hljs-variable">${BASE}</span> | install -D /dev/stdin <span class="hljs-variable">$ARQ</span>"</span> <span class="hljs-variable">$_RESET</span>
 
