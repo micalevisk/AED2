@@ -1,0 +1,5 @@
+./gerarResultados.sh: line 74: ../DADO/instancia_10: No such file or directory
+
+real	0m0.048s
+user	0m0.015s
+sys	0m0.015s

@@ -32,9 +32,6 @@ $ for i in ${TESTES[@]}; do ( time ./transcoder < ../Dado/instancia.${i} ) 2> ..
 
 ////// [ SALVA O TEMPO DE EXECUÇÃO REAL] //////
 $ ( time [cmd] ) |& grep real > realTime
-
-=======
->>>>>>> 21e873bc897949a54ba604bb8bf0acbe15d0d61e
 */
 
 #include <stdio.h>

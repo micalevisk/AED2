@@ -5,8 +5,8 @@
  *      Author: cesar
  */
 #include <stdlib.h>
+#include "heap.h"
 #include "servico.h"
-#include "fila.h"
 #include "job.h"
 
 typedef struct {

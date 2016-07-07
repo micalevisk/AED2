@@ -11,18 +11,14 @@ typedef void* (*TDesenfileirar)(TFila*);
 typedef short (*TVazia)(TFila*);
 typedef void (*TAnalytics)(TFila*);
 
-//construtor
 TFila *criarFila();
-
-//destrutor
 void destruirFila(TFila*);
 
 //tipo abstrato de dados
 struct fila{
-	/// dados, que são privados
 	void *dado;
 
-	// Operações sobre o dado
+	// métodos
 	TEnfileirar enfileirar;
 	TDesenfileirar desenfileirar;
 	TVazia vazia;

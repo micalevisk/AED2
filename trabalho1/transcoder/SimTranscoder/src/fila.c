@@ -15,7 +15,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#define NaN NULL
 #define TAM 2
 
 #define TIPOSTATS unsigned long long
@@ -46,25 +45,15 @@ typedef struct{
 static void ajustarFila(TFila *f, unsigned novoTamanho){
 	TDadoFila *d = f->dado;
 	size_t bytes = sizeof(void*) * novoTamanho;
-	void **novoVetor = malloc(bytes);
-	memcpy(novoVetor, d->fila, bytes);
 
-	free(d->fila);
+	d->fila = realloc(d->fila, bytes);
 	d->tamanho = novoTamanho;
-	d->fila   = novoVetor;
 
 	// Atualiza estatística
 	d->stats.sobrecarregou++;
 }
 
 
-/** Remove o primeiro elemento da fila. Para a fila passada, o primeiro elemento será removido se ele existir.
- * No caso da fila vazia, a operação não é realizada e um NaN é retornado.
- *
- * Pré-cond: Fila criada.
- *
- * Pós-cond: Elemento removido, se fila não estiver vazia.
- */
 static void* Desenfileirar(TFila *f){
 	void* elemento=NULL;
 	TDadoFila *d = f->dado;
@@ -89,20 +78,11 @@ static void* Desenfileirar(TFila *f){
 	return elemento;
 }
 
-/** Insere um novo elemento na fila. Para uma fila criada
- * a função irá inserir o elemento passado
- * considerando a ocupação da fila. o retorno indica se a
- * operação foi realizada com sucesso.
- *
- * Pré-cond: fila criada, e elemento a ser inserido.
- *
- * Pós-Cond: elemento inserido na fila, se houver espaço.
- */
+
 static short Enfileirar(TFila *f, void *elemento){
 	TDadoFila *d = f->dado;
-
 	int posInsercao = d->ultimo+1, i;
-	void* aux; // auxilia na troca de endereços.
+	void *aux;
 
 	if(d->primeiro == -1){
 		d->primeiro = d->ultimo = 0;
@@ -130,40 +110,38 @@ static short Enfileirar(TFila *f, void *elemento){
 	return 1;
 }
 
-/**Verifica a ocupação da fila. Para uma fila criada, verifica se ela tem UM elemento, pelo menos. Caso haja elementos o status retornado é de que a fila NÃO está vazia, caso contrário tem-se a indicação de fila vazia.
- *
- *Pré-cond: Fila criada.
- *
- *Pós-cond: Fila inalterada.
- */
+
 static short Vazia(TFila *f){
 	TDadoFila *d = f->dado;
 	return (d->primeiro == -1);
 }
 
-/** Analisa e imprime estatísticas da fila. Para uma fila criada, imprime as estatísticas coletadas ao longo da execução do programa que usou a fila. São consideradas operações de inserção e remoção na fila e os custos de movimentação de elementos.
- *
- * Pré-cond: Fila criada
- *
- * Pós-cond: Estatísticas geradas e apresentadas.
- */
+
 static void Analytics(TFila *f){
 	TDadoFila *d = f->dado;
 	printf("\n");
-	printf(ANSI_COLOR_GREEN " inserções : " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.inseriu); printf("\n");
-	printf(ANSI_COLOR_RED " removeu   : " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.removeu); printf("\n");
-	printf(ANSI_COLOR_YELLOW " movimentou: " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.movimentou); printf("\n");
-	printf(ANSI_COLOR_CYAN " sobrecarga: " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.sobrecarregou); printf("\n");
+	printf(ANSI_COLOR_GREEN " inserções : " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.inseriu);
+	printf(ANSI_COLOR_RED " removeu   : " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.removeu);
+	printf(ANSI_COLOR_YELLOW " movimentou: " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.movimentou);
+	printf(ANSI_COLOR_CYAN " sobrecarga: " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.sobrecarregou);
+}
+
+
+TDadoFila* criarDadoFila(){
+	TDadoFila *d = malloc(sizeof(TDadoFila));
+	d->fila = malloc(sizeof(void*)*TAM);
+	d->tamanho = TAM;
+	d->primeiro = d->ultimo = -1;
+	d->stats.inseriu = 0;
+	d->stats.removeu = 0;
+	d->stats.movimentou = 0;
+	d->stats.sobrecarregou = 0;
 }
 
 
 TFila* criarFila(){
 	TFila *f = malloc(sizeof(TFila));
-
-	TDadoFila *d = malloc(sizeof(TDadoFila));
-	d->fila = malloc(sizeof(void*)*TAM);
-	d->tamanho = TAM;
-	d->primeiro = d->ultimo = -1;
+	TDadoFila *d = criarDadoFila();
 
 	f->dado = d;
 	f->desenfileirar = Desenfileirar;

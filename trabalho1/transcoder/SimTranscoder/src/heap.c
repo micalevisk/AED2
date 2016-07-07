@@ -15,24 +15,21 @@
 #include <stdio.h>
 #include <string.h>
 
-#define NaN NULL
 #define TAM 2
 
 #define TIPOSTATS unsigned long long
 #define DIRETIVASTATS "%llu\n"
 
-#define ESQ(i) (2*(i)+1)
-#define DIR(i) (2*(i)+2)
 #define PAI(i) (((i)-1)/2)
 
 // prioridade de 'a' é menor que a de 'b'
 #define COMPARAR_PRIORIDADES(a,b) (comparar((a), (b)) < 0)
 
 typedef struct{
-	unsigned inseriu;
-	unsigned removeu;
-	unsigned movimentou;
-	unsigned sobrecarregou;
+	TIPOSTATS inseriu;
+	TIPOSTATS removeu;
+	TIPOSTATS movimentou;
+	TIPOSTATS sobrecarregou;
 } TStatsFila;
 
 typedef struct{
@@ -49,20 +46,20 @@ typedef struct{
 // Heapify:
 // Garante a manutenção da propriedade ordem do Heap; complexidade O(log n)
 void ajustarHeap(TDadoFila* d, int pai, int posUltimo){
-	void* aux;
+	void *aux;
 	int esq, dir, posAtual;
 
-  esq = ESQ(pai);
-  dir = DIR(pai);
+  esq = 2*pai + 1;
+  dir = esq + 1;
 	posAtual = pai;
 
 	if((esq <= posUltimo) && COMPARAR_PRIORIDADES(d->fila[posAtual], d->fila[esq]))	posAtual = esq;
 	if((dir <= posUltimo) && COMPARAR_PRIORIDADES(d->fila[posAtual], d->fila[dir]))	posAtual = dir;
 
 	if(posAtual != pai){
-		aux				     = d->fila[pai];
-		d->fila[pai]	 = d->fila[posAtual];
-		d->fila[posAtual] = aux;
+		aux				     			= d->fila[pai];
+		d->fila[pai]				= d->fila[posAtual];
+		d->fila[posAtual] 	= aux;
 
     //atualiza estatísticas
     d->stats.movimentou++;
@@ -75,12 +72,9 @@ void ajustarHeap(TDadoFila* d, int pai, int posUltimo){
 static void ajustarFila(TFila *f, unsigned novoTamanho){
 	TDadoFila *d = f->dado;
 	size_t bytes = sizeof(void*) * novoTamanho;
-	void **novoVetor = malloc(bytes);
-	memcpy(novoVetor, d->fila, bytes);
 
-	free(d->fila);
+	d->fila = realloc(d->fila, bytes);
 	d->tamanho = novoTamanho;
-	d->fila    = novoVetor;
 
 	// Atualiza estatística
 	d->stats.sobrecarregou++;
@@ -118,15 +112,15 @@ static void* Desenfileirar(TFila *f){
 static short Enfileirar(TFila *f, void *elemento){
 	TDadoFila *d = f->dado;
   int i=d->ocupacao, posAncestral;
-	void* aux; // auxilia na troca de endereços.
+	void *aux;
 
-	if(i >= d->tamanho) ajustarFila(f, pow(2.0, floor(log2(posInsercao))+1));
+	if(i >= d->tamanho) ajustarFila(f, pow(2.0, floor(log2(i))+1));
 
   d->fila[i] = elemento;
   d->ocupacao++;
 
   posAncestral = PAI(i);
-  for(; (i > 0) && (COMPARAR_PRIORIDADES(d->fila[posAncestral],d->fila[i])); posAncestral = PAI(i)){
+  while( (i > 0) && (COMPARAR_PRIORIDADES(d->fila[posAncestral],d->fila[i])) ){
     aux 				          =	d->fila[posAncestral];
     d->fila[posAncestral] = d->fila[i];
     d->fila[i]            = aux;
@@ -135,6 +129,7 @@ static short Enfileirar(TFila *f, void *elemento){
     d->stats.movimentou++;
 
     i = posAncestral;
+		posAncestral = PAI(i);
   }
 
 
@@ -153,21 +148,28 @@ static short Vazia(TFila *f){
 static void Analytics(TFila *f){
 	TDadoFila *d = f->dado;
 	printf("\n");
-	printf(ANSI_COLOR_GREEN " inserções : " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.inseriu); printf("\n");
-	printf(ANSI_COLOR_RED " removeu   : " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.removeu); printf("\n");
-	printf(ANSI_COLOR_YELLOW " movimentou: " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.movimentou); printf("\n");
-	printf(ANSI_COLOR_CYAN " sobrecarga: " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.sobrecarregou); printf("\n");
+	printf(ANSI_COLOR_GREEN " inserções : " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.inseriu);
+	printf(ANSI_COLOR_RED " removeu   : " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.removeu);
+	printf(ANSI_COLOR_YELLOW " movimentou: " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.movimentou);
+	printf(ANSI_COLOR_CYAN " sobrecarga: " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.sobrecarregou);
 }
 
+
+TDadoFila* criarDadoFila(){
+	TDadoFila *d = malloc(sizeof(TDadoFila));
+	d->fila = malloc(sizeof(void*)*TAM);
+	d->tamanho = TAM;
+	d->ocupacao=0;
+	d->stats.inseriu = 0;
+	d->stats.removeu = 0;
+	d->stats.movimentou = 0;
+	d->stats.sobrecarregou = 0;
+}
 
 
 TFila* criarFila(){
 	TFila *f = malloc(sizeof(TFila));
-
-	TDadoFila *d = malloc(sizeof(TDadoFila));
-	d->fila = malloc(sizeof(void*) * TAM);
-	d->tamanho = TAM;
-	d->ocupacao=0;
+	TDadoFila *d = criarDadoFila();
 
   f->dado = d;
 	f->desenfileirar = Desenfileirar;
