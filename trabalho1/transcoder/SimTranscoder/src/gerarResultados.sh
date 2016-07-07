@@ -25,7 +25,7 @@ declare -i SO_TESTA=1
 
 ## nome do programa que será executado; o arquivo deve exisitir e ser executável
 declare -r PROG="$1"
-[ -x $PROG ] || { echo 'ERRO AO ABRIR: $PROG'; exit 1; }
+[ -x $PROG ] || { echo "ERRO AO ABRIR: $PROG"; exit 1; }
 
 ## 'parcial' ou 'completa'; define o diretório ordenacao_xx/...
 [ "$2" == "parcial" -o "$2" == "completa" ] || exit 1
@@ -43,8 +43,21 @@ declare -i ITERACOES=15
 
 ## diretório que contém as pastas de resultados
 declare -r DIR="../resultados/ordenacao_$TORDENACAO"
+[ -d $DIR ] || exit 1
 
+#-----------------[ ]-----------------------#
 
+echo "Deseja continuar? [SN]"
+echo "> nome do programa : $PROG"
+echo "> tipo de ordenação: $TORDENACAO"
+echo "> estrutura usada  : $TAD"
+echo "> número de testes : $ITERACOES"
+echo "> diretório results: $DIR"
+read resposta
+resposta=$(tr '[:lower:]' '[:upper:]' <<< $resposta)
+resposta=$(tr -d -c '[:alpha:]' <<< $resposta)
+[ "$resposta" != "S" ] && exit 1
+echo -e "\033c"	## limpar tela
 
 #-----------------[ ]-----------------------#
 ## DIRETÓRIO CORRENTE: .../src/
