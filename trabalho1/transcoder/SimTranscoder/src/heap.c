@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define TAM 2
+#define TAM 100
 
 #define TIPOSTATS unsigned long long
 #define DIRETIVASTATS "%llu\n"
@@ -42,10 +42,14 @@ typedef struct{
 } TDadoFila;
 
 
+static short Vazia(TFila *f){
+	return !(((TDadoFila*)f->dado)->ocupacao);
+}
+
 
 // Heapify:
 // Garante a manutenção da propriedade ordem do Heap; complexidade O(log n)
-void ajustarHeap(TDadoFila* d, int pai, int posUltimo){
+void ajustarHeap(TDadoFila* d, void** vetor, int pai, int posUltimo){
 	void *aux;
 	int esq, dir, posAtual;
 
@@ -53,18 +57,18 @@ void ajustarHeap(TDadoFila* d, int pai, int posUltimo){
   dir = esq + 1;
 	posAtual = pai;
 
-	if((esq <= posUltimo) && COMPARAR_PRIORIDADES(d->fila[posAtual], d->fila[esq]))	posAtual = esq;
-	if((dir <= posUltimo) && COMPARAR_PRIORIDADES(d->fila[posAtual], d->fila[dir]))	posAtual = dir;
+	if((esq <= posUltimo) && COMPARAR_PRIORIDADES(vetor[posAtual], vetor[esq]))	posAtual = esq;
+	if((dir <= posUltimo) && COMPARAR_PRIORIDADES(vetor[posAtual], vetor[dir]))	posAtual = dir;
 
 	if(posAtual != pai){
-		aux				     			= d->fila[pai];
-		d->fila[pai]				= d->fila[posAtual];
-		d->fila[posAtual] 	= aux;
+		aux				     			= vetor[pai];
+		vetor[pai]				= vetor[posAtual];
+		vetor[posAtual] 	= aux;
 
     //atualiza estatísticas
     d->stats.movimentou++;
 
-		ajustarHeap(d, posAtual, posUltimo);
+		ajustarHeap(d, vetor, posAtual, posUltimo);
 	}
 }
 
@@ -86,12 +90,12 @@ static void* Desenfileirar(TFila *f){
 	if(Vazia(f)) return NULL;
 	TDadoFila *d = f->dado;
 
-  void *raiz = d->fila[0];
+  void *raiz = d->fila[0], **vet = d->fila;
   int posUltimo = d->ocupacao - 1;
 
   if(posUltimo > 0){
-    d->fila[0]         = d->fila[posUltimo];
-    d->fila[posUltimo] = raiz;
+    vet[0]         = vet[posUltimo];
+    vet[posUltimo] = raiz;
 
     //atualiza estatísticas
     d->stats.movimentou++;
@@ -99,7 +103,7 @@ static void* Desenfileirar(TFila *f){
     d->ocupacao--;
     posUltimo = d->ocupacao-1;
 
-    if(posUltimo > 0) ajustarHeap(d, 0, posUltimo);
+    if(posUltimo > 0) ajustarHeap(d, vet, 0, posUltimo);
   }
 
 	//atualiza estatísticas
@@ -114,12 +118,13 @@ static short Enfileirar(TFila *f, void *elemento){
   int i=d->ocupacao, posAncestral;
 	void *aux;
 
-	if(i >= d->tamanho) ajustarFila(f, pow(2.0, floor(log2(i))+1));
+	if(i >= d->tamanho) ajustarFila(f, i*2);
 
   d->fila[i] = elemento;
-  d->ocupacao++;
+  d->ocupacao=i+1;
 
   posAncestral = PAI(i);
+
   while( (i > 0) && (COMPARAR_PRIORIDADES(d->fila[posAncestral],d->fila[i])) ){
     aux 				          =	d->fila[posAncestral];
     d->fila[posAncestral] = d->fila[i];
@@ -139,10 +144,6 @@ static short Enfileirar(TFila *f, void *elemento){
 	return 1;
 }
 
-
-static short Vazia(TFila *f){
-	return !(((TDadoFila*)f->dado)->ocupacao);
-}
 
 
 static void Analytics(TFila *f){
@@ -181,8 +182,10 @@ TFila* criarFila(){
 }
 
 void destruirFila(TFila *f){
-	free(((TDadoFila*)f->dado)->fila);
-	free(f->dado);
+	// free(((TDadoFila*)f->dado)->fila);
+	TDadoFila* d = f->dado;
+	free(d->fila);
+	free(d);
 	free(f);
 }
 

@@ -89,7 +89,7 @@ static short Enfileirar(TFila *f, void *elemento){
 		d->fila[d->primeiro] = elemento;
 	}else{
 		// se o vetor estiver cheio, então cria outro com o dobro do tamanho inicial.
-		if(posInsercao >= d->tamanho) ajustarFila(f, pow(2.0, floor(log2(posInsercao))+1));
+		if(posInsercao >= d->tamanho) ajustarFila(f, posInsercao*2);
 
 		d->ultimo = posInsercao;
 		d->fila[posInsercao] = elemento;

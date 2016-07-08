@@ -2,11 +2,10 @@
 $ shopt -s extglob
 
 $ TAD="FILA"
-<<<<<<< HEAD
+
 $ TESTES=(10 100 1000 10000 100000 1000000 10000000 )
-=======
+
 $ TESTES=(10 15 20)
->>>>>>> 21e873bc897949a54ba604bb8bf0acbe15d0d61e
 
 $ gcc -o transcoder !(heap).c
 $ gcc -o transcoder !(fila).c
@@ -28,7 +27,6 @@ $ for i in ${TESTES[@]}; do gprof -b transcoder < ../Dado/instancia.${i}  > ../o
 ///////////////////////////////// [ MOSTRA A SAÍDA PADRÃO DO PROGRAMA E SALVA O TEMPO DE EXECUÇÃO ] ///////////////////////////////////////
 $ for i in ${TESTES[@]}; do { time ./transcoder < ../Dado/instancia.${i} ; } 2> ../executionTimes/executionTime_${TAD}_instancia.${i}; done
 $ for i in ${TESTES[@]}; do ( time ./transcoder < ../Dado/instancia.${i} ) 2> ../executionTimes/executionTime_${TAD}_instancia.${i}; done
-<<<<<<< HEAD
 
 ////// [ SALVA O TEMPO DE EXECUÇÃO REAL] //////
 $ ( time [cmd] ) |& grep real > realTime
@@ -72,8 +70,10 @@ int main(void){
 		evento->print(evento);
 
 		if ( (evento->getTipo(evento) == CHEGADA) && (oServico->ocioso(oServico)) ){
+			printf("chegada:\n");
 			oServico->chegada(oServico,video);
 
+			printf("runTranscoding:\n");
 			oServico->runTranscoding(oServico, video);
 
 			// agenda novo evento
@@ -82,7 +82,9 @@ int main(void){
 			agenda->novo(agenda,novoEvento);
 
 			// transcoding iniciado imediatamente
+			printf("saida:\n");
 			video = oServico->saida(oServico);
+			printf("destruirJob:\n");
 			destruirJob(video);
 
 			video = criarJob();
@@ -94,6 +96,7 @@ int main(void){
 			}
 
 		} else if (evento->getTipo(evento) == CHEGADA){
+			printf("\tchegada:\n");
 			oServico->chegada(oServico,video);
 
 			video = criarJob();
@@ -105,20 +108,26 @@ int main(void){
 			}
 
 		} else if(evento->getTipo(evento) == TRANSCODING){
+			printf("\t\tstopTranscoding:\n");
 			oServico->stopTranscoding(oServico);
 
+			printf("\t\tsaida:\n");
 			transVideo = oServico->saida(oServico);
 			if (transVideo != NULL){
 
+				printf("\t\trunTranscoding:\n");
 				oServico->runTranscoding(oServico, transVideo);
 
 				//termino do transcoding
+				printf("\t\tgetTempoTranscoding= %f:\n", tempoEvento);
 				tempoEvento = relogio + transVideo->getTempoTranscoding(transVideo);
 
 				// agenda novo evento
+				printf("\t\tcriarEvento:\n");
 				novoEvento = criarEvento(TRANSCODING, tempoEvento);
 				agenda->novo(agenda, novoEvento);
 
+				printf("\t\tdestruirJob:\n");
 				destruirJob(transVideo);
 			}
 		} else{

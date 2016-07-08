@@ -4,6 +4,7 @@
  *  Created on: 25/06/2016
  *      Author: cesar
  */
+#include "stdio.h"
 #include <stdlib.h>
 #include "heap.h"
 #include "servico.h"
@@ -40,14 +41,11 @@ void* saidaServico(TServico* oServico){
 }
 
 void chegadaServico(TServico* oServico, void *demanda){
-  //retirar servico da fila
-
+  //colocar servico na fila
   TDadoServico *d = oServico->dado;
 
   TFila *f = d->fila;
-
   f->enfileirar(f, demanda);
-
 }
 
 void runTranscodingServico(TServico *oServico, void *v ){

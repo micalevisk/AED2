@@ -45,6 +45,7 @@ static void *proximoAgenda(TAgenda* agenda){
 
 		free(caminha);
 	}
+
 	return evento;
 }
 

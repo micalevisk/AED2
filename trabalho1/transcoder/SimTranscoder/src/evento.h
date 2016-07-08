@@ -18,6 +18,7 @@ typedef void (*TPrintEvento)(TEvento*);
 struct evento{
 	void *dado;
 	TComparaEvento compara;
+
 	TGetTempoEvento getTempo;
 	TGetTipoEvento getTipo;
 	TPrintEvento print;
