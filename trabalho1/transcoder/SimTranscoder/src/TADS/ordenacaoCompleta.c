@@ -8,16 +8,9 @@
 // Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 //
 
-#include "arrayDinamicoGenerico.h"
-#include "../comparavel.h"
-
 #include "ordenacaoFila.h"
 #include <stdlib.h>
 
-#define TAM 10
-
-// A prioridade de 'a' é maior que a de 'b' ?
-#define COMPARAR_PRIORIDADES(a,b) (comparar((a), (b)) > 0)
 
 typedef struct{
   TArrayDinamico *vetorFila;
@@ -27,39 +20,31 @@ typedef struct{
 
 }TDadoTAD;
 
-/* IMPLEMENTAÇÃO DOS MÉTODOS: */
+/* ---------------- IMPLEMENTAÇÃO DOS MÉTODOS: -------------------------- */
 
 // "Remove" o último e atualiza o ponteiro que indica a posição do último.
+// isso implica em zero movimentações ao desenfileirar.
 static void* _desenfileirar(TTAD* t){
   TDadoTAD *d = t->dado;
-  return (d->posPrimeiro < 0) ?
-    NULL :
-    ((TArrayDinamico*)d->vetorFila)->acessar(d->vetorFila, d->posUltimo);
-  /*
-  if(d->posPrimeiro < 0) return NULL;
-
   TArrayDinamico *vet = d->vetorFila;
-  int posElementoRemovido = --d->posUltimo;
-  return vet->acessar(vet, posElementoRemovido);
-  */
+
+  void* ultimoElemento = (d->posUltimo >= 0) ? (vet->acessar(vet, d->posUltimo)) : (NULL);
+
+  if(ultimoElemento) d->posUltimo--;
+  return ultimoElemento;
 }
 
 // Insere no final,
-// verifica se o anterior tem prioridade menor que o inserido,
+// verifica se o anterior tem prioridade maior que o inserido,
 // se sim: swap
 // senão: pára.
 static short _enfileirar(TTAD* t, void* elemento){
-
-  // if(!elemento) return 0;
-
   TDadoTAD *d = t->dado;
-  printf("\t;enfileirar1;\n");
+  if(!elemento || !d) return 0;
+  
   int posInsercao = d->posUltimo + 1, i;
-  printf("\t;enfileirar2;\n");
-  void* aux;
   TArrayDinamico *vet = d->vetorFila;
 
-  printf("\t;enfileirar3; %d\n", posInsercao);
   d->posUltimo = posInsercao;
 
   if(!posInsercao){
@@ -74,16 +59,16 @@ static short _enfileirar(TTAD* t, void* elemento){
     }
 
     vet->atualizar(vet, posInsercao, elemento);
-    // trocar enquanto o anterior tiver prioridade menor que o último inserido.
-		// Utilizar função de comparação de acordo com o tipo de elemento.
+
 		for(i=posInsercao; (i > 0)
-    && COMPARAR_PRIORIDADES(vet->acessar(vet, i-1), vet->acessar(vet, i)); i--){
-      aux = vet->acessar(vet, i);
-      vet->atualizar(vet, i, vet->acessar(vet, i-1));
-      vet->atualizar(vet, i-1, aux);
+      && COMPARAR_PRIORIDADES(vet->acessar(vet, i-1), elemento); i--){ //vet->acessar(vet, i)
+        vet->atualizar(vet, i, vet->acessar(vet, i-1));
+        vet->atualizar(vet, i-1, elemento);
     }
+
+    t->movimentacoes_enfileirar += posInsercao - i;
   }
-  t->movimentacoes_enfileirar = posInsercao - i;
+
   return 1;
 }
 
@@ -92,8 +77,8 @@ static short _enfileirar(TTAD* t, void* elemento){
 
 TDadoTAD* criarDadoTAD(){
   TDadoTAD *d = malloc(sizeof(TDadoTAD));
-  TArrayDinamico *v = criarAD(TAM);
-  d->vetorFila = v;
+
+  d->vetorFila = construirAD(TAM);
   d->posPrimeiro = d->posUltimo = -1;
   return d;
 }
@@ -109,9 +94,9 @@ TTAD* construirTAD(){
 }
 
 void destruirTAD(TTAD* t){
-  // TDadoTAD *d = t->dado;
-  // destruirAD(d->vetorFila);
-  free(t->dado);
+  TDadoTAD *d = t->dado;
+  destruirAD(d->vetorFila);
+  free(d);
   free(t);
   t=NULL;
 }

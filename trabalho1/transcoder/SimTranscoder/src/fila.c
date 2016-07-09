@@ -36,30 +36,14 @@ static void* Desenfileirar(TFila *f){
   TDadoFila *d = f->dado;
   TTAD *minhaFila = d->fila;
 
-  return minhaFila->desenfileirar(minhaFila);
-  /*
-	void* elemento=NULL;
-	TDadoFila *d = f->dado;
-	//printf("P:%d U:%d\n", d->primeiro, d->ultimo);
-	if (d->primeiro == -1){
-		elemento = NULL;
-	}else{
-		elemento  = d->fila[d->primeiro];
-		if (d->primeiro == d->ultimo){
-			d->primeiro = d->ultimo = -1;
-		}else{
-			int i;
-			for(i=d->primeiro; i < d->ultimo; i++){
-				d->fila[i] = d->fila[i+1];
-			}
-			d->ultimo--;
-		}
-		//atualiza estatísticas
+  void* elementoRemovido = minhaFila->desenfileirar(minhaFila);
+
+	if(elementoRemovido){
+		// Atualiza remoções e número de elementos:
 		d->stats.removeu++;
-		d->stats.movimentou += (d->ultimo-d->primeiro)+(d->primeiro==-1?0:1);
+		d->numElementos--;
 	}
-	return elemento;
-  */
+	return elementoRemovido;
 }
 
 
@@ -67,37 +51,11 @@ static short Enfileirar(TFila *f, void *elemento){
 	TDadoFila *d = f->dado;
   TTAD *minhaFila = d->fila;
 
-  minhaFila->enfileirar(minhaFila, elemento);
-	d->numElementos++;
-  /*
-	int posInsercao = d->ultimo+1, i;
-	void *aux;
+	d->numElementos += minhaFila->enfileirar(minhaFila, elemento);
 
-	if(d->primeiro == -1){
-		d->primeiro = d->ultimo = 0;
-		d->fila[d->primeiro] = elemento;
-	}else{
-		// se o vetor estiver cheio, então cria outro com o dobro do tamanho inicial.
-		if(posInsercao >= d->tamanho) ajustarFila(f, posInsercao*2);
-
-		d->ultimo = posInsercao;
-		d->fila[posInsercao] = elemento;
-
-		// trocar enquanto o anterior tiver prioridade menor que o último inserido.
-		// Utilizar função de comparação de acordo com o tipo de elemento.
-		for(i=posInsercao; (i > 0) && COMPARAR_PRIORIDADES(d->fila[i-1], d->fila[i]); i--){ //
-			aux 				=	d->fila[i];
-			d->fila[i] 	= d->fila[i-1];
-			d->fila[i-1]= aux;
-			d->stats.movimentou++;
-		}
-	}
-  */
-	// Atualiza estatística
-
-	d->stats.movimentou = minhaFila->movimentacoes_enfileirar;
-	d->stats.sobrecarregou = minhaFila->sobrecarga;
+	// Atualiza inserções e número de elementos:
 	d->stats.inseriu++;
+	d->numElementos++;
 
 	return 1;
 }
@@ -111,6 +69,13 @@ static short Vazia(TFila *f){
 
 static void Analytics(TFila *f){
 	TDadoFila *d = f->dado;
+	TTAD *minhaFila = d->fila;
+
+	// Atualiza estatísticas:
+	d->stats.movimentou = minhaFila->movimentacoes_desenfileirar;
+	d->stats.movimentou = minhaFila->movimentacoes_enfileirar;
+	d->stats.sobrecarregou = minhaFila->sobrecarga;
+
 	printf("\n");
 	printf( " inserções : " DIRETIVASTATS , d->stats.inseriu);
 	printf( " removeu   : " DIRETIVASTATS , d->stats.removeu);
@@ -132,7 +97,7 @@ TDadoFila* criarDadoFila(){
 	d->stats.sobrecarregou = 0;
 }
 
-TFila* criarFila(){
+TFila* construirFila(){
 	TFila *f = malloc(sizeof(TFila));
 	TDadoFila *d = criarDadoFila();
 

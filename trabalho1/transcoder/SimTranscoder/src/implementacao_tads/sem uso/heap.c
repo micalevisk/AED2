@@ -61,7 +61,7 @@ void ajustarHeap(TDadoFila* d, void** vetor, int pai, int posUltimo){
 	if((dir <= posUltimo) && COMPARAR_PRIORIDADES(vetor[posAtual], vetor[dir]))	posAtual = dir;
 
 	if(posAtual != pai){
-		aux				     			= vetor[pai];
+		aux				     		= vetor[pai];
 		vetor[pai]				= vetor[posAtual];
 		vetor[posAtual] 	= aux;
 
@@ -72,7 +72,7 @@ void ajustarHeap(TDadoFila* d, void** vetor, int pai, int posUltimo){
 	}
 }
 
-
+// aumenta o tamanho do vetor
 static void ajustarFila(TFila *f, unsigned novoTamanho){
 	TDadoFila *d = f->dado;
 	size_t bytes = sizeof(void*) * novoTamanho;

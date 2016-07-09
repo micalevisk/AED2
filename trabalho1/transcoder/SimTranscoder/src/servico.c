@@ -23,7 +23,7 @@ static TDadoServico *criarDado(int nroServidores){
 
 	d->nroOcupados=0;
 	d->nroServidores = nroServidores;
-	d->fila = criarFila();
+	d->fila = construirFila();
 
 	return d;
 }

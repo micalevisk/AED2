@@ -4,8 +4,14 @@
 // Created by Micael Levi on 07/08/2016
 // Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 //
+#include "arrayDinamicoGenerico.h"
+#include "../comparavel.h"
 
 #define PRECISAOSTATS unsigned long long
+#define TAM 10  // tamanho inicial da fila (vetor)
+
+// A prioridade de 'a' é maior que a de 'b' ?
+#define COMPARAR_PRIORIDADES(a,b) (comparar((a), (b)) > 0)
 
 typedef struct TADManipulacaoFila TTAD;
 
@@ -19,7 +25,6 @@ struct TADManipulacaoFila{
   PRECISAOSTATS movimentacoes_enfileirar;
   PRECISAOSTATS movimentacoes_desenfileirar;
   PRECISAOSTATS sobrecarga;
-
 
   // MÉTODOS:
   TEnfileirarTAD enfileirar;

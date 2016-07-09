@@ -13,7 +13,7 @@ typedef void* (*TDesenfileirar)(TFila*);
 typedef short (*TVazia)(TFila*);
 typedef void (*TAnalytics)(TFila*);
 
-TFila *criarFila();					// construtor.
+TFila *construirFila();					// construtor.
 void destruirFila(TFila*);	// destrutor.
 
 // Tipo Abstrato de Dados.

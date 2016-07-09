@@ -1,6 +1,5 @@
 typedef struct video TJob;
 
-short comparaJob(TJob*, TJob*);
 typedef short(*TComparaJobs)(TJob*, TJob*);
 
 typedef void (*TImprimirVideo)(TJob *v);

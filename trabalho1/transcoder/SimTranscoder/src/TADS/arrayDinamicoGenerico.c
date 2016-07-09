@@ -49,7 +49,7 @@ TDado* criaDadoAD(unsigned tamanho){
 }
 
 
-TArrayDinamico* criarAD(unsigned tamanho){
+TArrayDinamico* construirAD(unsigned tamanho){
 	TArrayDinamico* vetor = malloc(sizeof(TArrayDinamico));
 	TDado* d = criaDadoAD(tamanho);
 

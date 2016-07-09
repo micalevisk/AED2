@@ -1,4 +1,4 @@
-// TAD Vetor Dinâmico Circular
+// TAD Vetor Dinâmico 
 typedef struct arraydinamico TArrayDinamico;
 
 typedef void*	(*TAcessarAD)(TArrayDinamico*,int);
@@ -12,7 +12,7 @@ struct arraydinamico{
 	TAtualizarAD atualizar;
 };
 
-TArrayDinamico* criarAD(unsigned);
+TArrayDinamico* construirAD(unsigned);
 void destruirAD(TArrayDinamico*);
 unsigned tamanhoAD(TArrayDinamico*);
 void ajustarAD(TArrayDinamico*, unsigned); // realoca  o vetor.

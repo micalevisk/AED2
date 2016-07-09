@@ -9,6 +9,21 @@ typedef struct {
 	int tempoTranscoding;
 }TDadoJob;
 
+short comparaJob(TJob *v, TJob *v2){
+	int pV  = v->getPrioridade(v);
+	int pV2 = v2->getPrioridade(v2);
+	return ((pV == pV2) ? 0 :	((pV > pV2) ? 1 : -1));
+	/*
+	if (v->getPrioridade(v) == v2->getPrioridade(v2)){
+		return 0;
+	}else if (v->getPrioridade(v) > v2->getPrioridade(v2)){
+		return 1;
+	}else{
+		return -1;
+	}
+	*/
+}
+
 static void *criarDado(){
     TDadoJob *d = malloc(sizeof(TDadoJob));
 
@@ -79,20 +94,6 @@ TJob* criarJob(){
 	return job;
 }
 
-short comparaJob(TJob *v, TJob *v2){
-	int pV  = v->getPrioridade(v);
-	int pV2 = v2->getPrioridade(v2);
-	return ((pV == pV2) ? 0 :	((pV > pV2) ? 1 : -1));
-	/*
-	if (v->getPrioridade(v) == v2->getPrioridade(v2)){
-		return 0;
-	}else if (v->getPrioridade(v) > v2->getPrioridade(v2)){
-		return 1;
-	}else{
-		return -1;
-	}
-	*/
-}
 
 void destruirJob(TJob *v){
 	free(v->dado);

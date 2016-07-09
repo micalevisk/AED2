@@ -1,35 +1,19 @@
-/*
-$ shopt -s extglob
+/* http://urs.bira.nom.br/informatica/comando.htm
+========================= [ PARA COMPILAR ] ======================
+- diretório corrente deve ser ../usr
 
-$ TAD="FILA"
+- Para utilizar a ordenação parcial, usar na linha de comando:
+$ gcc -o transcoder *.c TADS/!(ordenacaoParcial).c
 
-$ TESTES=(10 100 1000 10000 100000 1000000 10000000 )
+- Para utilizar a ordenação completa, usar na linha de comando:
+$ gcc -o transcoder *.c TADS/!(ordenacaoCompleta).c
 
-$ TESTES=(10 15 20)
 
-$ gcc -o transcoder !(heap).c
-$ gcc -o transcoder !(fila).c
-
-/////// [ TESTE INDIVIDUAL ] ////////
-$ ./transcoder < ../Dado/instancia.10
-$ ./transcoder < ../Dado/instancia.15
-$ ./transcoder < ../Dado/instancia.20
-$ for i in ${TESTES[@]}; do time ./transcoder < ../Dado/instancia.${i}; done
-
-///////////////////////////////// [ MOSTRA A SAÍDA PADRÃO DO PROGRAMA ] /////////////////////////////////////////////////////////////
-$ for i in ${TESTES[@]}; do ./transcoder < ../Dado/instancia.${i} | sed -r 's/\[..?m//' > ../testes/teste_${TAD}_instancia.${i}; done
-
-///////////////////////////////// [ MOSTRA A SAÍDA GRÁFICA DO PROGRAMA ] //////////////////////////////////////////////////
-$ gcc -Wall -pg -o transcoder !(heap).c
-$ for i in ${TESTES[@]}; do ./transcoder < ../Dado/instancia.${i} | sed -r 's/\[..?m//' > _log${i} ; done
-$ for i in ${TESTES[@]}; do gprof -b transcoder < ../Dado/instancia.${i}  > ../outputs/outuput_${TAD}_instancia.${i} ; done
-
-///////////////////////////////// [ MOSTRA A SAÍDA PADRÃO DO PROGRAMA E SALVA O TEMPO DE EXECUÇÃO ] ///////////////////////////////////////
-$ for i in ${TESTES[@]}; do { time ./transcoder < ../Dado/instancia.${i} ; } 2> ../executionTimes/executionTime_${TAD}_instancia.${i}; done
-$ for i in ${TESTES[@]}; do ( time ./transcoder < ../Dado/instancia.${i} ) 2> ../executionTimes/executionTime_${TAD}_instancia.${i}; done
-
-////// [ SALVA O TEMPO DE EXECUÇÃO REAL] //////
-$ ( time [cmd] ) |& grep real > realTime
+========================= [ PARA TESTAR UMA INSTÂNCIA ] =========
+- após compilar;
+- diretório corrente deve ser ../usr
+- ./transcoder < ../Dado/instancia.x
+{onde 'x' é o número da instância a ser testada}
 */
 
 #include "agenda.h"
@@ -68,7 +52,7 @@ int main(){
 		evento = agenda->proximo(agenda);
 		relogio = evento->getTempo(evento);
 
-		evento->print(evento);
+		// evento->print(evento);
 
 		if ( (evento->getTipo(evento) == CHEGADA) && (oServico->ocioso(oServico)) ){
 			printf("chegada:\n");
@@ -87,6 +71,7 @@ int main(){
 			video = oServico->saida(oServico);
 			printf("destruirJob:\n");
 			destruirJob(video);
+			printf("destruirJob\n");
 
 			video = criarJob();
 			if(video!=NULL){
