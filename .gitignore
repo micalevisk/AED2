@@ -8,3 +8,4 @@ trabalho1/transcoder/SimTranscoder/html/*
 *.exe
 *.doxyfile
 *.o
+*.swp

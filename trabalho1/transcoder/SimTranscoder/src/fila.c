@@ -1,14 +1,14 @@
 /* EM CONSTRUÇÃO */
 
+//
 // fila.c
 // Created by Micael Levi on 07/08/2016
 // Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
+//
 
-// #include "comparavel.h"
-// #include "arrayDinamicoGenerico.h"
-#include "/TADS/ordenacaoFila.h"
-
+#include "TADS/ordenacaoFila.h"
 #include "fila.h"
+
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -16,9 +16,6 @@
 
 #define TIPOSTATS unsigned long long
 #define DIRETIVASTATS "%llu\n"
-
-// prioridade de 'a' é menor que a de 'b'
-// #define COMPARAR_PRIORIDADES(a,b) (comparar((a), (b)) < 0)
 
 typedef struct{
 	TIPOSTATS inseriu;
@@ -28,47 +25,13 @@ typedef struct{
 } TStatsFila;
 
 typedef struct{
-	// TArrayDinamico *fila;
   TTAD *fila;
-	// void** fila;
-	// unsigned tamanho;
+
 	unsigned numElementos;
 	TStatsFila stats;
 } TDadoFila;
 
 
-TDadoFila* criarDadoFila(){
-	TDadoFila *d = malloc(sizeof(TDadoFila));
-
-	// d->fila = criarAD();
-  d->fila = construirTAD();
-  d->numElementos = 0;
-
-	d->stats.inseriu = 0;
-	d->stats.removeu = 0;
-	d->stats.movimentou = 0;
-	d->stats.sobrecarregou = 0;
-}
-
-TFila* criarFila(){
-	TFila *f = malloc(sizeof(TFila));
-	TDadoFila *d = criarDadoFila();
-
-	f->dado = d;
-	f->desenfileirar= Desenfileirar;
-	f->enfileirar 	= Enfileirar;
-	f->vazia 				= Vazia;
-	f->analytics 		= Analytics;
-
-	return f;
-}
-
-void destruirFila(TFila *f){
-  TDadoFila *d = f->dado;
-  destruirFila(d->fila);
-	free(d);
-	free(f);
-}
 
 
 /*
@@ -123,7 +86,7 @@ static short Enfileirar(TFila *f, void *elemento){
   TTAD *minhaFila = d->fila;
 
   minhaFila->enfileirar(minhaFila, elemento);
-
+	d->numElementos++;
   /*
 	int posInsercao = d->ultimo+1, i;
 	void *aux;
@@ -169,4 +132,39 @@ static void Analytics(TFila *f){
 	printf( " removeu   : " DIRETIVASTATS , d->stats.removeu);
 	printf( " movimentou: " DIRETIVASTATS , d->stats.movimentou);
 	printf( " sobrecarga: " DIRETIVASTATS , d->stats.sobrecarregou);
+}
+
+/*--------------------------------------------------------------*/
+
+TDadoFila* criarDadoFila(){
+	TDadoFila *d = malloc(sizeof(TDadoFila));
+
+	// d->fila = criarAD();
+  d->fila = construirTAD();
+  d->numElementos = 0;
+
+	d->stats.inseriu = 0;
+	d->stats.removeu = 0;
+	d->stats.movimentou = 0;
+	d->stats.sobrecarregou = 0;
+}
+
+TFila* criarFila(){
+	TFila *f = malloc(sizeof(TFila));
+	TDadoFila *d = criarDadoFila();
+
+	f->dado = d;
+	f->desenfileirar= Desenfileirar;
+	f->enfileirar 	= Enfileirar;
+	f->vazia 				= Vazia;
+	f->analytics 		= Analytics;
+
+	return f;
+}
+
+void destruirFila(TFila *f){
+  TDadoFila *d = f->dado;
+  destruirTAD(d->fila);
+	free(d);
+	free(f);
 }

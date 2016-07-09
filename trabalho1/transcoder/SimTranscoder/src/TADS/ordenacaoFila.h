@@ -5,29 +5,29 @@
 // Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 //
 
-#define TIPOSTATS unsigned long long
+#define PRECISAOSTATS unsigned long long
 
 typedef struct TADManipulacaoFila TTAD;
 
-typedef short (*TEnfileirar)(TTAD*,void*);
-typedef void* (*TDesenfileirar)(TTAD*);
+typedef short (*TEnfileirarTAD)(TTAD*,void*);
+typedef void* (*TDesenfileirarTAD)(TTAD*);
 
 struct TADManipulacaoFila{
   // TArrayDinamico *vetorFila;  // cada elemento possuirá uma função de comparação associada.
   void *dado;                 // define os dados necessários para a ordenação
 
   // estatísticas de movimentações.
-  TIPOSTATS movimentacoes_enfileirar;
-  TIPOSTATS movimentacoes_desenfileirar;
+  PRECISAOSTATS movimentacoes_enfileirar;
+  PRECISAOSTATS movimentacoes_desenfileirar;
 
   // MÉTODOS:
-  TEnfileirar enfileirar;
-  TDesenfileirar desenfileirar;
+  TEnfileirarTAD enfileirar;
+  TDesenfileirarTAD desenfileirar;
 
 };
 
 TTAD* construirTAD(void);  // cria o vetor circular dinâmico e define o tipo de ordenacao.
-void  destruirFila(TTAD*); // libera a fila alocada e a estrutura acima.
+void  destruirTAD(TTAD*); // libera a fila alocada e a estrutura acima.
 
 /*
 cada elemento da fila deve possuir um método "compara"

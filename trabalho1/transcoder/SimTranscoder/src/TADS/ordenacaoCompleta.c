@@ -100,7 +100,7 @@ TTAD* construirTAD(){
   t->desenfileirar  = _desenfileirar;
 }
 
-void destruirFila(TTAD* t){
+void destruirTAD(TTAD* t){
   TDadoTAD *d = t->dado;
   destruirAD(d->vetorFila);
   free(d);
