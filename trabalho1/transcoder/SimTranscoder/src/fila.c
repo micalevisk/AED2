@@ -1,5 +1,3 @@
-/* EM CONSTRUÇÃO */
-
 //
 // fila.c
 // Created by Micael Levi on 07/08/2016
@@ -31,22 +29,6 @@ typedef struct{
 	TStatsFila stats;
 } TDadoFila;
 
-
-
-
-/*
-static void ajustarFila(TFila *f, unsigned novoTamanho){
-	TDadoFila *d = f->dado;
-
-	size_t bytes = sizeof(void*) * novoTamanho;
-
-	d->fila = realloc(d->fila, bytes);
-	d->tamanho = novoTamanho;
-
-	// Atualiza estatística
-	d->stats.sobrecarregou++;
-}
-*/
 
 /* MÉTODOS */
 
@@ -112,7 +94,9 @@ static short Enfileirar(TFila *f, void *elemento){
 	}
   */
 	// Atualiza estatística
+
 	d->stats.movimentou = minhaFila->movimentacoes_enfileirar;
+	d->stats.sobrecarregou = minhaFila->sobrecarga;
 	d->stats.inseriu++;
 
 	return 1;

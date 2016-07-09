@@ -1,6 +1,7 @@
-#include "agenda.h"
 #include "evento.h"
 #include "comparavel.h"
+
+#include "agenda.h"
 #include <stdlib.h>
 #include <stdio.h>
 

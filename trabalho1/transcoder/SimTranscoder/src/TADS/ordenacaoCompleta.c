@@ -67,7 +67,10 @@ static short _enfileirar(TTAD* t, void* elemento){
   }
   else{
     unsigned tam = tamanhoDoArray(vet);
-    if(posInsercao >= tam) ajustarArray(vet, tam * 2);
+    if(posInsercao >= tam){
+       ajustarArray(vet, tam * 2);
+       t->sobrecarga++;
+    }
 
     vet->atualizar(vet, posInsercao, elemento);
     // trocar enquanto o anterior tiver prioridade menor que o último inserido.
@@ -99,7 +102,7 @@ TTAD* construirTAD(){
   TTAD *t = malloc(sizeof(TTAD));
   t->dado = criarDadoTAD();
 
-  t->movimentacoes_enfileirar = t->movimentacoes_desenfileirar = 0;
+  t->movimentacoes_enfileirar = t->movimentacoes_desenfileirar = 0 = t->sobrecarga;
   t->enfileirar     = _enfileirar;
   t->desenfileirar  = _desenfileirar;
 }

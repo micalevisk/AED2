@@ -15,9 +15,11 @@ typedef void* (*TDesenfileirarTAD)(TTAD*);
 struct TADManipulacaoFila{
   void *dado;
 
-  // estatísticas de movimentações.
+  // ESTATÍSTICAS:
   PRECISAOSTATS movimentacoes_enfileirar;
   PRECISAOSTATS movimentacoes_desenfileirar;
+  PRECISAOSTATS sobrecarga;
+
 
   // MÉTODOS:
   TEnfileirarTAD enfileirar;
