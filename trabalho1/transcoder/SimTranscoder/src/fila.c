@@ -5,8 +5,8 @@
 //
 
 #include "TADS/ordenacaoFila.h"
-#include "fila.h"
 
+#include "fila.h"
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>

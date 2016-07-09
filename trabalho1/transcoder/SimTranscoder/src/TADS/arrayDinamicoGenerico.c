@@ -11,13 +11,13 @@ typedef struct{
 }TDado;
 
 
-void ajustarArray(TArrayDinamico* ad, unsigned novoTamanho){
+void ajustarAD(TArrayDinamico* ad, unsigned novoTamanho){
 	TDado* d = ad->dado;
 	d->vetor = realloc(d->vetor, sizeof(void*) * novoTamanho);
 	d->tamanho = novoTamanho;
 }
 
-unsigned tamanhoDoArray(TArrayDinamico* ad){
+unsigned tamanhoAD(TArrayDinamico* ad){
 	if(!ad) return 0;
 	return ((TDado*)ad->dado)->tamanho;
 }

@@ -4,12 +4,13 @@
  *  Created on: 25/06/2016
  *      Author: cesar
  */
+#include "fila.h"
+#include "job.h"
+
+#include "servico.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "fila.h"
-#include "job.h"
-#include "servico.h"
 
 typedef struct {
   TFila *fila;

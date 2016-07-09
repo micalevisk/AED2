@@ -10,6 +10,7 @@
 
 #include "arrayDinamicoGenerico.h"
 #include "../comparavel.h"
+
 #include "ordenacaoFila.h"
 #include <stdlib.h>
 
@@ -66,9 +67,9 @@ static short _enfileirar(TTAD* t, void* elemento){
     vet->atualizar(vet, posInsercao, elemento);
   }
   else{
-    unsigned tam = tamanhoDoArray(vet);
+    unsigned tam = tamanhoAD(vet);
     if(posInsercao >= tam){
-       ajustarArray(vet, tam * 2);
+       ajustarAD(vet, tam * 2);
        t->sobrecarga++;
     }
 
@@ -102,7 +103,7 @@ TTAD* construirTAD(){
   TTAD *t = malloc(sizeof(TTAD));
   t->dado = criarDadoTAD();
 
-  t->movimentacoes_enfileirar = t->movimentacoes_desenfileirar = 0 = t->sobrecarga;
+  t->movimentacoes_enfileirar = t->movimentacoes_desenfileirar = t->sobrecarga = 0;
   t->enfileirar     = _enfileirar;
   t->desenfileirar  = _desenfileirar;
 }
