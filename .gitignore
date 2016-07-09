@@ -7,3 +7,4 @@ trabalho1/transcoder/SimTranscoder/Dado/*
 trabalho1/transcoder/SimTranscoder/html/*
 *.exe
 *.doxyfile
+*.o

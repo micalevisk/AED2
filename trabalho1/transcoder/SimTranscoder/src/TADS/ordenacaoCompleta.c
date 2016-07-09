@@ -1,5 +1,8 @@
 //
-// ordencaoCompleta.c
+// [ordencaoCompleta.c]
+// Usando o princípio de fila inversa, i.e.,
+// o elemento de maior prioridade está na última posição do vetor;
+// isso implica numa remoção abstrata.
 //
 // Created by Micael Levi on 07/08/2016
 // Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
@@ -24,8 +27,18 @@ typedef struct{
 
 /* IMPLEMENTAÇÃO DOS MÉTODOS: */
 
-static void* _desenfileirar(TTAD* t){
 
+// "Remove" o último e atualiza o ponteiro que indica a posição do último.
+static void* _desenfileirar(TTAD* t){
+  TDadoFila *d = t->dado;
+  return (d->posPrimeiro < 0) ? NULL : d->vetorFila->acessar(d->vetorFila, d->posUltimo);
+  /*
+  if(d->posPrimeiro < 0) return NULL;
+
+  TArrayDinamico *vet = d->vetorFila;
+  int posElementoRemovido = --d->posUltimo;
+  return vet->acessar(vet, posElementoRemovido);
+  */
 }
 
 // Insere no final,
