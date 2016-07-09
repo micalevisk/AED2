@@ -5,9 +5,6 @@
  *      Author: cesar
  */
 
-#ifndef FILA_H_
-#define FILA_H_
-
 typedef struct fila TFila;
 
 // declaração dos tipos Função/Método
@@ -16,22 +13,18 @@ typedef void* (*TDesenfileirar)(TFila*);
 typedef short (*TVazia)(TFila*);
 typedef void (*TAnalytics)(TFila*);
 
-//construtor
-TFila *criarFila();
+TFila *criarFila();					// construtor.
+void destruirFila(TFila*);	// destrutor.
 
-//destrutor
-void destruirFila(TFila*);
-
-//tipo abstrato de dados
+// Tipo Abstrato de Dados.
 struct fila{
-	/// dados, que são privados
-	void *dado;
+	void *dado;	// dado privado.
 
-	// Operações sobre o dado
+	// Operações sobre o dado:
 	TEnfileirar enfileirar;
 	TDesenfileirar desenfileirar;
 	TVazia vazia;
 	TAnalytics analytics;
 };
+
 void percorrer(TFila*, void (*)(void*));
-#endif /* FILA_H_ */

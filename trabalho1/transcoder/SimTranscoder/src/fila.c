@@ -1,27 +1,22 @@
-// filaD.c
-// Created by Micael Levi on 07/03/2016
+// fila.c
+// Created by Micael Levi on 07/08/2016
 // Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 
-#define ANSI_COLOR_GREEN   "\x1b[32m"
-#define ANSI_COLOR_RED     "\x1b[31m"
-#define ANSI_COLOR_YELLOW  "\x1b[33m"
-#define ANSI_COLOR_CYAN    "\x1b[36m"
-#define ANSI_COLOR_RESET   "\x1b[0m"
+// #include "comparavel.h"
+// #include "arrayDinamicoGenerico.h"
+#include "/TADS/ordenacaoFila.h"
 
-#include "comparavel.h"
 #include "fila.h"
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-#define TAM 2
-
 #define TIPOSTATS unsigned long long
 #define DIRETIVASTATS "%llu\n"
 
 // prioridade de 'a' é menor que a de 'b'
-#define COMPARAR_PRIORIDADES(a,b) (comparar((a), (b)) < 0)
+// #define COMPARAR_PRIORIDADES(a,b) (comparar((a), (b)) < 0)
 
 typedef struct{
 	TIPOSTATS inseriu;
@@ -31,19 +26,53 @@ typedef struct{
 } TStatsFila;
 
 typedef struct{
-	void** fila;
-	unsigned tamanho;
-
-	int primeiro;
-	int ultimo;
+	// TArrayDinamico *fila;
+  TTAD *fila;
+	// void** fila;
+	// unsigned tamanho;
+	unsigned numElementos;
 	TStatsFila stats;
 } TDadoFila;
 
 
+TDadoFila* criarDadoFila(){
+	TDadoFila *d = malloc(sizeof(TDadoFila));
+
+	// d->fila = criarAD();
+  d->fila = construirTAD();
+  d->numElementos = 0;
+
+	d->stats.inseriu = 0;
+	d->stats.removeu = 0;
+	d->stats.movimentou = 0;
+	d->stats.sobrecarregou = 0;
+}
+
+TFila* criarFila(){
+	TFila *f = malloc(sizeof(TFila));
+	TDadoFila *d = criarDadoFila();
+
+	f->dado = d;
+	f->desenfileirar= Desenfileirar;
+	f->enfileirar 	= Enfileirar;
+	f->vazia 				= Vazia;
+	f->analytics 		= Analytics;
+
+	return f;
+}
+
+void destruirFila(TFila *f){
+  TDadoFila *d = f->dado;
+  destruirFila(d->fila);
+	free(d);
+	free(f);
+}
 
 
+/*
 static void ajustarFila(TFila *f, unsigned novoTamanho){
 	TDadoFila *d = f->dado;
+
 	size_t bytes = sizeof(void*) * novoTamanho;
 
 	d->fila = realloc(d->fila, bytes);
@@ -52,7 +81,9 @@ static void ajustarFila(TFila *f, unsigned novoTamanho){
 	// Atualiza estatística
 	d->stats.sobrecarregou++;
 }
+*/
 
+/* MÉTODOS */
 
 static void* Desenfileirar(TFila *f){
 	void* elemento=NULL;
@@ -81,6 +112,11 @@ static void* Desenfileirar(TFila *f){
 
 static short Enfileirar(TFila *f, void *elemento){
 	TDadoFila *d = f->dado;
+  TTAD *minhaFila = d->fila;
+
+  minhaFila->enfileirar(minhaFila, elemento);
+
+  /*
 	int posInsercao = d->ultimo+1, i;
 	void *aux;
 
@@ -103,8 +139,9 @@ static short Enfileirar(TFila *f, void *elemento){
 			d->stats.movimentou++;
 		}
 	}
-
+  */
 	// Atualiza estatística
+	d->stats.movimentou = minhaFila->movimentacoes_enfileirar;
 	d->stats.inseriu++;
 
 	return 1;
@@ -113,100 +150,15 @@ static short Enfileirar(TFila *f, void *elemento){
 
 static short Vazia(TFila *f){
 	TDadoFila *d = f->dado;
-	return (d->primeiro == -1);
+	return (!d->numElementos);
 }
 
 
 static void Analytics(TFila *f){
 	TDadoFila *d = f->dado;
 	printf("\n");
-	printf(ANSI_COLOR_GREEN " inserções : " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.inseriu);
-	printf(ANSI_COLOR_RED " removeu   : " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.removeu);
-	printf(ANSI_COLOR_YELLOW " movimentou: " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.movimentou);
-	printf(ANSI_COLOR_CYAN " sobrecarga: " DIRETIVASTATS ANSI_COLOR_RESET, d->stats.sobrecarregou);
+	printf( " inserções : " DIRETIVASTATS , d->stats.inseriu);
+	printf( " removeu   : " DIRETIVASTATS , d->stats.removeu);
+	printf( " movimentou: " DIRETIVASTATS , d->stats.movimentou);
+	printf( " sobrecarga: " DIRETIVASTATS , d->stats.sobrecarregou);
 }
-
-
-TDadoFila* criarDadoFila(){
-	TDadoFila *d = malloc(sizeof(TDadoFila));
-	d->fila = malloc(sizeof(void*)*TAM);
-	d->tamanho = TAM;
-	d->primeiro = d->ultimo = -1;
-	d->stats.inseriu = 0;
-	d->stats.removeu = 0;
-	d->stats.movimentou = 0;
-	d->stats.sobrecarregou = 0;
-}
-
-
-TFila* criarFila(){
-	TFila *f = malloc(sizeof(TFila));
-	TDadoFila *d = criarDadoFila();
-
-	f->dado = d;
-	f->desenfileirar = Desenfileirar;
-	f->enfileirar = Enfileirar;
-	f->vazia = Vazia;
-	f->analytics = Analytics;
-
-	return f;
-}
-
-void destruirFila(TFila *f){
-	free(((TDadoFila*)f->dado)->fila);
-	free(f->dado);
-	free(f);
-}
-
-
-
-void percorrer(TFila* f, void (*acao)(void*)){
-	if(!Vazia(f)){
-		TDadoFila* d = f->dado;
-		int i=d->primeiro;
-		for(; i <= d->ultimo; i++) acao(d->fila[i]);
-	}
-}
-
-
-
-/////////////////////// [ AFIM DE TESTES ] ////////////////////////////////////
-/*
-typedef struct tint INTEIRO;
-struct tint{
-	int *dado;
-	int (*compara)(INTEIRO*,INTEIRO*);
-};
-
-int comparaINTEIROS(INTEIRO* a, INTEIRO* b){
-	if(*(a->dado) > *(b->dado)) return 1;
-	if(*(a->dado) < *(b->dado)) return -1;
-	return 0;
-}
-
-void imprimir(void* e){
-	INTEIRO* E = e;
-	printf("%d, ", *(E->dado));
-}
-
-int main(){
-	TFila* minhaFila = criarFila();
-	int i, nLinhas;
-
-	scanf("%d",&nLinhas); // primeira linha
-
-	for(i=0; i < nLinhas; i++){
-		INTEIRO* aux = malloc(sizeof(INTEIRO));
-		aux->compara = comparaINTEIROS;
-
-		int *aux1 = malloc(sizeof(int));
-		scanf("%d", aux1);
-
-		aux->dado = aux1;
-		minhaFila->enfileirar(minhaFila, aux);
-	}
-
-	Analytics(minhaFila);
-	percorrer(minhaFila, imprimir);
-}
-*/
