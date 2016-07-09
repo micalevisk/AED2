@@ -32,14 +32,15 @@ $ for i in ${TESTES[@]}; do ( time ./transcoder < ../Dado/instancia.${i} ) 2> ..
 $ ( time [cmd] ) |& grep real > realTime
 */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "agenda.h"
 #include "evento.h"
 #include "job.h"
 #include "servico.h"
 
-int main(void){
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(){
 	int nroServidores;
 	double relogio, tempoEvento;
 

@@ -5,8 +5,7 @@
  *      Author: cesar
  */
 
-#ifndef SERVICO_H_
-#define SERVICO_H_
+
 typedef struct servico TServico;
 typedef void* (*TSaidaServico)(TServico *);
 typedef void (*TAnalyticServico)(TServico *);
@@ -24,8 +23,5 @@ struct servico{
 	TStopTranscodingServico stopTranscoding;
 	TOciosoServico ocioso;
 };
+
 TServico* criarServico(int nroServidores);
-
-
-
-#endif /* SERVICO_H_ */

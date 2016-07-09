@@ -4,10 +4,11 @@
  *  Created on: 22/06/2016
  *      Author: cesar
  */
-#include <assert.h>
-#include "evento.h"
+ #include "evento.h"
+
 #include <stdlib.h>
 #include <stdio.h>
+
 typedef struct {
 	TTipoEvento tipo;
 	double tempo;
@@ -60,7 +61,7 @@ static short comparaEvento(TEvento *e1, TEvento *e2){
 
 TEvento *criarEvento(TTipoEvento tipo, double tempo){
 					printf("AQUI\n");
-    TEvento *evento = malloc(sizeof(TEvento)); 
+    TEvento *evento = malloc(sizeof(TEvento));
 				printf("AQUI0\n");
     evento->dado = criarDado(tipo, tempo);
 						printf("AQUI1\n");

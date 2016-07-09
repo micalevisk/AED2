@@ -27,7 +27,7 @@ static void *criarDado(){
 
 static void imprimirJob(TJob *v){
 	TDadoJob *d = v->dado;
-  // printf("%lf %d %d\n", d->tempoChegada, d->duracao, d->prioridade);
+  printf("%lf %d %d\n", d->tempoChegada, d->duracao, d->prioridade);
 }
 
 static void setTempoTranscodingJob(TJob *v, int tempoTranscoding){

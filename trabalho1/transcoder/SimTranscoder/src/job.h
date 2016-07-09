@@ -24,6 +24,3 @@ struct video{
 
 TJob *criarJob();
 void destruirJob(TJob*);
-// short comparaJob(TJob*, TJob*);
-
-// Atividades
