@@ -11,6 +11,7 @@
 #include "arrayDinamicoGenerico.h"
 #include "../comparavel.h"
 #include "ordenacaoFila.h"
+#include <stdlib.h>
 
 #define TAM 10
 
@@ -27,11 +28,12 @@ typedef struct{
 
 /* IMPLEMENTAÇÃO DOS MÉTODOS: */
 
-
 // "Remove" o último e atualiza o ponteiro que indica a posição do último.
 static void* _desenfileirar(TTAD* t){
-  TDadoFila *d = t->dado;
-  return (d->posPrimeiro < 0) ? NULL : d->vetorFila->acessar(d->vetorFila, d->posUltimo);
+  TDadoTAD *d = t->dado;
+  return (d->posPrimeiro < 0) ?
+    NULL :
+    ((TArrayDinamico*)d->vetorFila)->acessar(d->vetorFila, d->posUltimo);
   /*
   if(d->posPrimeiro < 0) return NULL;
 

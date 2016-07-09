@@ -1,3 +1,5 @@
+/* EM CONSTRUÇÃO */
+
 // fila.c
 // Created by Micael Levi on 07/08/2016
 // Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
@@ -86,6 +88,11 @@ static void ajustarFila(TFila *f, unsigned novoTamanho){
 /* MÉTODOS */
 
 static void* Desenfileirar(TFila *f){
+  TDadoFila *d = f->dado;
+  TTAD *minhaFila = d->fila;
+
+  return minhaFila->desenfileirar(minhaFila);
+  /*
 	void* elemento=NULL;
 	TDadoFila *d = f->dado;
 	//printf("P:%d U:%d\n", d->primeiro, d->ultimo);
@@ -107,6 +114,7 @@ static void* Desenfileirar(TFila *f){
 		d->stats.movimentou += (d->ultimo-d->primeiro)+(d->primeiro==-1?0:1);
 	}
 	return elemento;
+  */
 }
 
 
