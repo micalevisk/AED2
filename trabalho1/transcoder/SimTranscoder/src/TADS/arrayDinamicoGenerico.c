@@ -19,7 +19,7 @@ void ajustarArray(TArrayDinamico* ad, unsigned novoTamanho){
 
 unsigned tamanhoDoArray(TArrayDinamico* ad){
 	if(!ad) return 0;
-	return ((TDado*)ad->dado)->tamanho; 
+	return ((TDado*)ad->dado)->tamanho;
 }
 
 /*--------------- IMPLEMENTAÇÃO DOS MÉTODOS -------------------------*/
@@ -43,7 +43,7 @@ static void* _acessar(TArrayDinamico* ad, int pos){
 
 TDado* criaDadoAD(unsigned tamanho){
 	TDado *d = malloc(sizeof(TDado));
-	d->tamanho = tamanho;	
+	d->tamanho = tamanho;
 	d->vetor = malloc(sizeof(void*) * tamanho);
 	return d;
 }
@@ -62,5 +62,5 @@ TArrayDinamico* criarAD(unsigned tamanho){
 void destruirAD(TArrayDinamico* ad){
 	free(ad->dado);
 	free(ad);
+	ad=NULL;
 }
-

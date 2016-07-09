@@ -48,13 +48,17 @@ static void* _desenfileirar(TTAD* t){
 // se sim: swap
 // senão: pára.
 static short _enfileirar(TTAD* t, void* elemento){
-  if(!elemento) return 0;
+
+  // if(!elemento) return 0;
 
   TDadoTAD *d = t->dado;
+  printf("\t;enfileirar1;\n");
   int posInsercao = d->posUltimo + 1, i;
+  printf("\t;enfileirar2;\n");
   void* aux;
   TArrayDinamico *vet = d->vetorFila;
 
+  printf("\t;enfileirar3; %d\n", posInsercao);
   d->posUltimo = posInsercao;
 
   if(!posInsercao){
@@ -86,7 +90,7 @@ TDadoTAD* criarDadoTAD(){
   TDadoTAD *d = malloc(sizeof(TDadoTAD));
   TArrayDinamico *v = criarAD(TAM);
   d->vetorFila = v;
-  d->posPrimeiro = d->posUltimo = 0;
+  d->posPrimeiro = d->posUltimo = -1;
   return d;
 }
 
@@ -101,8 +105,9 @@ TTAD* construirTAD(){
 }
 
 void destruirTAD(TTAD* t){
-  TDadoTAD *d = t->dado;
-  destruirAD(d->vetorFila);
-  free(d);
+  // TDadoTAD *d = t->dado;
+  // destruirAD(d->vetorFila);
+  free(t->dado);
   free(t);
+  t=NULL;
 }

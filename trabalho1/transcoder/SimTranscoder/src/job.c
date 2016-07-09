@@ -98,4 +98,5 @@ short comparaJob(TJob *v, TJob *v2){
 void destruirJob(TJob *v){
 	free(v->dado);
 	free(v);
+	// v=NULL;
 }

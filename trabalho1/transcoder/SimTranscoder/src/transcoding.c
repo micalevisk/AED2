@@ -124,12 +124,14 @@ int main(){
 				tempoEvento = relogio + transVideo->getTempoTranscoding(transVideo);
 
 				// agenda novo evento
-				printf("\t\tcriarEvento:\n");
+				printf("\t\tcriarEvento:(%f)\n", tempoEvento);	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 				novoEvento = criarEvento(TRANSCODING, tempoEvento);
 				agenda->novo(agenda, novoEvento);
 
 				printf("\t\tdestruirJob:\n");
 				destruirJob(transVideo);
+				// printf("\t\tdestruirEvento:\n");/**/
+				// destruirEvento(novoEvento);/**/
 			}
 		} else{
 			printf("PANIC: Evento nao catalogado\n");

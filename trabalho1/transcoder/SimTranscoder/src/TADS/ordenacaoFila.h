@@ -13,8 +13,7 @@ typedef short (*TEnfileirarTAD)(TTAD*,void*);
 typedef void* (*TDesenfileirarTAD)(TTAD*);
 
 struct TADManipulacaoFila{
-  // TArrayDinamico *vetorFila;  // cada elemento possuirá uma função de comparação associada.
-  void *dado;                 // define os dados necessários para a ordenação
+  void *dado;
 
   // estatísticas de movimentações.
   PRECISAOSTATS movimentacoes_enfileirar;
@@ -23,7 +22,6 @@ struct TADManipulacaoFila{
   // MÉTODOS:
   TEnfileirarTAD enfileirar;
   TDesenfileirarTAD desenfileirar;
-
 };
 
 TTAD* construirTAD(void);  // cria o vetor circular dinâmico e define o tipo de ordenacao.

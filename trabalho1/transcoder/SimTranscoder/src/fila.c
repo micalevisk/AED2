@@ -139,7 +139,6 @@ static void Analytics(TFila *f){
 TDadoFila* criarDadoFila(){
 	TDadoFila *d = malloc(sizeof(TDadoFila));
 
-	// d->fila = criarAD();
   d->fila = construirTAD();
   d->numElementos = 0;
 

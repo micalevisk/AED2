@@ -60,19 +60,19 @@ static short comparaEvento(TEvento *e1, TEvento *e2){
 }
 
 TEvento *criarEvento(TTipoEvento tipo, double tempo){
-					printf("AQUI\n");
+					//printf("AQUI\n");
     TEvento *evento = malloc(sizeof(TEvento));
-				printf("AQUI0\n");
+				//printf("AQUI0\n");
     evento->dado = criarDado(tipo, tempo);
-						printf("AQUI1\n");
+						//printf("AQUI1\n");
     evento->compara = comparaEvento;
-						printf("AQUI2\n");
+						//printf("AQUI2\n");
     evento->getTempo = getTempoEvento;
-						printf("AQUI3\n");
+						//printf("AQUI3\n");
     evento->getTipo = getTipoEvento;
-						printf("AQUI4\n");
+						//printf("AQUI4\n");
     evento->print = printEvento;
-						printf("AQUI5\n");
+						//printf("AQUI5\n");
 
     return evento;
 }
