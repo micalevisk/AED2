@@ -41,7 +41,7 @@ static void* _desenfileirar(TTAD* t){
 static short _enfileirar(TTAD* t, void* elemento){
   TDadoTAD *d = t->dado;
   if(!elemento || !d) return 0;
-  
+
   int posInsercao = d->posUltimo + 1, i;
   TArrayDinamico *vet = d->vetorFila;
 
@@ -52,7 +52,7 @@ static short _enfileirar(TTAD* t, void* elemento){
     vet->atualizar(vet, posInsercao, elemento);
   }
   else{
-    unsigned tam = tamanhoAD(vet);
+    unsigned tam = vet->tamanho(vet);
     if(posInsercao >= tam){
        ajustarAD(vet, tam * 2);
        t->sobrecarga++;

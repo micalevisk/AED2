@@ -89,16 +89,15 @@ static short _enfileirar(TTAD* t, void* elemento){
   void *elementoAncestral;
 
   TArrayDinamico *vet = d->vetorFila;
-  unsigned tam = tamanhoAD(vet);
+  unsigned tam = vet->tamanho(vet);
 
-  d->ocupacao = posInsercao+1;
-  
   if(posInsercao >= tam){
     ajustarAD(vet, tam * 2);
     t->sobrecarga++;
   }
 
   vet->atualizar(vet, posInsercao, elemento);
+  d->ocupacao = posInsercao+1;
 
   for(i=posInsercao; (i > 0); i = posAncestral, posAncestral = PAI(i)){
     elementoAncestral = vet->acessar(vet, posAncestral);

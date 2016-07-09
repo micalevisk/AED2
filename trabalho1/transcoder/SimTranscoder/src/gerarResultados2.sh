@@ -7,6 +7,13 @@
 # Created by Micael Levi on 07/06/2016
 # Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 #
+#	1.	Salva numa variável inteira o segundo atual
+#	2.	chama o programa (imrpessão apenas do analitico)
+#	2.	Redireciona saída truncando para o .log corrente
+#	3.	Salva o segundo final
+#	4.	Salva o print da diferença entre o final e o inicial
+#	5.	Redireciona saída anexando no .log corrente
+#	{ > arq.log  ./transcoder [...] ; echo [...] >> arq.log  }
 
 [ "$1" -a "$2" ] || exit 1
 

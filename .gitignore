@@ -5,6 +5,7 @@ trabalho1/transcoder/SimTranscoder/Dado/*
 
 # ignorar por desuso
 trabalho1/transcoder/SimTranscoder/html/*
+trabalho1/transcoder/SimTranscoder/src/backup/*
 *.exe
 *.doxyfile
 *.o

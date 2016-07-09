@@ -17,10 +17,6 @@ void ajustarAD(TArrayDinamico* ad, unsigned novoTamanho){
 	d->tamanho = novoTamanho;
 }
 
-unsigned tamanhoAD(TArrayDinamico* ad){
-	if(!ad) return 0;
-	return ((TDado*)ad->dado)->tamanho;
-}
 
 /*--------------- IMPLEMENTAÇÃO DOS MÉTODOS -------------------------*/
 
@@ -30,7 +26,6 @@ static void _atualizar(TArrayDinamico* ad, int pos, void* elem){
 	d->vetor[pos] = elem; // insere na posição passada.
 }
 
-
 // Retorna o elemento da posição 'pos'; deve ser sempre válido!
 static void* _acessar(TArrayDinamico* ad, int pos){
 	TDado* d = ad->dado;
@@ -38,6 +33,11 @@ static void* _acessar(TArrayDinamico* ad, int pos){
 	return d->vetor[pos];
 }
 
+// Retorna o número de elementos que estão no array.
+unsigned _tamanho(TArrayDinamico* ad){
+	if(!ad) return 0;
+	return ((TDado*)ad->dado)->tamanho;
+}
 
 /*-----------------------------------------------------------------*/
 
@@ -56,6 +56,7 @@ TArrayDinamico* construirAD(unsigned tamanho){
 	vetor->dado = d;
 	vetor->acessar	 = _acessar;
 	vetor->atualizar = _atualizar;
+	vetor->tamanho	 = _tamanho;
 	return vetor;
 }
 
