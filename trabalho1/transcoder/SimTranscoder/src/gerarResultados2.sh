@@ -35,7 +35,8 @@ declare -r TORDENACAO="$2"
 
 ## array de casos testes (instâncias i)
 ## for((i=0; i <= 10000000; i*=10)); do echo -n "$i "; done
-CASOS=(10 100 1000 10000 100000 1000000 10000000) ## 1000000 10000000
+CASOS=(10 100 1000 10000 100000) ## 1000000 10000000
+# CASOS=(10 100 1000 10000 100000 1000000 10000000)
 
 ## (x) define o número de iterações para cada teste
 declare -i ITERACOES=1
@@ -60,7 +61,7 @@ echo -e "\033c"	## limpar tela
 
 declare -i i x	## contadores
 
-for i in 10; do #${CASOS[@]}
+for i in ${CASOS[@]}; do
 	VEZ="instancia.${i}"	## nome da pasta relacionada à instância corrente
 
 	for((x=1; x <= $ITERACOES; ++x)); do
@@ -68,17 +69,16 @@ for i in 10; do #${CASOS[@]}
 		## gerando o .log
 		BASE="${DIR}/tudo/$VEZ/${x}.log"
 		if [ $SO_TESTA -eq 0 ]; then
-			( time ./$PROG < ../Dado/$VEZ ) 2>&1 | install -D /dev/stdin $BASE
-			sed -nr -i 's/[^[:digit:]\n]*// ; 1,6p' $BASE	## formato: MmS,Ms
+			( time ./$PROG < ../Dado/$VEZ ) 2>&1 | sed -nr 's/real\t// ; 1,6p' | install -D /dev/stdin $BASE
 		fi
-		echo -e $_GREEN "( time ./$PROG < ../Dado/$VEZ ) 2>&1 | install -D /dev/stdin $BASE" $_RESET
+		echo -e $_GREEN "( time ./$PROG < ../Dado/$VEZ ) 2>&1 | sed -nr 's/real\t// ; 1,6p' | install -D /dev/stdin $BASE" $_RESET
 
 		## gerando .stats
 		ARQ="${DIR}/analiticos/$VEZ/${x}.stats"
 		if [ $SO_TESTA -eq 0 ]; then
-			head -n 4 $BASE | install -D /dev/stdin $ARQ
+			head -n 4 $BASE | tr -d -c '[:digit:]\n' | install -D /dev/stdin $ARQ
 		fi
-		echo -e $_YELLO "head -n 4 $BASE | install -D /dev/stdin $ARQ" $_RESET
+		echo -e $_YELLO "head -n 4 $BASE | tr -d -c '[:digit:]\n' | install -D /dev/stdin $ARQ" $_RESET
 
 		## gerando .time
 		ARQ="${DIR}/tempos/$VEZ/${x}.time"
@@ -91,7 +91,6 @@ for i in 10; do #${CASOS[@]}
 
 		## converte (.log) do formato UNIX para DOS
 		sed -i 's/$/\r/' $BASE
-
 		echo
 	done
 

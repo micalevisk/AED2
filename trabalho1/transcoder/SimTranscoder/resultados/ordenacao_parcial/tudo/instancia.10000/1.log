@@ -1,6 +1,6 @@
-10000
-10000
-99764
-10
+inserções : 10000
+removeu   : 10000
+movimentou: 99764
+sobrecarga: 10
 
-0m0.076s
+0m0.386s
