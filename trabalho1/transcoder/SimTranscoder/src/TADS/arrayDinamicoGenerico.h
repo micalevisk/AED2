@@ -16,4 +16,3 @@ struct arraydinamico{
 TArrayDinamico* construirAD(unsigned);
 void destruirAD(TArrayDinamico*);
 void ajustarAD(TArrayDinamico*, unsigned); // realoca  o vetor.
-// unsigned tamanhoAD(TArrayDinamico*);
