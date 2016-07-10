@@ -53,9 +53,8 @@ static short Enfileirar(TFila *f, void *elemento){
 
 	d->numElementos += minhaFila->enfileirar(minhaFila, elemento);
 
-	// Atualiza inserções e número de elementos:
+	// Atualiza inserções:
 	d->stats.inseriu++;
-	d->numElementos++;
 
 	return 1;
 }
@@ -72,8 +71,8 @@ static void Analytics(TFila *f){
 	TTAD *minhaFila = d->fila;
 
 	// Atualiza estatísticas:
-	d->stats.movimentou = minhaFila->movimentacoes_desenfileirar;
-	d->stats.movimentou += minhaFila->movimentacoes_enfileirar;
+	d->stats.movimentou = minhaFila->movimentacoes_enfileirar;
+	d->stats.movimentou += minhaFila->movimentacoes_desenfileirar;
 	d->stats.sobrecarregou = minhaFila->sobrecarga;
 
 	printf( "inserções : " DIRETIVASTATS , d->stats.inseriu);

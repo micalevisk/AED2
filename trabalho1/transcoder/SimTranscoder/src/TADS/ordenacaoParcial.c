@@ -15,12 +15,13 @@
 
 typedef struct{
   TArrayDinamico *vetorFila;
+
   int ocupacao;
 
 }TDadoTAD;
 
 
-/* ------------------------ AUXILIARES: --------------------------------- */
+/* ------------------------ AUXILIAR: --------------------------------- */
 
 // Heapify:
 // Garante a manutenção da propriedade ordem do Heap; complexidade O(log n)
@@ -54,15 +55,7 @@ void ajustarHeap(TTAD* t, int pai, int posUltimo){
 
 }
 
-// Retorna (se existir) o primeiro elemento do vetor.
-/*
-void* raiz(TTAD* t){
-  TDadoTAD *d = t->dado;
-  if(!d) return NULL;
-  TArrayDinamico *vet = d->vetorFila;
-  return (d->ocupacao > 0) ? (vet->acessar(vet, 0)) : (NULL);
-}
-*/
+
 
 /* ---------------- IMPLEMENTAÇÃO DOS MÉTODOS: -------------------------- */
 
@@ -72,9 +65,8 @@ void* raiz(TTAD* t){
 // - "desce" o elemento da raiz enquanto seus filhos tiverem maior prioridade.
 static void* _desenfileirar(TTAD* t){
   TDadoTAD *d = t->dado;
-  if(!d) return NULL;
   int posUltimo = d->ocupacao - 1;
-  void *raiz;
+  void *raiz = NULL;
   TArrayDinamico *vet = d->vetorFila;
 
   if(posUltimo >= 0){
@@ -83,9 +75,9 @@ static void* _desenfileirar(TTAD* t){
       vet->atualizar(vet, posUltimo, raiz);
 
       t->movimentacoes_desenfileirar++;
-      d->ocupacao--;
-      posUltimo = d->ocupacao - 1;
-      // posUltimo = (--d->ocupacao) - 1;
+      posUltimo = (--d->ocupacao) - 1;
+      // d->ocupacao--;
+      // posUltimo = d->ocupacao - 1;
       if(posUltimo > 0) ajustarHeap(t, 0, posUltimo);
   }
 
@@ -113,7 +105,7 @@ static short _enfileirar(TTAD* t, void* elemento){
   }
 
   vet->atualizar(vet, posInsercao, elemento);
-  d->ocupacao = posInsercao+1;
+  d->ocupacao++;
 
   for(i=posInsercao; (i > 0)
     && COMPARAR_PRIORIDADES(elemento, vet->acessar(vet,posAncestral)); ){
