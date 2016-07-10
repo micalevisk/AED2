@@ -1,0 +1,53 @@
+begin{enumerate}
+    item Definindo o tipo de dado que será armazenado na estrutura de dados vetor, na ordenação parcial
+begin{lstlisting}[frame=single]
+typedef struct{
+	void fila;
+	unsigned tamanho;
+
+	int primeiro;
+	int ultimo;
+	TStatsFila stats;
+} TDadoFila;
+end{lstlisting}
+
+    item Na ordenação completa ficaria
+begin{lstlisting}[frame=single]
+typedef struct{
+	void fila;
+	unsigned tamanho;
+
+  int ocupacao;
+
+	TStatsFila stats;
+} TDadoFila;
+end{lstlisting}
+end{enumerate}
+
+
+
+
+
+
+
+
+
+\lstdefinestyle{customc}{
+  frame=tb,
+  belowcaptionskip=1\baselineskip,
+  aboveskip=3mm,
+  belowskip=3mm,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  breaklines=true,
+  columns=flexible,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+\lstset{escapechar=@,style=customc}
