@@ -1,8 +1,6 @@
 #include "arrayDinamicoGenerico.h"
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <string.h>
 
 typedef struct{
@@ -34,7 +32,7 @@ static void* _acessar(TArrayDinamico* ad, int pos){
 }
 
 // Retorna o número de elementos que estão no array.
-unsigned _tamanho(TArrayDinamico* ad){
+static unsigned _tamanho(TArrayDinamico* ad){
 	if(!ad) return 0;
 	return ((TDado*)ad->dado)->tamanho;
 }

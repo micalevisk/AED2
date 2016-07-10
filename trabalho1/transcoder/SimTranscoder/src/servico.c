@@ -37,9 +37,8 @@ void* saidaServico(TServico* oServico){
 
   TFila *f = d->fila;
 
-  void* demanda = f->desenfileirar(f);
-
-  return demanda;
+  // void* demanda = f->desenfileirar(f);
+  return f->desenfileirar(f);
 }
 
 void chegadaServico(TServico* oServico, void *demanda){

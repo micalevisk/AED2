@@ -1,19 +1,14 @@
 #!/bin/bash
 #
-#								transcoder_FILA|HEAP	parcial|completa
-# uso verbose : ./gerarResultado.sh <nomePrograma_TAD> <tipoDeOrdenacao>
-# uso execucao: ./gerarResultado.sh -e <nomePrograma_TAD> <tipoDeOrdenacao>
+# uso verbose : ./gerarResultado.sh <nomePrograma> <tipoDeOrdenacao>
+# uso execucao: ./gerarResultado.sh -e <nomePrograma> <tipoDeOrdenacao>
 #
 # Created by Micael Levi on 07/06/2016
 # Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 #
-#	1.	Salva numa variável inteira o segundo atual
-#	2.	chama o programa (imrpessão apenas do analitico)
-#	2.	Redireciona saída truncando para o .log corrente
-#	3.	Salva o segundo final
-#	4.	Salva o print da diferença entre o final e o inicial
-#	5.	Redireciona saída anexando no .log corrente
 #	{ > arq.log  ./transcoder [...] ; echo [...] >> arq.log  }
+#	./gerarResultados2.sh -e transcoder_completa completa
+#
 
 [ "$1" -a "$2" ] || exit 1
 
@@ -32,44 +27,39 @@ declare -i SO_TESTA=1
 
 ## nome do programa que será executado; o arquivo deve exisitir e ser executável
 declare -r PROG="$1"
-# [ -x $PROG ] || { echo "ERRO AO ABRIR: $PROG"; exit 1; }
+[ -x $PROG ] || { echo "ERRO ARQUIVO: $PROG NÃO EXISTE/EXECUTÁVEL"; exit 1; }
 
 ## 'parcial' ou 'completa'; define o diretório ordenacao_xx/...
 [ "$2" == "parcial" -o "$2" == "completa" ] || exit 1
 declare -r TORDENACAO="$2"
-
-## (Estrutura de Dados) FILA ou HEAP; deve estar em maiúsculo
-declare -r TAD=$(tr -dc '[A-Z]' <<< $PROG)
 
 ## array de casos testes (instâncias i)
 ## for((i=0; i <= 10000000; i*=10)); do echo -n "$i "; done
 CASOS=(10 100 1000 10000 100000) ## 1000000 10000000
 
 ## (x) define o número de iterações para cada teste
-declare -i ITERACOES=5
+declare -i ITERACOES=1
 
 ## diretório que contém as pastas de resultados
 declare -r DIR="../resultados/ordenacao_$TORDENACAO"
 [ -d $DIR ] || exit 1
 
 #--------[ INTERAÇÃO COM O USUÁRIO ]----------------#
-
 echo "Deseja continuar? [sn]"
 echo "> nome do programa : $PROG"
 echo "> tipo de ordenação: $TORDENACAO"
-echo "> estrutura usada  : $TAD"
 echo "> número de testes : $ITERACOES"
 echo "> diretório results: $DIR"
 read resposta
-resposta=$(tr '[:upper:]' '[:lower:]' <<< $resposta)
-resposta=$(tr -d -c '[:alpha:]' <<< $resposta)
-[ "$resposta" != "s" ] && exit 1
+resposta=$(tr -d 'sS' <<< $resposta)
+[[ $resposta =~ [nN] ]] && exit 1
 echo -e "\033c"	## limpar tela
 
 #--------------------------------------[ LOOP GERADOR ]--------------------------------------------#
 ## DIRETÓRIO CORRENTE: .../src/
 
-declare -i i x
+declare -i i x	## contadores
+
 for i in ${CASOS[@]}; do
 	VEZ="instancia.${i}"	## nome da pasta relacionada à instância corrente
 
@@ -77,26 +67,31 @@ for i in ${CASOS[@]}; do
 
 		## gerando o .log
 		BASE="${DIR}/tudo/$VEZ/${x}.log"
-		[ $SO_TESTA -eq 0 ] &&
-			( time ./$PROG < ../Dado/$VEZ ) 2>&1 | install -D /dev/stdin $BASE
-		echo -e $_GREEN "( time ./$PROG < ../Dado/$VEZ ) 2>&1 | install -D /dev/stdin $BASE" $_RESET
+		if [ $SO_TESTA -eq 0 ]; then
+			{ time ./$PROG < ../Dado/$VEZ >&2 ; } 2> $BASE
+			sed -nr -i 's/[^[:digit:]\n]*// ; 1,6p' $BASE
+		else
+			echo -e $_GREEN "{ time ./$PROG < ../Dado/$VEZ >&2 ; } 2> $BASE" $_RESET
+		fi
 
 		## gerando .stats
 		ARQ="${DIR}/analiticos/$VEZ/${x}.stats"
-		[ $SO_TESTA -eq 0 ] &&
-			grep -Po '(?<=\[..m ).+(?=\[0m)' $BASE | install -D /dev/stdin $ARQ
-		echo -e $_YELLO "grep -Po '(?<=\[..m ).+(?=\[0m)' $BASE | install -D /dev/stdin $ARQ" $_RESET
-
-		## gerando .output
-		# ARQ="${DIR}/saidas/$VEZ/${x}.output"
-		# [ $SO_TESTA -eq 0 ] && sed -n '1,/^$/p' ${BASE} | install -D /dev/stdin $ARQ
-		# echo -e $_PURPL "sed -n '1,/^$/p' ${BASE} | install -D /dev/stdin $ARQ" $_RESET
+		if [ $SO_TESTA -eq 0 ]; then
+			head -n 4 $BASE > $ARQ
+		else
+			echo -e $_YELLO "head -n 4 $BASE > $ARQ" $_RESET
+		fi
 
 		## gerando .time
 		ARQ="${DIR}/tempos/$VEZ/${x}.time"
-		[ $SO_TESTA -eq 0 ] &&
-			tail -4 ${BASE} | install -D /dev/stdin $ARQ
-		echo -e $_BLUE "tail -4 ${BASE} | install -D /dev/stdin $ARQ" $_RESET
+		if [ $SO_TESTA -eq 0 ]; then
+			tail -n1 ${BASE} | tr -d '[:alpha:]' | tr '.' ',' > $ARQ
+		else
+			echo -e $_BLUE "tail -n1 ${BASE} | tr -d '[:alpha:]' | tr '.' ',' > $ARQ" $_RESET
+		fi
+
+		## converte (.log) do formato UNIX para DOS
+		sed -i 's/$/\r/' $BASE
 
 		echo
 	done

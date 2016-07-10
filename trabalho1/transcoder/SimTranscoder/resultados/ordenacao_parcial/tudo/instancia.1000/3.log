@@ -1,9 +1,0 @@
-
-[32m inserções : 1000
-[0m[31m removeu   : 1000
-[0m[33m movimentou: 430661
-[0m[36m sobrecarga: 9
-[0m
-real	0m0.053s
-user	0m0.000s
-sys	0m0.015s

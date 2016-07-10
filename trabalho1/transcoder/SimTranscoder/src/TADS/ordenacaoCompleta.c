@@ -28,9 +28,10 @@ static void* _desenfileirar(TTAD* t){
   TDadoTAD *d = t->dado;
   TArrayDinamico *vet = d->vetorFila;
 
-  void* ultimoElemento = (d->posUltimo >= 0) ? (vet->acessar(vet, d->posUltimo)) : (NULL);
+  if(d->posUltimo < 0) return 0;
+  void* ultimoElemento = vet->acessar(vet, d->posUltimo);
+  d->posUltimo--;
 
-  if(ultimoElemento) d->posUltimo--;
   return ultimoElemento;
 }
 
@@ -61,7 +62,7 @@ static short _enfileirar(TTAD* t, void* elemento){
     vet->atualizar(vet, posInsercao, elemento);
 
 		for(i=posInsercao; (i > 0)
-      && COMPARAR_PRIORIDADES(vet->acessar(vet, i-1), elemento); i--){ //vet->acessar(vet, i)
+      && COMPARAR_PRIORIDADES(vet->acessar(vet, i-1), elemento); i--){ 
         vet->atualizar(vet, i, vet->acessar(vet, i-1));
         vet->atualizar(vet, i-1, elemento);
     }

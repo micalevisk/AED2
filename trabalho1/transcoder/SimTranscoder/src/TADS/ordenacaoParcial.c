@@ -55,25 +55,41 @@ void ajustarHeap(TTAD* t, int pai, int posUltimo){
 }
 
 // Retorna (se existir) o primeiro elemento do vetor.
+/*
 void* raiz(TTAD* t){
   TDadoTAD *d = t->dado;
   if(!d) return NULL;
   TArrayDinamico *vet = d->vetorFila;
   return (d->ocupacao > 0) ? (vet->acessar(vet, 0)) : (NULL);
 }
+*/
 
 /* ---------------- IMPLEMENTAÇÃO DOS MÉTODOS: -------------------------- */
 
 // Se tiver mais de 1 elementos:
-//  swap entre a raiz (que será removido por ter maior prioridade) e o último;
+// - swap entre a raiz (que será removido por ter maior prioridade) e o último;
 // depois ajusta o vetor para obedecer a propriedade de ordem do Heap:
-//  "desce" o elemento da raiz enquanto seus filhos tiverem maior prioridade.
+// - "desce" o elemento da raiz enquanto seus filhos tiverem maior prioridade.
 static void* _desenfileirar(TTAD* t){
   TDadoTAD *d = t->dado;
+  if(!d) return NULL;
+  int posUltimo = d->ocupacao - 1;
+  void *raiz;
   TArrayDinamico *vet = d->vetorFila;
 
-  void *primeiroElemento = raiz(t);
-  return primeiroElemento;
+  if(posUltimo >= 0){
+      raiz = vet->acessar(vet, 0);
+      vet->atualizar(vet, 0, vet->acessar(vet, posUltimo));
+      vet->atualizar(vet, posUltimo, raiz);
+
+      t->movimentacoes_desenfileirar++;
+      d->ocupacao--;
+      posUltimo = d->ocupacao - 1;
+      // posUltimo = (--d->ocupacao) - 1;
+      if(posUltimo > 0) ajustarHeap(t, 0, posUltimo);
+  }
+
+  return raiz;
 }
 
 // Insere no final,
@@ -99,17 +115,20 @@ static short _enfileirar(TTAD* t, void* elemento){
   vet->atualizar(vet, posInsercao, elemento);
   d->ocupacao = posInsercao+1;
 
-  for(i=posInsercao; (i > 0); i = posAncestral, posAncestral = PAI(i)){
-    elementoAncestral = vet->acessar(vet, posAncestral);
-
-    if( COMPARAR_PRIORIDADES(elementoAncestral, elemento) ){
-      vet->atualizar(vet, i, elementoAncestral);
+  for(i=posInsercao; (i > 0)
+    && COMPARAR_PRIORIDADES(elemento, vet->acessar(vet,posAncestral)); ){
+      vet->atualizar(vet, i, vet->acessar(vet, posAncestral));
       vet->atualizar(vet, posAncestral, elemento);
 
+      // elementoAncestral = vet->acessar(vet, posAncestral);
+      // vet->atualizar(vet, posAncestral, elemento);
+      // vet->atualizar(vet, i, elementoAncestral);
+
       t->movimentacoes_enfileirar++;
-    }
-    else return 1;
+      i = posAncestral;
+      posAncestral = PAI(i);
   }
+
   return 1;
 }
 

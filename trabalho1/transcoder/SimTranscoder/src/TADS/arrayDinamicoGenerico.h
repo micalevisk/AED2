@@ -1,7 +1,7 @@
 // TAD Vetor Dinâmico
 typedef struct arraydinamico TArrayDinamico;
 
-typedef void*	(*TTamanhoAD)(TArrayDinamico*);
+typedef unsigned (*TTamanhoAD)(TArrayDinamico*);
 typedef void*	(*TAcessarAD)(TArrayDinamico*,int);
 typedef void 	(*TAtualizarAD)(TArrayDinamico*,int,void*);
 

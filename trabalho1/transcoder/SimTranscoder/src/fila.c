@@ -73,14 +73,13 @@ static void Analytics(TFila *f){
 
 	// Atualiza estatísticas:
 	d->stats.movimentou = minhaFila->movimentacoes_desenfileirar;
-	d->stats.movimentou = minhaFila->movimentacoes_enfileirar;
+	d->stats.movimentou += minhaFila->movimentacoes_enfileirar;
 	d->stats.sobrecarregou = minhaFila->sobrecarga;
 
-	printf("\n");
-	printf( " inserções : " DIRETIVASTATS , d->stats.inseriu);
-	printf( " removeu   : " DIRETIVASTATS , d->stats.removeu);
-	printf( " movimentou: " DIRETIVASTATS , d->stats.movimentou);
-	printf( " sobrecarga: " DIRETIVASTATS , d->stats.sobrecarregou);
+	printf( "inserções : " DIRETIVASTATS , d->stats.inseriu);
+	printf( "removeu   : " DIRETIVASTATS , d->stats.removeu);
+	printf( "movimentou: " DIRETIVASTATS , d->stats.movimentou);
+	printf( "sobrecarga: " DIRETIVASTATS , d->stats.sobrecarregou);
 }
 
 /*--------------------------------------------------------------*/
@@ -100,6 +99,7 @@ TDadoFila* criarDadoFila(){
 TFila* construirFila(){
 	TFila *f = malloc(sizeof(TFila));
 	TDadoFila *d = criarDadoFila();
+	if(!f || !d) return NULL;
 
 	f->dado = d;
 	f->desenfileirar= Desenfileirar;
