@@ -61,7 +61,7 @@ echo -e "\033c"	## limpar tela
 
 declare -i i x	## contadores
 
-for i in ${CASOS[@]}; do
+for i in 1000000; do #${CASOS[@]}
 	VEZ="instancia.${i}"	## nome da pasta relacionada à instância corrente
 
 	for((x=1; x <= $ITERACOES; ++x)); do
@@ -71,14 +71,16 @@ for i in ${CASOS[@]}; do
 		if [ $SO_TESTA -eq 0 ]; then
 			( time ./$PROG < ../Dado/$VEZ ) 2>&1 | sed -nr 's/real\t// ; 1,6p' | install -D /dev/stdin $BASE
 		fi
-		echo -e $_GREEN "( time ./$PROG < ../Dado/$VEZ ) 2>&1 | sed -nr 's/real\t// ; 1,6p' | install -D /dev/stdin $BASE" $_RESET
+		echo -ne $_GREEN
+		echo "( time ./$PROG < ../Dado/$VEZ ) 2>&1 | sed -nr 's/real\t// ; 1,6p' | install -D /dev/stdin $BASE"
 
 		## gerando .stats
 		ARQ="${DIR}/analiticos/$VEZ/${x}.stats"
 		if [ $SO_TESTA -eq 0 ]; then
 			head -n 4 $BASE | tr -d -c '[:digit:]\n' | install -D /dev/stdin $ARQ
 		fi
-		echo -e $_YELLO "head -n 4 $BASE | tr -d -c '[:digit:]\n' | install -D /dev/stdin $ARQ" $_RESET
+		echo -ne $_YELLO
+		echo "head -n 4 $BASE | tr -d -c '[:digit:]\n' | install -D /dev/stdin $ARQ"
 
 		## gerando .time
 		ARQ="${DIR}/tempos/$VEZ/${x}.time"
@@ -87,11 +89,14 @@ for i in ${CASOS[@]}; do
 			echo -n $tempo | install -D /dev/stdin $ARQ
 			# tail -n1 $BASE | tr -d '[:alpha:]' | tr '.' ',' | install -D /dev/stdin $ARQ
 		fi
-		echo -e $_BLUE "echo -n $tempo | install -D /dev/stdin $ARQ" $_RESET
+		echo -ne $_BLUE
+		echo "echo -n $tempo | install -D /dev/stdin $ARQ"
 
 		## converte (.log) do formato UNIX para DOS
-		sed -i 's/$/\r/' $BASE
+		[ $SO_TESTA -eq 0 ] && sed -i 's/$/\r/' $BASE
 		echo
 	done
 
 done
+
+echo -ne $_RESET

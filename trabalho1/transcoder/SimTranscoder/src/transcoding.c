@@ -55,10 +55,8 @@ int main(){
 		// evento->print(evento);
 
 		if ( (evento->getTipo(evento) == CHEGADA) && (oServico->ocioso(oServico)) ){
-			//printf("chegada:\n");
 			oServico->chegada(oServico,video);
 
-			//printf("runTranscoding:\n");
 			oServico->runTranscoding(oServico, video);
 
 			// agenda novo evento
@@ -67,9 +65,9 @@ int main(){
 			agenda->novo(agenda,novoEvento);
 
 			// transcoding iniciado imediatamente
-			//printf("saida:\n");
+
 			video = oServico->saida(oServico);
-			//printf("destruirJob:\n");
+
 			destruirJob(video);
 
 			video = criarJob();
@@ -81,7 +79,7 @@ int main(){
 			}
 
 		} else if (evento->getTipo(evento) == CHEGADA){
-			//printf("\tchegada:\n");
+
 			oServico->chegada(oServico,video);
 
 			video = criarJob();
@@ -93,32 +91,32 @@ int main(){
 			}
 
 		} else if(evento->getTipo(evento) == TRANSCODING){
-			//printf("\t\tstopTranscoding:\n");
+
 			oServico->stopTranscoding(oServico);
 
-			//printf("\t\tsaida:\n");
+
 			transVideo = oServico->saida(oServico);
 			if (transVideo != NULL){
 
-				//printf("\t\trunTranscoding:\n");
+
 				oServico->runTranscoding(oServico, transVideo);
 
 				//termino do transcoding
-				//printf("\t\tgetTempoTranscoding= %f:\n", tempoEvento);
+
 				tempoEvento = relogio + transVideo->getTempoTranscoding(transVideo);
 
 				// agenda novo evento
-				//printf("\t\tcriarEvento:(%f)\n", tempoEvento);	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 				novoEvento = criarEvento(TRANSCODING, tempoEvento);
 				agenda->novo(agenda, novoEvento);
 
-				//printf("\t\tdestruirJob:\n");
+
 				destruirJob(transVideo);
-				// //printf("\t\tdestruirEvento:\n");/**/
+
 				// destruirEvento(novoEvento);/**/
 			}
 		} else{
-			//printf("PANIC: Evento nao catalogado\n");
+
 			exit(0);
 		}
 

@@ -22,14 +22,14 @@ typedef void* (*TDesenfileirarTAD)(TTAD*);
 struct TADManipulacaoFila{
   void *dado;
 
+  // MÉTODOS:
+  TEnfileirarTAD enfileirar;
+  TDesenfileirarTAD desenfileirar;
+
   // ESTATÍSTICAS:
   PRECISAOSTATS movimentacoes_enfileirar;
   PRECISAOSTATS movimentacoes_desenfileirar;
   PRECISAOSTATS sobrecarga;
-
-  // MÉTODOS:
-  TEnfileirarTAD enfileirar;
-  TDesenfileirarTAD desenfileirar;
 };
 
 TTAD* construirTAD(void);  // cria o vetor circular dinâmico e define o tipo de ordenacao.
