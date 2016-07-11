@@ -61,7 +61,7 @@ echo -e "\033c"	## limpar tela
 
 declare -i i x	## contadores
 
-for i in 1000000; do #${CASOS[@]}
+for i in ${CASOS[@]}; do #
 	VEZ="instancia.${i}"	## nome da pasta relacionada à instância corrente
 
 	for((x=1; x <= $ITERACOES; ++x)); do
@@ -86,6 +86,7 @@ for i in 1000000; do #${CASOS[@]}
 		ARQ="${DIR}/tempos/$VEZ/${x}.time"
 		if [ $SO_TESTA -eq 0 ]; then
 			tempo=$(tail -n1 $BASE | tr 'm.' ':' | awk -F: '{ print ($1 * 60) + $2 + ($3 / 1000) }' | tr '.' ',')
+			# tempo=$(tail -n1 $BASE | sed 'y/m./:,/' | awk -F: '{ print ($1 * 60) + $2 + ($3 / 1000) }' | tr '.' ',')
 			echo -n $tempo | install -D /dev/stdin $ARQ
 			# tail -n1 $BASE | tr -d '[:alpha:]' | tr '.' ',' | install -D /dev/stdin $ARQ
 		fi
