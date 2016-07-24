@@ -35,14 +35,14 @@ void ajustarHeap(TTAD* t, int pai, int posUltimo){
   dir = esq + 1;
   posAtual = pai;
 
-  // o filho esquerdo tem prioridade maior que o seu pai?
-  if( (esq <= posUltimo)
-    && COMPARAR_PRIORIDADES(vet->acessar(vet, esq), vet->acessar(vet, posAtual)) )
-    posAtual = esq;
-  // o filho direito tem prioridade maior que o filho/pai que está na posição posAtual?
-  if( (dir <= posUltimo)
-    && COMPARAR_PRIORIDADES(vet->acessar(vet, dir), vet->acessar(vet, posAtual)) )
-    posAtual = dir;
+  // se o filho esquerdo existir então o direito pode ou não exisitr.
+  if( esq <= posUltimo ){
+    if( COMPARAR_PRIORIDADES(vet->acessar(vet, esq), vet->acessar(vet, posAtual)) )
+      posAtual = esq; // atualiza a posição que posição o maior valor
+
+    if( (dir <= posUltimo) && COMPARAR_PRIORIDADES(vet->acessar(vet, dir), vet->acessar(vet, posAtual)) )
+      posAtual = dir; // atualiza a posição que posição o maior valor
+  }
 
   if(posAtual != pai){
     aux = vet->acessar(vet, pai);
@@ -75,9 +75,9 @@ static void* _desenfileirar(TTAD* t){
       vet->atualizar(vet, posUltimo, raiz);
 
       t->movimentacoes_desenfileirar++;
-      posUltimo = (--d->ocupacao) - 1;
-      // d->ocupacao--;
-      // posUltimo = d->ocupacao - 1;
+      d->ocupacao--;
+      posUltimo = d->ocupacao - 1;
+      // posUltimo = (--d->ocupacao) - 1;
       if(posUltimo > 0) ajustarHeap(t, 0, posUltimo);
   }
 

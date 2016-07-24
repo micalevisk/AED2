@@ -18,12 +18,11 @@ _YELLO="\033[40;33m"
 _PURPL="\033[40;35m"
 _BLUE="\033[40;36m"
 
+#---------------------[ DEFINIÇÃO DAS VARIÁVEIS GLOBAIS ]-----------------------#
 
+## define se irá executar o comando (além de exibi-lo)
 declare -i SO_TESTA=1
 [ "$1" == "-e" ] && { SO_TESTA=0; shift; }
-
-
-#---------------------[ DEFINIÇÃO DAS VARIÁVEIS GLOBAIS ]-----------------------#
 
 ## nome do programa que será executado; o arquivo deve exisitir e ser executável
 declare -r PROG="$1"
@@ -35,7 +34,7 @@ declare -r TORDENACAO="$2"
 
 ## array de casos testes (instâncias i)
 ## for((i=0; i <= 10000000; i*=10)); do echo -n "$i "; done
-CASOS=(10 100 1000 10000 100000) ## 1000000 10000000
+CASOS=(10 100 1000 10000 100000)
 # CASOS=(10 100 1000 10000 100000 1000000 10000000)
 
 ## (x) define o número de iterações para cada teste
