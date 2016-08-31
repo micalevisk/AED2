@@ -11,3 +11,8 @@ trabalho1/transcoder/SimTranscoder/src/backup/*
 *.o
 *.swp
 *.stackdump
+
+#
+trabalho2/off/
+trabalho2/base/off
+trabalho2/fontes/off
