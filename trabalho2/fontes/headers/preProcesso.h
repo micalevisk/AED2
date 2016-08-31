@@ -15,7 +15,7 @@
 #include <string.h>
 
 
-// OBS: O PROGRAMA EXECUTÁVEL DEVE ESTAR NA PASTA RAIZ "Trabalho2" (ou uma pasta antes da pasta "fontes")
+// OBS: O PROGRAMA EXECUTÁVEL DEVE ESTAR NA PASTA RAIZ "trabalho2" (ou uma pasta antes da pasta "fontes")
 #define DIRETORIO_SCRIPTTRATADOR "base/"
 #define NOMEARQUIVO_SCRIPTTRATADOR "tratarTexto.sh"
 

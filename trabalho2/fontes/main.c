@@ -6,7 +6,7 @@
 
 
 // USO:
-// (na pasta "Trabalho2") !!!!!!!!!!!
+// (na pasta "trabalho2") !!!!!!!!!!!
 // - COMPILAR: $ gcc -o criarIndiceRemissivo fontes/*.c -lm
 // - EXECUTAR: $ ./criarIndiceRemissivo [caminho do livro] [caminho do arquivo de consultas]
 // - e.g.: $ ./criarIndiceRemissivo "base/baseAventuras" "consultas/consultas1-2"
