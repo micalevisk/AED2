@@ -13,8 +13,8 @@
 #include <string.h>
 
 
-#define ESTIMAR(x) ((x)/2) // tamanho inicial de um dicionário de palavras, onde x = quantidade de palavras do arquivo tratado
-#define ID_PAG "PA" // identificador de nova página
+#define ESTIMAR(x) ((x)/2)  // tamanho inicial de um dicionário de palavras, onde x = quantidade de palavras do arquivo tratado
+#define ID_PAG "PA"         // identificador de nova página
 
 
 

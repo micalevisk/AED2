@@ -4,7 +4,6 @@
 //  Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 //
 
-// #define ERROR(number, fileBaseName, functionName){ fprintf(stderr, "\e[1;49;3%hhum" "ERRO%hhu: %s.c => %s()" "\e[0m\n", number, number, fileBaseName, functionName); exit(3); }
 #include "headers/indiceRemissivo.h"
 
 
@@ -57,28 +56,12 @@ TDicionarioDinamico* gerarIndiceRemissivo(const char* path_livro){
     if(posInsercao < 5){
       unsigned* pPagCorrente = malloc(sizeof(unsigned)); *pPagCorrente = pagCorrente;
       v->inserir(v, posInsercao, pPagCorrente);
-      // printf("%s|%u\n", elementoBuscado->palavra, *pPagCorrente);
-      // fprintf(stderr,"%u\n", v->ocupacao(v) );
     }
   }
 
   fclose(fd_arqInfo);
   removerArquivoDir(arqInfo);
   // system(CMD_APAGAR_INFOS);
-
-  #ifdef ERROR
-    // printf("ocupacao do indice remissivo: %u\n", indiceRemissivo->ocupacao);
-    // printf("ULTIMO: %s|%u\n", elementoBuscado->palavra, pagCorrente);
-    TElementoIndice* buscado = indiceRemissivo->buscar(indiceRemissivo, elementoBuscado);
-    TVetorDinamico* vBuscado = buscado->vetorPaginas;
-    printf("BUSCADO: %s\nRETORNO: %s\n", elementoBuscado->palavra, buscado->palavra);
-    if(vBuscado == NULL) printf("O VETOR DE PÁGINAS NÃO EXISTE\n");
-    else{
-      vBuscado->imprimir(vBuscado, funcImprimir);
-      printf("end. do primeiro elemento: (%p)\n",  vBuscado->elemento(vBuscado, 0));
-      printf("=======================\n");
-    }
-  #endif
 
   return indiceRemissivo;
 }
@@ -88,37 +71,3 @@ void imprimirElementosDoVetor(TVetorDinamico* v){
   if(!v) return;
   v->imprimir(v, funcImprimir);
 }
-
-
-/************************************************************/
-
-/*
-#define DIR_DOC "../base/baseAventuras"
-int main(int argc, char** argv){
-  TDicionarioDinamico* indice = gerarIndiceRemissivo(DIR_DOC);
-
-  TElementoIndice elementoBuscado_aux = { .palavra = argv[1] };
-  TElementoIndice* elementoBuscado = indice->buscar(indice, &elementoBuscado_aux);
-
-  if(!elementoBuscado) printf("\"%s\" NAO ESTA NESSE DOCUMENTO\n", argv[1]);
-  else{
-    printf("%s: ", elementoBuscado->palavra);
-    imprimirElementosDoVetor(elementoBuscado->vetorPaginas);
-    printf("\n");
-  }
-
-
-  #ifdef ERROR
-    printf("NUMERO DE PALAVRAS (sem repetições) = ocupacao do indice remissivo: %u\n", indice->ocupacao);
-    if(!elementoBuscado){
-      ERROR(1, "indiceRemissivo", "main");
-    }else{
-      printf("PALAVRA:\n(%s):", elementoBuscado->palavra);
-      imprimirElementosDoVetor(elementoBuscado->vetorPaginas);
-      TVetorDinamico* vBuscado = elementoBuscado->vetorPaginas;
-      // printf("end. do primeiro elemento: (%p)\n", vBuscado->elemento(vBuscado, 0));
-      printf("\n\n");
-    }
-  #endif
-}
-*/

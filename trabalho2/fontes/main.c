@@ -1,7 +1,7 @@
 //
 //  [main.c]
 //  Created by Micael & Victor on 08/27/2016
-//  Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
+//  Copyright (c) 2016 {mllc, wmr1}@icomp.ufam.edu.br; All rights reserved.
 //
 
 
@@ -9,7 +9,7 @@
 // (na pasta "trabalho2") !!!!!!!!!!!
 // - COMPILAR: $ gcc -o criarIndiceRemissivo fontes/*.c -lm
 // - EXECUTAR: $ ./criarIndiceRemissivo [caminho do livro] [caminho do arquivo de consultas]
-// - e.g.: $ ./criarIndiceRemissivo "base/baseAventuras" "consultas/consultas1-2"
+// - e.g.: $ ./criarIndiceRemissivo "base/baseAventuras" "arquivoConsultas"
 
 #include "headers/main.h"
 

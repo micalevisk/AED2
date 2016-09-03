@@ -7,8 +7,8 @@
 
 #include "headers/elementoDicionarios.h"
 
-
-short cmpElementos(void* a, void* b){ // retorna 0 se forem a mesma palavra ou 1 caso contrário
+// retorna 0 se forem a mesma palavra ou 1 caso contrário
+short cmpElementos(void* a, void* b){
   if(!a || !b) return 1;
   TElemento* A = a;
   TElemento* B = b;

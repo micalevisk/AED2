@@ -13,13 +13,6 @@ short compararPalavras(const char* key, char* word){
   unsigned posUltimoKey = strlen(key)-1;
   unsigned posUltimoWord = strlen(word)-1;
 
-  // printf("posUltimoKey : %u (%s|%c)\n", posUltimoKey, key, key[posUltimoKey]);
-  // printf("posUltimoWord: %u (%s|%c)\n", posUltimoWord, word, word[posUltimoWord]);
-
-  /// e.g., "trabalho": "trabalho1" ou "trabalhos"
-  // if( !(lastCharOfWord == key[keyLength-1]) && !(ispunct(lastCharOfWord)) ) return 0;
-  // return (strncmp(word, key, keyLength) == 0);
-
   if( (!ispunct(word[posUltimoWord])) && (word[posUltimoWord] != key[posUltimoKey]) ) return 1;
   if(ispunct(word[posUltimoWord])) word[posUltimoWord] = '\0';
   return (strcmp(word, key) == 0 ? 0 : 1);

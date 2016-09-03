@@ -10,8 +10,8 @@ static unsigned n_containing(char* palavra, TDicionarioDinamico* dPalavras){
     if(!dPalavras || !palavra) return 0;
     TElemento elementoBuscado_aux = { .palavra = palavra };
     TElemento* elementoBuscado = dPalavras->buscar(dPalavras, &elementoBuscado_aux);
-    if(!elementoBuscado) return 0;  // erro
-    return elementoBuscado->info;   // quantidade de páginas em que a palavra ocorre
+    if(!elementoBuscado) return 0;
+    return elementoBuscado->info;
 }
 
 

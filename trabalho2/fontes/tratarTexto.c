@@ -13,7 +13,6 @@
 char* criarArquivoTemporario(const char* dir_arquivo, const char* filename_arquivoComTemplate, mode_t modo){
 	char* path_arquivoTemp = (char*)malloc( sizeof(char)*( strlen(dir_arquivo) + strlen(filename_arquivoComTemplate) ) );
 	strcpy(path_arquivoTemp, dir_arquivo); strcat(path_arquivoTemp, filename_arquivoComTemplate);
-	// memset(path_arquivoTemp, '\0', strlen(dir_arquivo) + strlen(filename_arquivoComTemplate) );
 
 	int fd_temp;
 	if((fd_temp = mkstemp(path_arquivoTemp)) < 1) return NULL;

@@ -4,8 +4,6 @@
 //  Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 //
 
-// #define ERROR(number, fileBaseName, functionName) { fprintf(stderr, "\e[1;49;3%hhum" "ERRO%hhu: %s.c => %s()" "\e[0m\n", number, number, fileBaseName, functionName); exit(1); }
-
 #include "headers/preProcesso.h"
 
 
@@ -59,18 +57,10 @@ char* preProcessar(const char* path_doc){
     if(novaPagina){
       dVetorPaginasCorrente = vetorPaginas->elemento(vetorPaginas, indice); // obtendo o dicionário de palavras da página corrente.
       novaPagina = 0;
-
-      #ifdef ERROR
-        if(!dVetorPaginasCorrente) ERROR(2, "preProcesso", "preProcessar");
-      #endif
     }
 
     TElemento elementoCorrente_aux = { .palavra = palavraCorrente };
     TElemento* elementoCorrente = dVetorPaginasCorrente->buscar(dVetorPaginasCorrente, &elementoCorrente_aux);
-
-    #ifdef ERROR
-      if(!elementoCorrente) ERROR(3, "preProcesso", "preProcessar");
-    #endif
 
     float tfidf_corrente = TFIDF(elementoCorrente, dicionarioPalavras, dVetorPaginasCorrente, vetorPaginas);
     fprintf(fd_arquivoInformacoes, "%u:%f:%s\n", indice+1, tfidf_corrente, palavraCorrente); // <página>:<TF-IDF>:<palavra>
