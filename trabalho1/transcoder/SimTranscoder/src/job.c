@@ -1,5 +1,4 @@
 #include "job.h"
-
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -9,6 +8,12 @@ typedef struct {
 	int duracao;
 	int tempoTranscoding;
 }TDadoJob;
+
+short comparaJob(TJob *v, TJob *v2){
+	int pV  = v->getPrioridade(v);
+	int pV2 = v2->getPrioridade(v2);
+	return ((pV == pV2) ? 0 :	((pV > pV2) ? 1 : -1));
+}
 
 static void *criarDado(){
     TDadoJob *d = malloc(sizeof(TDadoJob));
@@ -27,8 +32,7 @@ static void *criarDado(){
 
 static void imprimirJob(TJob *v){
 	TDadoJob *d = v->dado;
-    printf("%lf %d %d\n", d->tempoChegada, d->duracao, d->prioridade);
-
+  printf("%lf %d %d\n", d->tempoChegada, d->duracao, d->prioridade);
 }
 
 static void setTempoTranscodingJob(TJob *v, int tempoTranscoding){
@@ -75,28 +79,15 @@ TJob* criarJob(){
     		job->setTempoTranscoding = setTempoTranscodingJob;
     }else{
     		free(job);
-    		job=NULL;
+    		return NULL;
     }
 
 	return job;
 }
 
-short comparaJob(TJob *v, TJob *v2){
-	int pV  = v->getPrioridade(v);
-	int pV2 = v2->getPrioridade(v2);
-	return ((pV == pV2) ? 0 :	((pV > pV2) ? 1 : -1));
-	/*
-	if (v->getPrioridade(v) == v2->getPrioridade(v2)){
-		return 0;
-	}else if (v->getPrioridade(v) > v2->getPrioridade(v2)){
-		return 1;
-	}else{
-		return -1;
-	}
-	*/
-}
 
 void destruirJob(TJob *v){
 	free(v->dado);
 	free(v);
+	// v=NULL;
 }

@@ -1,0 +1,18 @@
+# ignorar instancias (por serem grandes)
+
+trabalho1/transcoder/SimTranscoder/Dado/*
+
+
+# ignorar por desuso
+trabalho1/transcoder/SimTranscoder/html/*
+trabalho1/transcoder/SimTranscoder/src/backup/*
+*.exe
+*.doxyfile
+*.o
+*.swp
+*.stackdump
+
+#
+trabalho2/off/
+trabalho2/base/off
+trabalho2/fontes/off

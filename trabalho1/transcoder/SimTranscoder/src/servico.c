@@ -4,10 +4,13 @@
  *  Created on: 25/06/2016
  *      Author: cesar
  */
-#include <stdlib.h>
-#include "servico.h"
 #include "fila.h"
 #include "job.h"
+
+#include "servico.h"
+#include <stdio.h>
+#include <stdlib.h>
+
 
 typedef struct {
   TFila *fila;
@@ -20,7 +23,7 @@ static TDadoServico *criarDado(int nroServidores){
 
 	d->nroOcupados=0;
 	d->nroServidores = nroServidores;
-	d->fila = criarFila();
+	d->fila = construirFila();
 
 	return d;
 }
@@ -34,20 +37,16 @@ void* saidaServico(TServico* oServico){
 
   TFila *f = d->fila;
 
-  void* demanda = f->desenfileirar(f);
-
-  return demanda;
+  // void* demanda = f->desenfileirar(f);
+  return f->desenfileirar(f);
 }
 
 void chegadaServico(TServico* oServico, void *demanda){
-  //retirar servico da fila
-
+  //colocar servico na fila
   TDadoServico *d = oServico->dado;
 
   TFila *f = d->fila;
-
   f->enfileirar(f, demanda);
-
 }
 
 void runTranscodingServico(TServico *oServico, void *v ){

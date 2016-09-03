@@ -1,38 +1,30 @@
-/*
-$ shopt -s extglob
+/* http://urs.bira.nom.br/informatica/comando.htm
+========================= [ PARA COMPILAR ] ======================
+- diretório corrente deve ser ../src
 
-$ TAD="FILA"
-$ TESTES=(10 15 20)
+- Para utilizar a ordenação completa, usar na linha de comando:
+$ gcc -o transcoder *.c TADS/!(ordenacaoParcial).c
 
-$ gcc -o transcoder !(heap).c
-$ gcc -o transcoder !(fila).c
+- Para utilizar a ordenação parcial, usar na linha de comando:
+$ gcc -o transcoder *.c TADS/!(ordenacaoCompleta).c
 
-/////// [ TESTE INDIVIDUAL ] ////////
-$ ./transcoder < ../Dado/instancia.10
-$ ./transcoder < ../Dado/instancia.15
-$ ./transcoder < ../Dado/instancia.20
-$ for i in ${TESTES[@]}; do time ./transcoder < ../Dado/instancia.${i}; done
 
-///////////////////////////////// [ MOSTRA A SAÍDA PADRÃO DO PROGRAMA ] /////////////////////////////////////////////////////////////
-$ for i in ${TESTES[@]}; do ./transcoder < ../Dado/instancia.${i} | sed -r 's/\[..?m//' > ../testes/teste_${TAD}_instancia.${i}; done
-
-///////////////////////////////// [ MOSTRA A SAÍDA GRÁFICA DO PROGRAMA ] //////////////////////////////////////////////////
-$ gcc -Wall -pg -o transcoder !(heap).c
-$ for i in ${TESTES[@]}; do ./transcoder < ../Dado/instancia.${i} | sed -r 's/\[..?m//' > _log${i} ; done
-$ for i in ${TESTES[@]}; do gprof -b transcoder < ../Dado/instancia.${i}  > ../outputs/outuput_${TAD}_instancia.${i} ; done
-
-///////////////////////////////// [ MOSTRA A SAÍDA PADRÃO DO PROGRAMA E SALVA O TEMPO DE EXECUÇÃO ] ///////////////////////////////////////
-$ for i in ${TESTES[@]}; do { time ./transcoder < ../Dado/instancia.${i} ; } 2> ../executionTimes/executionTime_${TAD}_instancia.${i}; done
+========================= [ PARA TESTAR UMA INSTÂNCIA ] =========
+- após compilar;
+- diretório corrente deve ser ../src
+- ./transcoder < ../Dado/instancia.x
+{onde 'x' é o número da instância a ser testada}
 */
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "agenda.h"
 #include "evento.h"
 #include "job.h"
 #include "servico.h"
 
-int main(void){
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(){
 	int nroServidores;
 	double relogio, tempoEvento;
 
@@ -60,7 +52,7 @@ int main(void){
 		evento = agenda->proximo(agenda);
 		relogio = evento->getTempo(evento);
 
-		evento->print(evento);
+		// evento->print(evento);
 
 		if ( (evento->getTipo(evento) == CHEGADA) && (oServico->ocioso(oServico)) ){
 			oServico->chegada(oServico,video);
@@ -73,7 +65,9 @@ int main(void){
 			agenda->novo(agenda,novoEvento);
 
 			// transcoding iniciado imediatamente
+
 			video = oServico->saida(oServico);
+
 			destruirJob(video);
 
 			video = criarJob();
@@ -85,6 +79,7 @@ int main(void){
 			}
 
 		} else if (evento->getTipo(evento) == CHEGADA){
+
 			oServico->chegada(oServico,video);
 
 			video = criarJob();
@@ -96,24 +91,32 @@ int main(void){
 			}
 
 		} else if(evento->getTipo(evento) == TRANSCODING){
+
 			oServico->stopTranscoding(oServico);
+
 
 			transVideo = oServico->saida(oServico);
 			if (transVideo != NULL){
 
+
 				oServico->runTranscoding(oServico, transVideo);
 
 				//termino do transcoding
+
 				tempoEvento = relogio + transVideo->getTempoTranscoding(transVideo);
 
 				// agenda novo evento
+
 				novoEvento = criarEvento(TRANSCODING, tempoEvento);
 				agenda->novo(agenda, novoEvento);
 
+
 				destruirJob(transVideo);
+
+				// destruirEvento(novoEvento);/**/
 			}
 		} else{
-			printf("PANIC: Evento nao catalogado\n");
+
 			exit(0);
 		}
 

@@ -7,6 +7,7 @@
 #include "evento.h"
 #include <stdlib.h>
 #include <stdio.h>
+
 typedef struct {
 	TTipoEvento tipo;
 	double tempo;
@@ -14,6 +15,7 @@ typedef struct {
 
 static TDadoEvento *criarDado(TTipoEvento tipo, double tempo){
 	TDadoEvento *dado = malloc(sizeof(TDadoEvento));
+	if(!dado) return NULL;
 	dado->tempo = tempo;
 	dado->tipo = tipo;
 
@@ -41,8 +43,9 @@ static TTipoEvento getTipoEvento(TEvento *ev){
 
 	return d->tipo;
 }
+
 static short comparaEvento(TEvento *e1, TEvento *e2){
-	if ( e1->getTempo(e1) < e2->getTempo(e2) ){
+	if ( e1->getTempo(e1) > e2->getTempo(e2) ){
 		return -1;
 	} else if( e1->getTempo(e1) == e2->getTempo(e2) ){
 		if ( (e1->getTipo(e1) == CHEGADA) && (e2->getTipo(e2) == TRANSCODING) )
@@ -54,16 +57,22 @@ static short comparaEvento(TEvento *e1, TEvento *e2){
 		return 1;
 
 }
+
 TEvento *criarEvento(TTipoEvento tipo, double tempo){
-    TEvento *evento;
-
-    evento = malloc(sizeof(TEvento));
+					//printf("AQUI\n");
+    TEvento *evento = malloc(sizeof(TEvento));
+    if(!evento) return NULL;
+				//printf("AQUI0\n");
     evento->dado = criarDado(tipo, tempo);
-
+						//printf("AQUI1\n");
     evento->compara = comparaEvento;
+						//printf("AQUI2\n");
     evento->getTempo = getTempoEvento;
+						//printf("AQUI3\n");
     evento->getTipo = getTipoEvento;
+						//printf("AQUI4\n");
     evento->print = printEvento;
+						//printf("AQUI5\n");
 
     return evento;
 }
