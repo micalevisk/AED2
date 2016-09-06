@@ -4,7 +4,7 @@
 //	Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 //
 
-#include "headers/dicionarioDinamico.h"
+#include "dicionarioDinamico.h"
 #define REL_AUREA 0.61803399
 
 typedef struct{

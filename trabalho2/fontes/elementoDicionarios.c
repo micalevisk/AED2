@@ -5,7 +5,7 @@
 //
 
 
-#include "headers/elementoDicionarios.h"
+#include "elementoDicionarios.h"
 
 // retorna 0 se forem a mesma palavra ou 1 caso contrário
 short cmpElementos(void* a, void* b){

@@ -4,7 +4,7 @@
 //	Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 //
 
-#include "headers/vetorDinamico.h"
+#include "vetorDinamico.h"
 
 
 typedef struct{

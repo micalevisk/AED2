@@ -4,7 +4,7 @@
 //	Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 //
 
-#include "headers/wordToInt.h"
+#include "wordToInt.h"
 
 /*
 // ideal caso existam palavras com as mesmas letras

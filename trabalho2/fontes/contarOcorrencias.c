@@ -4,7 +4,7 @@
 //  Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 //
 
-#include "headers/contarOcorrencias.h"
+#include "contarOcorrencias.h"
 
 // verifica se "word" é igual a "key". Retorna 0 se for ou 1 caso contrário.
 short compararPalavras(const char* key, char* word){
