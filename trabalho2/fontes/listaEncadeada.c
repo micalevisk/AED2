@@ -4,7 +4,7 @@
 //	Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 //
 
-#include "headers/listaEncadeada.h"
+#include "listaEncadeada.h"
 
 
 struct no{

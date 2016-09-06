@@ -4,7 +4,7 @@
 //  Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 //
 
-#include "headers/construirEDs.h"
+#include "construirEDs.h"
 #define ALOCAR_PALAVRA (char*)malloc( sizeof(char)*MAX_N_CARACTERES_LINHA )
 
 

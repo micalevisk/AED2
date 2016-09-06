@@ -4,7 +4,7 @@
 //  Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 //
 
-#include "headers/indiceRemissivo.h"
+#include "indiceRemissivo.h"
 
 
 // retorna 0 se forem o mesmo elemento ou 1 caso o contrario

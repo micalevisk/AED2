@@ -4,7 +4,7 @@
 //  Copyright (c) 2016 Micael Levi L. Cavalcante. All rights reserved.
 //
 
-#include "headers/calcularTFIDF.h"
+#include "calcularTFIDF.h"
 
 static unsigned n_containing(char* palavra, TDicionarioDinamico* dPalavras){
     if(!dPalavras || !palavra) return 0;

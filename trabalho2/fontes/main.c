@@ -4,16 +4,21 @@
 //  Copyright (c) 2016 {mllc, wmr1}@icomp.ufam.edu.br; All rights reserved.
 //
 
-
 // USO:
 // (na pasta "trabalho2") !!!!!!!!!!!
-// - COMPILAR: $ gcc -o criarIndiceRemissivo fontes/*.c -lm
+// - COMPILAR: basta executar 'make' na linha de comandos
 // - EXECUTAR: $ ./criarIndiceRemissivo [caminho do livro] [caminho do arquivo de consultas]
 // - e.g.: $ ./criarIndiceRemissivo "base/baseAventuras" "arquivoConsultas"
 
-#include "headers/main.h"
 
-int main(int argc, char **argv) {
+// COMPILAR SEM MAKEFILE:
+// (na pasta "trabalho2") !!!!!!!!!!!
+// - COMPILAR: $ gcc -o criarIndiceRemissivo fontes/*.c -lm
+
+#include "main.h"
+
+int main(int argc, char **argv)
+{
   if(argc != N_ARGS) MSG_USO;
   TDicionarioDinamico* indiceRemissivo = gerarIndiceRemissivo(LIVRO);
   if(!indiceRemissivo){ printf("ERRO AO GERAR O INDICE REMISSIVO\n"); exit(1); }
@@ -25,7 +30,7 @@ int main(int argc, char **argv) {
     strlwr(palavraLida);
     TElementoIndice elementoBuscado_aux = { .palavra = palavraLida };
     TElementoIndice* elementoBuscado = indiceRemissivo->buscar(indiceRemissivo, &elementoBuscado_aux);
-    if(!elementoBuscado) printf("\"%s\" NAO ESTA NESSE DOCUMENTO\n", palavraLida);
+    if(!elementoBuscado) printf("\"%s\" NAO ESTAH NESSE DOCUMENTO\n", palavraLida);
     else{
       printf("\"%s\": ", palavraLida);
       imprimirElementosDoVetor(elementoBuscado->vetorPaginas);
