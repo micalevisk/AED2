@@ -6,15 +6,15 @@
 
 #
 #	(em relação ao arquivo 'makefile')
-#	MAIN		=	nome do programa executavel
-#	SRCSDIR		=	caminho dos arquivos .c
-#	INCDIR		=	caminho dos arquivos .h	(deve estar na mesma pasta que os códigos-fonte)
-#	INCLUDES 	=	opção para incluir arquivos cabeçalhos de outros diretórios
-#	CC			=	comando para compilar (o arroba faz sumprimir a saída do make)
-#	CFLAGS		=	flags para o 'CC'
-#	LIBS		=	bibliotecas importadas
-#	SRCS		=	nome dos arquivos de código-fonte com extensão '.c'
-#	_OBJS		=	nome dos objetos que serão gerados (um para cada .c)
+#	MAIN		= nome do programa executavel
+#	SRCSDIR		= caminho dos arquivos .c
+#	INCDIR		= caminho dos arquivos .h (deve estar na mesma pasta que os códigos-fonte)
+#	INCLUDES 	= opção para incluir arquivos cabeçalhos de outros diretórios
+#	CC		= comando para compilar (o arroba faz sumprimir a saída do make)
+#	CFLAGS		= flags para o 'CC'
+#	LIBS		= bibliotecas importadas
+#	SRCS		= nome dos arquivos de código-fonte com extensão '.c'
+#	_OBJS		= nome dos objetos que serão gerados (um para cada .c)
 #
 
 MAIN = criarIndiceRemissivo
