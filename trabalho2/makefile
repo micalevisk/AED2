@@ -33,7 +33,7 @@ OBJS = $(_OBJS:.c=.o)
 
 $(MAIN): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o  $@ $^ $(LIBS)
-	@echo  COMPILADO COM SUCESSO! o executavel \"$(MAIN)\" foi gerado.
+	@echo  USO: ./$(MAIN) [caminho do livro] [caminho do arquivo de consultas]
 
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
