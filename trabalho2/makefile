@@ -5,16 +5,17 @@
 ##
 
 #
-#	(em relação ao arquivo 'makefile')
-#	MAIN		= nome do programa executavel
-#	SRCSDIR		= caminho dos arquivos .c
-#	INCDIR		= caminho dos arquivos .h (deve estar na mesma pasta que os códigos-fonte)
-#	INCLUDES 	= opção para incluir arquivos cabeçalhos de outros diretórios
-#	CC		= comando para compilar (o arroba faz sumprimir a saída do make)
-#	CFLAGS		= flags para o 'CC'
-#	LIBS		= bibliotecas importadas
-#	SRCS		= nome dos arquivos de código-fonte com extensão '.c'
-#	_OBJS		= nome dos objetos que serão gerados (um para cada .c)
+# (em relacao ao arquivo makefile)
+# MAIN		= nome do programa executavel
+# SRCSDIR	= caminho dos arquivos .c
+# INCDIR	= caminho dos arquivos .h (deve estar na mesma pasta que os codigos-fonte)
+# INCLUDES 	= opcaoo para incluir arquivos cabecalhos de outros diretorio
+# CC		= comando para compilar (o arroba faz sumprimir a saida do make)
+# CFLAGS	= flags para o 'CC'
+# LIBS		= bibliotecas importadas
+# SRCS		= nome dos arquivos de codigo-fonte com extensao .c
+# _OBJS		= nome dos objetos que serao gerados (extensao .o)
+# MSGUSO	= mensagem de uso do programa (exibido apos o comando make)
 #
 
 MAIN = criarIndiceRemissivo
@@ -28,13 +29,15 @@ SRCS = calcularTFIDF.c construirEDs.c contarOcorrencias.c dicionarioDinamico.c e
 _OBJS = $(SRCSDIR)calcularTFIDF.c $(SRCSDIR)construirEDs.c $(SRCSDIR)contarOcorrencias.c $(SRCSDIR)dicionarioDinamico.c $(SRCSDIR)elementoDicionarios.c $(SRCSDIR)indiceRemissivo.c $(SRCSDIR)listaEncadeada.c $(SRCSDIR)main.c $(SRCSDIR)preProcesso.c $(SRCSDIR)tratarTexto.c $(SRCSDIR)vetorDinamico.c $(SRCSDIR)wordToInt.c
 OBJS = $(_OBJS:.c=.o)
 
+MSGUSO = "USO: ./$(MAIN) [caminho do livro] [caminho do arquivo de consultas]"
+
+
 
 .PHONY: depend clean
 
 $(MAIN): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o  $@ $^ $(LIBS)
-	@echo  USO: ./$(MAIN) [caminho do livro] [caminho do arquivo de consultas]
-
+	@echo $(MSGUSO)
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
