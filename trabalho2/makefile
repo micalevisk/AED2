@@ -39,17 +39,17 @@ all: $(MAIN)
 
 $(MAIN): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o  $@ $^ $(LIBS)
-	@echo $(MSGUSO)
+	@echo -e $(MSGUSO)
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	@$(RM) $(OBJS) $(MAIN)
-	@echo "ARQUIVOS REMOVIDOS:\n$(OBJS) $(MAIN)"
+	@echo -e "ARQUIVOS REMOVIDOS:\n$(OBJS) $(MAIN)"
 
 mostlyclean:
 	@$(RM) $(OBJS)
-	@echo "OBJETOS REMOVIDOS."
+	@echo -e "OBJETOS REMOVIDOS."
 
 depend: $(SRCS)
 	makedepend $(INCLUDES) $^
