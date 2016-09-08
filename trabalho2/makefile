@@ -29,11 +29,13 @@ SRCS = calcularTFIDF.c construirEDs.c contarOcorrencias.c dicionarioDinamico.c e
 _OBJS = $(SRCSDIR)calcularTFIDF.c $(SRCSDIR)construirEDs.c $(SRCSDIR)contarOcorrencias.c $(SRCSDIR)dicionarioDinamico.c $(SRCSDIR)elementoDicionarios.c $(SRCSDIR)indiceRemissivo.c $(SRCSDIR)listaEncadeada.c $(SRCSDIR)main.c $(SRCSDIR)preProcesso.c $(SRCSDIR)tratarTexto.c $(SRCSDIR)vetorDinamico.c $(SRCSDIR)wordToInt.c
 OBJS = $(_OBJS:.c=.o)
 
-MSGUSO = "USO: ./$(MAIN) [caminho do livro] [caminho do arquivo de consultas]"
-
+MSGUSO = "USO:\n./$(MAIN) [caminho do livro] [caminho do arquivo de consultas]"
 
 
 .PHONY: depend clean
+
+
+all: $(MAIN)
 
 $(MAIN): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o  $@ $^ $(LIBS)
@@ -43,13 +45,11 @@ $(MAIN): $(OBJS)
 
 clean:
 	@$(RM) $(OBJS) $(MAIN)
-	@echo ARQUIVOS REMOVIDOS: $(OBJS) $(MAIN)
+	@echo "ARQUIVOS REMOVIDOS:\n$(OBJS) $(MAIN)"
 
-clean-objs:
+mostlyclean:
 	@$(RM) $(OBJS)
-	@echo OBJETOS REMOVIDOS: $(OBJS)
+	@echo "OBJETOS REMOVIDOS."
 
 depend: $(SRCS)
 	makedepend $(INCLUDES) $^
-
-# DO NOT DELETE THIS LINE -- make depend needs it
