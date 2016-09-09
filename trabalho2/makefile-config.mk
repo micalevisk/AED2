@@ -1,6 +1,6 @@
 ##
 ##	[makefile-config.mk]
-##	Created by Micael Levi on 09/06/2016
+##	Created by Micael Levi on 09/09/2016
 ##	Copyright (c) 2016 mllc@icomp.ufam.edu.br; All rights reserved.
 ##
 
