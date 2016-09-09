@@ -13,9 +13,18 @@
 
 // COMPILAR SEM MAKEFILE:
 // (na pasta "trabalho2") !!!!!!!!!!!
-// - COMPILAR: $ gcc -o criarIndiceRemissivo fontes/*.c -lm
+// - COMPILAR: $ gcc -I fontes/headers -o criarIndiceRemissivo fontes/*.c -lm
 
 #include "main.h"
+
+char* str2lower(char* s){
+  char* tmp = s;
+
+  for(; *tmp; ++tmp)
+    *tmp = tolower((unsigned char) *tmp);
+
+  return s;
+}
 
 int main(int argc, char **argv)
 {
@@ -27,7 +36,7 @@ int main(int argc, char **argv)
   char* palavraLida = ALOCAR_PALAVRA;
 
   while( (fscanf(fd_consultas, "%s", palavraLida))!=EOF ){
-    strlwr(palavraLida);
+    palavraLida = str2lower(palavraLida);
     TElementoIndice elementoBuscado_aux = { .palavra = palavraLida };
     TElementoIndice* elementoBuscado = indiceRemissivo->buscar(indiceRemissivo, &elementoBuscado_aux);
     if(!elementoBuscado) printf("\"%s\" NAO ESTAH NESSE DOCUMENTO\n", palavraLida);
