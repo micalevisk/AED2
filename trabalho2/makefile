@@ -7,6 +7,7 @@
 -include *.mk
 
 
+
 .PHONY: depend clean
 
 
@@ -14,17 +15,17 @@ all: $(MAIN)
 
 $(MAIN): $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o  $@ $^ $(LIBS)
-	@echo -e $(MSGUSO)
+	$(PRINT) $(MSGUSO)
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	@$(RM) $(OBJS) $(MAIN)
-	@echo -e "ARQUIVOS REMOVIDOS:\n$(OBJS) $(MAIN)"
+	$(PRINT) "ARQUIVOS REMOVIDOS:\n$(OBJS) $(MAIN)"
 
 mostlyclean:
 	@$(RM) $(OBJS)
-	@echo "OBJETOS REMOVIDOS."
+	$(PRINT) "OBJETOS REMOVIDOS."
 
 depend: $(SRCS)
 	makedepend $(INCLUDES) $^

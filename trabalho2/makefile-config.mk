@@ -32,12 +32,14 @@ OBJS = $(_OBJS:.c=.o)
 MSGUSO = "USO:\n./$(MAIN) [caminho do livro] [caminho do arquivo de consultas]"
 
 ##########################################
-# UNAME := $(shell uname)
-# ifeq ($(UNAME), Linux)
-#   # Linux flags
-# else ifeq ($(UNAME), Darwin)
-#   # OS X flags
-# else ifeq ($(shell uname -o), Cygwin)
-#   # Cygwin flags
-# endif
+UNAME := $(shell uname)
+PRINT = @echo
+ifeq ($(UNAME), Linux)
+  # Linux flags
+else ifeq ($(UNAME), Darwin)
+  # OS X flags
+else ifeq ($(shell uname -o), Cygwin)
+  # Cygwin flags
+  PRINT += -e
+endif
 ##########################################
