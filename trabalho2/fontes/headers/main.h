@@ -14,7 +14,7 @@
 #define PALAVRAS_CONSULTA argv[2]
 #define TAM_CHARS_LINHA 56
 
-#define MSG_USO { fprintf(stdout, "USO:\n$ %s \"caminho do livro\" < \"caminho do arquivo texto de consultas\"\n", argv[0]); return 1; }
+#define MSG_USO { fprintf(stdout, "USO:\n$ %s <\"caminho do livro\">  <\"caminho do arquivo texto de consultas\"> \n", argv[0]); return 1; }
 
 
 int main(int, char**);
