@@ -19,7 +19,7 @@ static void funcImprimir(void* elemento){
 	if(!elemento) return;
 	else{
 		unsigned* E = elemento;
-		printf("%u, ", *E);
+		printf("%u", *E);
 	}
 }
 

@@ -77,7 +77,8 @@ static void _imprimirVetorDinamico(TVetorDinamico* v, void (*imprimir)(void*)){
 	if(!dado) return;
 	void** vetor = dado->vetor;
 	unsigned i, n = dado->ocupa;
-	for(i=0; i < n; ++i){  imprimir(vetor[i]); }
+	for(i=0; i < n-1; ++i){  imprimir(vetor[i]); printf(", "); }
+	imprimir(vetor[i]);
 }
 
 
