@@ -16,7 +16,7 @@
 
 
 // OBS: O PROGRAMA EXECUTÁVEL DEVE ESTAR NA PASTA RAIZ "trabalho2" (ou uma pasta antes da pasta "fontes")
-#define DIRETORIO_SCRIPTTRATADOR "base/"
+#define DIRETORIO_SCRIPTTRATADOR ""
 #define NOMEARQUIVO_SCRIPTTRATADOR "tratarTexto.sh"
 
 #define ALOCAR_PALAVRA (char*)malloc( sizeof(char)*MAX_N_CARACTERES_LINHA )
