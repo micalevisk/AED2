@@ -11,5 +11,3 @@ $ make all ## idem.
 $ make clean ## para apagar TODOS arquivos gerados pelo 'make' anterior.
 $ make mostlyclean ## para apagar APENAS os objetos gerados (extensão .o).
 ```
-
-> PROBLEMA:  o programa deve estar exatamente na pasta **trabalho2**
