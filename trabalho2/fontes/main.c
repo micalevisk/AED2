@@ -5,14 +5,16 @@
 //
 
 // USO:
-// (na pasta "trabalho2") !!!!!!!!!!!
-// - COMPILAR: basta executar 'make' na linha de comandos
-// - EXECUTAR: $ ./criarIndiceRemissivo [caminho do livro] [caminho do arquivo de consultas]
+// (na pasta que cotém o arquivo "makefile") !!!!!!!!!!!
+// - COMPILAR: basta executar o comando 'make' na linha de comandos.
+//
+// - EXECUTAR: $ ./criarIndiceRemissivo [caminho do livro] < [caminho do arquivo de consultas]
 // - e.g.: $ ./criarIndiceRemissivo "base/baseAventuras" "arquivoConsultas"
-
+//
+// - EXECUTAR: $ ./criarIndiceRemissivo [caminho do livro]
+// - e.g.: $ ./criarIndiceRemissivo "base/baseAventuras"
 
 // COMPILAR SEM MAKEFILE:
-// (na pasta "trabalho2") !!!!!!!!!!!
 // - COMPILAR: $ gcc -I fontes/headers -o criarIndiceRemissivo fontes/*.c -lm
 
 #include "main.h"
@@ -28,14 +30,14 @@ char* str2lower(char* s){
 
 int main(int argc, char **argv)
 {
-  if(argc != N_ARGS) MSG_USO;
+  if(argc < N_ARGS) MSG_USO;
   TDicionarioDinamico* indiceRemissivo = gerarIndiceRemissivo(LIVRO);
-  if(!indiceRemissivo){ printf("ERRO AO GERAR O INDICE REMISSIVO\n"); exit(1); }
+  if(!indiceRemissivo){ fprintf(stderr,"ERRO AO GERAR O INDICE REMISSIVO\n"); exit(1); }
 
-  FILE* fd_consultas = fopen(PALAVRAS_CONSULTA, "r"); if(!fd_consultas){ perror("AO ABRIR O ARQUIVO DE CONSULTAS"); return 1; }
   char* palavraLida = ALOCAR_PALAVRA;
 
-  while( (fscanf(fd_consultas, "%s", palavraLida))!=EOF ){
+  printf("PALAVRA: ");
+  while( fscanf(stdin, "%60s", palavraLida)!=EOF ){
     palavraLida = str2lower(palavraLida);
     TElementoIndice elementoBuscado_aux = { .palavra = palavraLida };
     TElementoIndice* elementoBuscado = indiceRemissivo->buscar(indiceRemissivo, &elementoBuscado_aux);
@@ -45,7 +47,10 @@ int main(int argc, char **argv)
       imprimirElementosDoVetor(elementoBuscado->vetorPaginas);
       printf("\n");
     }
+    printf("\nPALAVRA: ");
   }
+
+
 
   return 0;
 }
