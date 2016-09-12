@@ -13,7 +13,6 @@
 all: $(MAIN)
 
 $(MAIN): $(OBJS)
-	@chmod 777 base/*.sh
 	$(CC) $(CFLAGS) $(INCLUDES) -o  $@ $^ $(LIBS)
 	$(PRINT) $(MSGUSO)
 
