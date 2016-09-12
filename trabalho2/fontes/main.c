@@ -8,7 +8,7 @@
 // (na pasta que cotém o arquivo "makefile") !!!!!!!!!!!
 // - COMPILAR: basta executar o comando 'make' na linha de comandos.
 //
-// - EXECUTAR: $ ./criarIndiceRemissivo [caminho do livro] < [caminho do arquivo de consultas]
+// - EXECUTAR: $ ./criarIndiceRemissivo [caminho do livro] < [caminho do arquivo de consultas] 2>&-
 // - e.g.: $ ./criarIndiceRemissivo "base/baseAventuras" "arquivoConsultas"
 //
 // - EXECUTAR: $ ./criarIndiceRemissivo [caminho do livro]
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 
   char* palavraLida = ALOCAR_PALAVRA;
 
-  printf("PALAVRA: ");
+  fprintf(stderr,"PALAVRA: ");
   while( fscanf(stdin, "%60s", palavraLida)!=EOF ){
     palavraLida = str2lower(palavraLida);
     TElementoIndice elementoBuscado_aux = { .palavra = palavraLida };
@@ -47,7 +47,7 @@ int main(int argc, char **argv)
       imprimirElementosDoVetor(elementoBuscado->vetorPaginas);
       printf("\n");
     }
-    printf("\nPALAVRA: ");
+    fprintf(stderr,"\nPALAVRA: ");
   }
 
 
