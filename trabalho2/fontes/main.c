@@ -19,7 +19,9 @@
 
 #include "main.h"
 
-char* str2lower(char* s){
+
+#ifndef WINDOWS
+char* strlwr(char* s){
   char* tmp = s;
 
   for(; *tmp; ++tmp)
@@ -27,6 +29,8 @@ char* str2lower(char* s){
 
   return s;
 }
+#endif
+
 
 int main(int argc, char **argv)
 {
@@ -38,7 +42,7 @@ int main(int argc, char **argv)
 
   fprintf(stderr,"PALAVRA: ");
   while( fscanf(stdin, "%60s", palavraLida)!=EOF ){
-    palavraLida = str2lower(palavraLida);
+    palavraLida = strlwr(palavraLida);
     TElementoIndice elementoBuscado_aux = { .palavra = palavraLida };
     TElementoIndice* elementoBuscado = indiceRemissivo->buscar(indiceRemissivo, &elementoBuscado_aux);
     if(!elementoBuscado) printf("\"%s\" NAO ESTAH NESSE DOCUMENTO\n", palavraLida);
