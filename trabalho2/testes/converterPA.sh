@@ -12,7 +12,7 @@ gawk '
 END {
 	pag=1
 	for(j=0; j < i; ){
-		if( gsub(/PA /, "PAGINA:"pag"\n", a[j]) ) pag++
+		if( gsub(/^PA/, "PAGINA:"pag"\n", a[j]) == 1) pag++
 		print a[j++]
 	}
 }' "$1"
