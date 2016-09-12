@@ -29,7 +29,7 @@ SRCS = calcularTFIDF.c construirEDs.c contarOcorrencias.c dicionarioDinamico.c e
 _OBJS = $(SRCSDIR)calcularTFIDF.c $(SRCSDIR)construirEDs.c $(SRCSDIR)contarOcorrencias.c $(SRCSDIR)dicionarioDinamico.c $(SRCSDIR)elementoDicionarios.c $(SRCSDIR)indiceRemissivo.c $(SRCSDIR)listaEncadeada.c $(SRCSDIR)main.c $(SRCSDIR)preProcesso.c $(SRCSDIR)tratarTexto.c $(SRCSDIR)vetorDinamico.c $(SRCSDIR)wordToInt.c
 OBJS = $(_OBJS:.c=.o)
 
-MSGUSO = "USO:\n./$(MAIN) [caminho do livro] < [caminho do arquivo de consultas]"
+MSGUSO = "USO:\n./$(MAIN) [caminho do livro] < [caminho do arquivo de consultas] 2>&-"
 
 ##########################################
 UNAME := $(shell uname)
