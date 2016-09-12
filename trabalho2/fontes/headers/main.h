@@ -9,7 +9,7 @@
 #include <string.h>
 #include <math.h>
 
-#define N_ARGS 3
+#define N_ARGS 2
 #define LIVRO argv[1]
 #define PALAVRAS_CONSULTA argv[2]
 #define TAM_CHARS_LINHA 56
