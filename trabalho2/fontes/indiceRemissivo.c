@@ -5,6 +5,7 @@
 //
 
 #include "indiceRemissivo.h"
+#define LOG(msg) fprintf(stderr, "[%s]\n", msg);
 
 
 // retorna 0 se forem o mesmo elemento ou 1 caso o contrario
@@ -29,6 +30,10 @@ TDicionarioDinamico* gerarIndiceRemissivo(const char* path_livro){
   if(!arqInfo){ perror("\a"); return NULL; }
   TDicionarioDinamico* indiceRemissivo = criarDicionarioDinamico(TAMANHO_TABELA, converterParaNumero, cmpElementosIndice);
   FILE* fd_arqInfo = fopen(arqInfo, "r"); if(!fd_arqInfo) return NULL;
+
+  
+  LOG("CONSTRUINDO O INDICE REMISSIVO");
+  
 
   unsigned pagCorrente=0;
   float tfidfCorrente=0;
@@ -62,6 +67,10 @@ TDicionarioDinamico* gerarIndiceRemissivo(const char* path_livro){
   fclose(fd_arqInfo);
   removerArquivoDir(arqInfo);
   // system(CMD_APAGAR_INFOS);
+
+
+  LOG("INDICE CONSTRUIDO COM SUCESSO!");
+
 
   return indiceRemissivo;
 }

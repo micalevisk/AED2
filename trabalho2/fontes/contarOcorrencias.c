@@ -5,6 +5,8 @@
 //
 
 #include "contarOcorrencias.h"
+#define LOG(msg) fprintf(stderr, "[%s]\n", msg);
+
 
 // verifica se "word" é igual a "key". Retorna 0 se for ou 1 caso contrário.
 short compararPalavras(const char* key, char* word){
@@ -26,6 +28,8 @@ unsigned qtdOcorrenciasETotalExceto_arquivo(const char* path_arquivo, const char
   sprintf(formatacao, "%%%us", MAX_N_CARACTERES_LINHA);
 
   char* palavraCorrente = malloc(sizeof(char)*MAX_N_CARACTERES_LINHA);
+
+  LOG("OBTENDO INFORMACOES SOBRE O TEXTO");
 
   while((fscanf(arq, formatacao, palavraCorrente)) == 1){
     if(!compararPalavras(chave, palavraCorrente)) ++ocorrencias;

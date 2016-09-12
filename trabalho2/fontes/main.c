@@ -35,12 +35,19 @@ char* strlwr(char* s){
 int main(int argc, char **argv)
 {
   if(argc < N_ARGS) MSG_USO;
+
   TDicionarioDinamico* indiceRemissivo = gerarIndiceRemissivo(LIVRO);
   if(!indiceRemissivo){ fprintf(stderr,"ERRO AO GERAR O INDICE REMISSIVO\n"); exit(1); }
 
   char* palavraLida = ALOCAR_PALAVRA;
 
-  fprintf(stderr,"PALAVRA: ");
+
+  #ifdef MANTER_LOG
+    fprintf(stderr,"PALAVRA: ");
+  #else
+    fprintf(stderr,"\033cPALAVRA: ");
+  #endif    
+
   while( fscanf(stdin, "%60s", palavraLida)!=EOF ){
     palavraLida = strlwr(palavraLida);
     TElementoIndice elementoBuscado_aux = { .palavra = palavraLida };

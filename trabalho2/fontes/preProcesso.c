@@ -5,6 +5,7 @@
 //
 
 #include "preProcesso.h"
+#define LOG(msg) fprintf(stderr, "[%s]\n", msg);
 
 
 // [3] CRIAR/CONSTRUIR ARQUIVO COM INFORMAÇÕES AS INFORMAÇÕES NECESSÁRIAS PARA O ÍNDICE REMISSIVO
@@ -12,6 +13,8 @@ char* preProcessar(const char* path_doc){
   if(!path_doc) return NULL;
   TDicionarioDinamico* dicionarioPalavras;
   TVetorDinamico* vetorPaginas;
+
+  LOG("PRE-PROCESSANDO ARQUIVO TEXTO");
 
   // [0] para criar um arquivo com o texto tratado
   char* path_arquivoTratado = processarTexto(path_doc, DIRETORIO_SCRIPTTRATADOR, NOMEARQUIVO_SCRIPTTRATADOR);
@@ -76,6 +79,9 @@ char* preProcessar(const char* path_doc){
   system(comandoParaOrdenarArquivoInfo);
 
   destruirDicionarioDinamico(dicionarioPalavras);
+
+
+  LOG("ARQUIVO PRE-PROCESSADO COM SUCESSO!");
 
 
   return path_arquivoInformacoes;
