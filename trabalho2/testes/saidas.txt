@@ -1,0 +1,5 @@
+"medicamentos": 248, 
+"capítulo" NAO ESTAH NESSE DOCUMENTO
+"capitulo": 1, 69, 82, 242, 48, 
+"leitor": 1, 
+"canoa": 6, 36, 137, 62, 248, 
