@@ -36,6 +36,8 @@ unsigned qtdOcorrenciasETotalExceto_arquivo(const char* path_arquivo, const char
     else ++totalPalavras;
   }
 
+  LOG("INFORMACOES OBTIDAS");
+
   fclose(arq);
 
   *totalDePalavras = totalPalavras;

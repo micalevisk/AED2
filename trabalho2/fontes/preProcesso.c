@@ -28,6 +28,8 @@ char* preProcessar(const char* path_doc){
   unsigned nPalavras=0;
   unsigned nPaginas = qtdOcorrenciasETotalExceto_arquivo(path_arquivoTratado, ID_PAG, &nPalavras); // número de páginas, i.e., ocorrências da string ID_PAG
 
+  LOG("CONSTRUINDO ESTRUTURAS INFORMATIVAS");
+
   // [1]
   if( !(construirEstruturasInformativas(fd_arquivoTratado, &dicionarioPalavras, &vetorPaginas, nPalavras, nPaginas)) ){
     removerArquivoDir(path_arquivoTratado);
@@ -41,6 +43,7 @@ char* preProcessar(const char* path_doc){
     return NULL;
   }
 
+
   // Processo de escrita de cada palavra (re)lida com as suas devidas informações (página e TF-IDF nessa página) no arquivo de informações (usado para gerar o índice remissivo).
   char* formatacao = (char*)malloc( sizeof(char)*(MAX_N_CARACTERES_LINHA+strlen("%%s")) );
   sprintf(formatacao, "%%%us", MAX_N_CARACTERES_LINHA);
@@ -48,6 +51,8 @@ char* preProcessar(const char* path_doc){
   int indice;
   char novaPagina=0;
   TDicionarioDinamico* dVetorPaginasCorrente;
+
+  LOG("INICIANDO CALCULO DOS TF-IDFs");
 
   rewind(fd_arquivoTratado);
   for(indice=-1, palavraCorrente=ALOCAR_PALAVRA; (fscanf(fd_arquivoTratado, formatacao, palavraCorrente))!=EOF; palavraCorrente=ALOCAR_PALAVRA){
