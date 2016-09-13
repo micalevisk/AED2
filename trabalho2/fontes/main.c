@@ -20,8 +20,7 @@
 #include "main.h"
 
 
-#ifndef WINDOWS
-char* strlwr(char* s){
+char* str2lwr(char* s){
   char* tmp = s;
 
   for(; *tmp; ++tmp)
@@ -29,7 +28,6 @@ char* strlwr(char* s){
 
   return s;
 }
-#endif
 
 
 int main(int argc, char **argv)
@@ -49,7 +47,7 @@ int main(int argc, char **argv)
   #endif    
 
   while( fscanf(stdin, "%60s", palavraLida)!=EOF ){
-    palavraLida = strlwr(palavraLida);
+    palavraLida = str2lwr(palavraLida);
     TElementoIndice elementoBuscado_aux = { .palavra = palavraLida };
     TElementoIndice* elementoBuscado = indiceRemissivo->buscar(indiceRemissivo, &elementoBuscado_aux);
     if(!elementoBuscado) printf("\"%s\" NAO ESTAH NESSE DOCUMENTO\n", palavraLida);
