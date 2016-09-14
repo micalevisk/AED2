@@ -36,6 +36,8 @@ char* preProcessar(const char* path_doc){
     return NULL;
   }
 
+  LOG("ESTRUTURAS INFORMATIVAS CONSTRUIDAS");
+
   char* path_arquivoInformacoes = criarArquivoTemporario("", MASK_ARQUIVO_INFO, PERMISSAO_LEITURA_ESCRITA);
   FILE* fd_arquivoInformacoes = fopen(path_arquivoInformacoes, "w");
   if(!fd_arquivoInformacoes){
@@ -43,6 +45,7 @@ char* preProcessar(const char* path_doc){
     return NULL;
   }
 
+  LOG("CRIADO ARQUIVO COM INFORMACOES");
 
   // Processo de escrita de cada palavra (re)lida com as suas devidas informações (página e TF-IDF nessa página) no arquivo de informações (usado para gerar o índice remissivo).
   char* formatacao = (char*)malloc( sizeof(char)*(MAX_N_CARACTERES_LINHA+strlen("%%s")) );
