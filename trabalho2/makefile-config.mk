@@ -41,6 +41,5 @@ else ifeq ($(UNAME), Darwin)
 else ifeq ($(shell uname -o), Cygwin)
   # Cygwin flags
   PRINT += -e
-  CFLAGS += -DWINDOWS
 endif
 ##########################################
