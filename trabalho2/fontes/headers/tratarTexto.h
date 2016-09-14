@@ -42,7 +42,6 @@ sed '/\\<\\(tal\\|talvez\\|também\\|tanta\\|tantas\\|tanto\\|tão\\|tarde\\|te\
 sed '/\\<\\(um\\|uma\\|umas\\|uns\\)\\>/ d' |\
 sed '/\\<\\(vai\\|vais\\|vão\\|vários\\|vem\\|vêm\\|vens\\|ver\\|vez\\|vezes\\|viagem\\|vindo\\|vinte\\|você\\|vocês\\|vos\\|vós\\|vossa\\|vossas\\|vosso\\|vossos\\)\\>/ d' |\
 sed '/\\<\\(zero\\)\\>/ d'"
-
 /////////////////////////////////////////////////////
 
 /*

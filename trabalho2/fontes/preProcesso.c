@@ -36,7 +36,7 @@ char* preProcessar(const char* path_doc){
     return NULL;
   }
 
-  LOG("ESTRUTURAS INFORMATIVAS CONSTRUIDAS");
+  LOG("ESTRUTURAS INFORMATIVAS CONSTRUIDAS COM SUCESSO!");
 
   char* path_arquivoInformacoes = criarArquivoTemporario("", MASK_ARQUIVO_INFO, PERMISSAO_LEITURA_ESCRITA);
   FILE* fd_arquivoInformacoes = fopen(path_arquivoInformacoes, "w");
