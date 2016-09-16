@@ -18,9 +18,6 @@ char* preProcessar(const char* path_doc){
 
   // [0] para criar um arquivo com o texto tratado
   char* path_arquivoTratado = processarTexto(path_doc, DIRETORIO_SCRIPTTRATADOR, NOMEARQUIVO_SCRIPTTRATADOR);
-  #ifdef ERROR
-    if(!path_arquivoTratado) ERROR(1, "preProcesso", "preProcessar");
-  #endif
 
   // abrir texto tratado que será usado no povoamento
   FILE* fd_arquivoTratado = fopen(path_arquivoTratado, "r"); if(!fd_arquivoTratado) return NULL;
