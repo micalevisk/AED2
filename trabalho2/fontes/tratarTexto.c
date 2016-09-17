@@ -9,7 +9,9 @@
 
 #define INICIO "egrep -o '\\w+(-\\w+)?' "
 #define FINAL   " > "
-#define MEIO " | sed '/[0-9]/d' | sed '/\\<PA\\>/! { y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/ ; y/ÀÁÂÃÄÅÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÇÑ/àáâãäåèéêëìíîïòóôõöùúûüçñ/ ; }' | sed '/\\<\\(a\\|à\\|adeus\\|agora\\|aí\\|ainda\\|além\\|algo\\|algumas\\|alguns\\|ali\\|ano\\|anos\\|antes\\|ao\\|aos\\|apenas\\|apoio\\|após\\|aquela\\|aquelas\\|aquele\\|aqueles\\|aqui\\|aquilo\\|área\\|as\\|às\\|assim\\|até\\|atrás\\|através\\)\\>/ d' |\
+#define MEIO " | sed '/[0-9]/d' |\
+sed '/^PA/! { y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/ ; y/ÀÁÂÃÄÅÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÇÑ/àáâãäåèéêëìíîïòóôõöùúûüçñ/ ; }' |\
+sed '/\\<\\(a\\|à\\|adeus\\|agora\\|aí\\|ainda\\|além\\|algo\\|algumas\\|alguns\\|ali\\|ano\\|anos\\|antes\\|ao\\|aos\\|apenas\\|apoio\\|após\\|aquela\\|aquelas\\|aquele\\|aqueles\\|aqui\\|aquilo\\|área\\|as\\|às\\|assim\\|até\\|atrás\\|através\\)\\>/ d' |\
 sed '/\\<\\(baixo\\|bastante\\|bem\\|boa\\|boas\\|bom\\|bons\\|breve\\)\\>/ d' |\
 sed '/\\<\\(cá\\|cada\\|catorze\\|cedo\\|cento\\|certamente\\|certeza\\|cima\\|cinco\\|coisa\\|com\\|como\\|conselho\\|contra\\|custa\\)\\>/ d' |\
 sed '/\\<\\(da\\|dá\\|dão\\|daquela\\|daquelas\\|daquele\\|daqueles\\|dar\\|das\\|de\\|debaixo\\|demais\\|dentro\\|depois\\|desde\\|dessa\\|dessas\\|desse\\|desses\\|desta\\|destas\\|deste\\|destes\\|deve\\|deverá\\|dez\\|dezanove\\|dezasseis\\|dezassete\\|dezoito\\|dia\\|diante\\|diz\\|dizem\\|dizer\\|do\\|dois\\|dos\\|doze\\|duas\\|dúvida\\)\\>/ d' |\
